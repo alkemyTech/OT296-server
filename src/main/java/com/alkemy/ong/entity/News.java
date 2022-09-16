@@ -10,6 +10,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Table(name = "news")
 @SQLDelete(sql = "UPDATE news SET deleted = true WHERE id=?" )
 @Where(clause = "deleted=false")
-public class NewsEntity {
+public class News {
 
     @Id
     @GeneratedValue
@@ -63,6 +64,6 @@ public class NewsEntity {
                     name = "category_id_fk"
             )
     )
-    private List<Categorie> categories;
+    private List<Category> categories;
 
 }
