@@ -58,14 +58,7 @@ public class News {
 
     private boolean deleted = Boolean.FALSE;
 
-    @OneToOne
-    @JoinColumn(
-            name = "category_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(
-                    name = "category_id_fk"
-            )
-    )
+    @Column(name = "category_id_fk")
     private UUID categoryId;
 
 }
