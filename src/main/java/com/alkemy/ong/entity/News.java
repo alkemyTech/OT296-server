@@ -64,6 +64,6 @@ public class News {
                     name = "category_id_fk"
             )
     )
-    private List<Category> categories;
+    private List<Category> categoryId;
 
 }
