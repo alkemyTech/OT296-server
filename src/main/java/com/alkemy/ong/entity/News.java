@@ -10,7 +10,6 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -56,7 +55,7 @@ public class News {
 
     private boolean deleted = Boolean.FALSE;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(
             name = "category_id",
             referencedColumnName = "id",
@@ -64,6 +63,6 @@ public class News {
                     name = "category_id_fk"
             )
     )
-    private List<Category> categoryId;
+    private UUID categoryId;
 
 }
