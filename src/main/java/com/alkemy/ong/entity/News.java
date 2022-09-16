@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Entity(name = "News")
 @Table(name = "news")
 @SQLDelete(sql = "UPDATE news SET deleted = true WHERE id=?" )
-@Where(clause = "deleted=false")
+@Where(clause = "deleted = false")
 public class News {
 
     @Id
@@ -29,28 +30,30 @@ public class News {
     private UUID id;
 
     @Column(
-            name = "name"
+            name = "name",
+            nullable = false
     )
-    @NotNull
     private String name;
 
     @Column(
             name = "content",
-            columnDefinition = "TEXT"
+            columnDefinition = "TEXT",
+            nullable = false
     )
-    @NotNull
     private String content;
 
     @Column(
-            name = "image"
+            name = "image",
+            nullable = false
     )
-    @NotNull
     private String image;
 
     @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime updateDateTime;
 
     private boolean deleted = Boolean.FALSE;
