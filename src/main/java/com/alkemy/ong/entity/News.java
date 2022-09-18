@@ -65,7 +65,7 @@ public class News {
 
     private boolean deleted = Boolean.FALSE;
 
-    @OneToOne
+    @OneToOne(targetEntity = Category.class)
     @JoinColumn(
             name = "category_id",
             referencedColumnName = "id",
