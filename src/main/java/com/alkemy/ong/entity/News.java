@@ -9,10 +9,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -73,6 +70,5 @@ public class News {
                     name = "category_id_fk"
             )
     )
-    private String categoryId;
-
+    private Category categoryId;
 }
