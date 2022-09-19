@@ -8,10 +8,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,7 +16,7 @@ import java.util.UUID;
 @Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET softDelete = true WHERE id=?")
 @Where(clause = "softDelete=false")
-public class Users {
+public class User {
 
     
     @Id
