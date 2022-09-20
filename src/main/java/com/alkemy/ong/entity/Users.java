@@ -22,7 +22,6 @@ public class Users {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
-
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
