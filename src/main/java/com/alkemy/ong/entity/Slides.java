@@ -2,6 +2,9 @@ package com.alkemy.ong.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -10,16 +13,21 @@ import java.util.UUID;
 @Table(name = "slides")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE categories SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Slides {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private UUID id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String id;
 
     private String imageURL;
     private String text;
-    @Column(name = "orderS")
+    @Column(name = "orders")
     private String order;
 
+    private boolean deleted = Boolean.FALSE;
+
     @Column(name = "organization_id", nullable = false)
-    private UUID organizationID;
+    private String organizationID;
 }
