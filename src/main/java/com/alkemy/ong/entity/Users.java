@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "users")
-@SQLDelete(sql = "UPDATE users SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete=false")
-public class User {
+
+@SQLDelete(sql = "UPDATE users SET soft_delete = true WHERE id=?")
+@Where(clause = "soft_delete=false")
+public class Users {
 
 
     @Id @GeneratedValue(generator="system-uuid")
@@ -44,5 +45,4 @@ public class User {
 
     @Column(name = "role_id")
     private String roleId;
-
 }
