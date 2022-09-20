@@ -6,6 +6,7 @@ import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Table;
@@ -53,7 +54,10 @@ public class News {
 
     private boolean deleted = Boolean.FALSE;
 
-    @OneToOne(targetEntity = Category.class)
+    @OneToOne(
+            targetEntity = Category.class,
+            cascade = {CascadeType.PERSIST}
+    )
     @JoinColumn(
             name = "category_id",
             referencedColumnName = "id",
@@ -62,5 +66,13 @@ public class News {
             )
     )
     private Category categoryId;
+
+    public News(){}
+
+    public News(String name, String content, String image){
+        this.name = name;
+        this.content = content;
+        this.image = image;
+    }
 
 }
