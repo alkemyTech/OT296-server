@@ -18,11 +18,11 @@ import java.time.LocalDateTime;
 @Where(clause = "softDelete=false")
 public class User {
 
-    
-    @Id
-    @GeneratedValue(generator="system-uuid")
+
+    @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
+
 
     @Column(nullable = false)
     private String firstName;

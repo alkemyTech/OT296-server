@@ -2,16 +2,15 @@ package com.alkemy.ong.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,12 +21,9 @@ import java.util.UUID;
 public class News {
 
     @Id
-    @GeneratedValue
-    @Column(
-            name = "id",
-            updatable = false
-    )
-    private UUID id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String id;
 
     @Column(
             name = "name",
@@ -58,7 +54,25 @@ public class News {
 
     private boolean deleted = Boolean.FALSE;
 
-    @Column(name = "category_id_fk")
-    private UUID categoryId;
+    @OneToOne(
+            targetEntity = Category.class,
+            cascade = {CascadeType.PERSIST}
+    )
+    @JoinColumn(
+            name = "category_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "category_id_fk"
+            )
+    )
+    private Category categoryId;
+
+    public News(){}
+
+    public News(String name, String content, String image){
+        this.name = name;
+        this.content = content;
+        this.image = image;
+    }
 
 }
