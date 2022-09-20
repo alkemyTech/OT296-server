@@ -1,7 +1,9 @@
 package com.alkemy.ong.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
@@ -15,13 +17,14 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "users")
-@SQLDelete(sql = "UPDATE users SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete=false")
+@SQLDelete(sql = "UPDATE users SET soft_delete = true WHERE id=?")
+@Where(clause = "soft_delete=false")
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private UUID id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String id;
 
     @Column(nullable = false)
     private String firstName;
@@ -29,6 +32,7 @@ public class Users {
     private String lastName;
     @Column(nullable = false)
     private String email;
+
     @Column(nullable = false)
     private String password;
     @Nullable
@@ -36,12 +40,10 @@ public class Users {
     private LocalDateTime timestamps;
     private boolean softDelete = Boolean.FALSE;
 
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", insertable = false,updatable = false)
     private Role role;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID roleId;
-
+    @Column(name = "user_id")
+    private String roleId;
 }
