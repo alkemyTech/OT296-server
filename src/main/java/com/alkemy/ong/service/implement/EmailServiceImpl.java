@@ -2,12 +2,11 @@ package com.alkemy.ong.service.implement;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.ong.dto.OrganizationDTO;
+import com.alkemy.ong.dto.RegisterDTO;
 import com.alkemy.ong.service.EmailService;
 
 import com.sendgrid.Method;
@@ -25,7 +24,7 @@ public class EmailServiceImpl implements EmailService {
 	private String emailSender = "senderongsomosmas@gmail.com";
 	
 	@Override
-	public void sendWelcomeEmailTo(String to) {
+	public void sendWelcomeEmailTo(RegisterDTO user) {
 		String apiKey = System.getenv("EMAIL_API_KEY");
 		
 		OrganizationDTO org = new OrganizationDTO();
@@ -35,13 +34,13 @@ public class EmailServiceImpl implements EmailService {
         mail.setTemplateId("d-0095599c09174d18861a8ff9ff062617");
 
         Personalization personalization = new Personalization();
-        personalization.addDynamicTemplateData("first_name", "Pepe");
+        personalization.addDynamicTemplateData("first_name", user.getFirstName());
         personalization.addDynamicTemplateData("ong_name", org.getName());
         personalization.addDynamicTemplateData("ong_mail", org.getEmail());
         personalization.addDynamicTemplateData("ong_phone", org.getPhone());
         personalization.setSubject("Registro realizado con exito");
 
-        personalization.addTo(new Email(to));
+        personalization.addTo(new Email(user.getEmail()));
 
         mail.addPersonalization(personalization);
 

@@ -1,7 +1,9 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.dto.RegisterDTO;
+
 public interface EmailService {
 	
-	void sendWelcomeEmailTo(String to);
+	void sendWelcomeEmailTo(RegisterDTO user);
 
 }
