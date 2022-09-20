@@ -13,9 +13,6 @@ public class OngApplication {
 		SpringApplication.run(OngApplication.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder encoder() {
-		return new BCryptPasswordEncoder();
-	}
+
 
 }
