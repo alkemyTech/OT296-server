@@ -1,4 +1,4 @@
-package com.alkemy.ong.security.service;
+package com.alkemy.ong.security.service.impl;
 
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.repository.UsersRepository;
