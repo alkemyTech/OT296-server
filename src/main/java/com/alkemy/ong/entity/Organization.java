@@ -1,21 +1,26 @@
 package com.alkemy.ong.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE organizations SET softDelete = true WHERE id=?")
+@Where(clause = "softDelete = false")
 @Table(name="organizations")
 public class Organization {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    private String id;
 
     @Column(nullable = false)
     private String name;
