@@ -25,10 +25,8 @@ public class Role {
 
     @NotNull
     private String name;
-
     @Column(nullable = true)
     private String description;
-
     @Column(name = "timestamps")
     @Temporal(TemporalType.DATE)
     private Date timestamps;
