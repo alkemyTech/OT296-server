@@ -2,6 +2,8 @@ package com.alkemy.ong.security.service.impl;
 
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.repository.UsersRepository;
+import com.alkemy.ong.security.dto.RegisterDTO;
+import com.alkemy.ong.security.mapper.UserMapper;
 import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

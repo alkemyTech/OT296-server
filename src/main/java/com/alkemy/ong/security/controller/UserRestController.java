@@ -5,7 +5,6 @@ import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.service.UserService;
-import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,6 @@ public class UserRestController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserService userService;
-
     @Autowired
     private UserService userService;
 
@@ -52,6 +48,7 @@ public class UserRestController {
         RegisterDTO registerDTO = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
+
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Users> delete(@PathVariable String id){
