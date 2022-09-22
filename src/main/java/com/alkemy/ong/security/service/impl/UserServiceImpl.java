@@ -18,6 +18,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UsersRepository usersRepository;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
@@ -31,6 +33,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         return new org.springframework.security.core.userdetails
                 .User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    @Override
+    public RegisterDTO create(RegisterDTO user) {
+        Users newUsers = userMapper.userDTO2Entity(user);
+        Users usersSave = usersRepository.save(newUsers);
+        RegisterDTO registerDTO = userMapper.userEntity2DTO(usersSave);
+        return registerDTO;
     }
 
     public void delete(String id) throws NotFoundException {
