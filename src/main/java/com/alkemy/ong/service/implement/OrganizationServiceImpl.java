@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.implement;
 
 import com.alkemy.ong.dto.OrganizationDTO;
+import com.alkemy.ong.dto.OrganizationDTOPublic;
 import com.alkemy.ong.entity.Organization;
 import com.alkemy.ong.mapper.OrganizationMapper;
 import com.alkemy.ong.repository.OrganizationRepository;
@@ -18,7 +19,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private OrganizationMapper organizationMapper;
 
     @Override
-    public List<OrganizationDTO> getOrganizationsDTO() {
+    public List<OrganizationDTOPublic> getOrganizationsDTO() {
         List<Organization> organizations = organizationRepository.findAll();
         return organizationMapper.organizationListEntity2DTO(organizations);
     }
