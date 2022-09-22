@@ -20,8 +20,7 @@ import com.sendgrid.helpers.mail.objects.Personalization;
 @Service
 public class EmailServiceImpl implements EmailService {
 	
-	@Value( "${alkemy.ot296.email.sender}" )
-	private String emailSender = "senderongsomosmas@gmail.com";
+	private String emailSender = System.getenv("EMAIL_SENDER");
 	
 	@Override
 	public void sendWelcomeEmailTo(RegisterDTO user) {
