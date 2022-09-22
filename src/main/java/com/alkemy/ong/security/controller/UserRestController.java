@@ -1,6 +1,8 @@
 package com.alkemy.ong.security.controller;
 
 import com.alkemy.ong.security.dto.LoginDTO;
+import com.alkemy.ong.security.dto.RegisterDTO;
+import com.alkemy.ong.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ public class UserRestController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginDTO> login(@RequestBody @Valid LoginDTO loginDTO) throws Exception {
@@ -31,5 +35,11 @@ public class UserRestController {
         }
 
         return ResponseEntity.ok(loginDTO);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<RegisterDTO> register(@RequestBody @Valid RegisterDTO user){
+        RegisterDTO registerDTO = userService.create(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
 }
