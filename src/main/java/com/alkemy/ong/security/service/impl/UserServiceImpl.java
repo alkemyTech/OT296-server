@@ -2,6 +2,8 @@ package com.alkemy.ong.security.service.impl;
 
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.repository.UsersRepository;
+import com.alkemy.ong.security.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
@@ -9,9 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UsersRepository usersRepository;
@@ -28,5 +31,14 @@ public class UserServiceImpl implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails
                 .User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    public void delete(String id) throws NotFoundException {
+        Optional<Users> user = usersRepository.findById(id);
+        if(user.isPresent()){
+            usersRepository.deleteById(id);
+        }else{
+            throw new NotFoundException("User not found");
+        }
     }
 }
