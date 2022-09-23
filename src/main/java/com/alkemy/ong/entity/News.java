@@ -6,6 +6,7 @@ import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -46,13 +47,21 @@ public class News {
 
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(
+            name = "create_timestamp",
+            updatable = false
+    )
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(
+            name = "update_timestamp"
+    )
     private LocalDateTime updateDateTime;
 
     private boolean deleted = Boolean.FALSE;
+
 
     @OneToOne(
             targetEntity = Category.class,
@@ -66,13 +75,5 @@ public class News {
             )
     )
     private Category categoryId;
-
-    public News(){}
-
-    public News(String name, String content, String image){
-        this.name = name;
-        this.content = content;
-        this.image = image;
-    }
 
 }

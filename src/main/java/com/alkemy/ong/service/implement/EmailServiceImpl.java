@@ -2,11 +2,10 @@ package com.alkemy.ong.service.implement;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.alkemy.ong.security.dto.RegisterDTO;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.ong.dto.OrganizationDTO;
-import com.alkemy.ong.dto.RegisterDTO;
 import com.alkemy.ong.service.EmailService;
 
 import com.sendgrid.Method;

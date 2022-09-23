@@ -1,8 +1,10 @@
 package com.alkemy.ong.security.controller;
 
+import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +43,17 @@ public class UserRestController {
     public ResponseEntity<RegisterDTO> register(@RequestBody @Valid RegisterDTO user){
         RegisterDTO registerDTO = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Users> delete(@PathVariable String id){
+        try{
+            userService.delete(id);
+        }catch(NotFoundException e){
+            e.getMessage();
+            return new ResponseEntity(("User Not Found"),HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
