@@ -1,21 +1,22 @@
 package com.alkemy.ong.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE organizations SET soft_delete = true WHERE id=?")
-@Where(clause = "soft_delete=false")
-@Table(name="organizations")
-public class Organization {
+@SQLDelete(sql = "UPDATE contacts SET deleted_at = true WHERE id=?")
+@Where(clause = "deleted_at = false")
+@Table(name="contacts")
+public class Contact {
 
     @Id
     @GeneratedValue(generator="system-uuid")
@@ -24,15 +25,10 @@ public class Organization {
 
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String image;
-    private String address;
-    private Integer phone;
+    private String phone;
     @Column(nullable = false)
     private String email;
-    private String welcomeText;
-    private String aboutUsText;
-    private LocalDateTime timestamps;
-    private boolean softDelete = Boolean.FALSE;
+    private String message;
+    private boolean deletedAt = Boolean.FALSE;
 
 }
