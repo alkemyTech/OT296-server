@@ -1,7 +1,6 @@
 package com.alkemy.ong.security.controller;
 
 import com.alkemy.ong.entity.Users;
-import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.service.UserService;
@@ -27,9 +26,6 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UsersRepository usersRepository;
-
     @PostMapping("/login")
     public ResponseEntity<LoginDTO> login(@RequestBody @Valid LoginDTO loginDTO) throws Exception {
         try {
@@ -48,7 +44,6 @@ public class UserRestController {
         RegisterDTO registerDTO = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(registerDTO);
     }
-
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Users> delete(@PathVariable String id){

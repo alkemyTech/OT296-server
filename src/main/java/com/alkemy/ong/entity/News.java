@@ -32,8 +32,6 @@ public class News {
     )
     private String name;
 
-
-
     @Column(
             name = "content",
             columnDefinition = "TEXT",
