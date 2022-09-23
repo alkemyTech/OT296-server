@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE organizations SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete = false")
+@SQLDelete(sql = "UPDATE organizations SET soft_delete = true WHERE id=?")
+@Where(clause = "soft_delete=false")
 @Table(name="organizations")
 public class Organization {
 
