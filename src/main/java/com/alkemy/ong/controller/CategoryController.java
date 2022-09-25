@@ -20,8 +20,8 @@ public class CategoryController {
 
     @GetMapping()
     public ResponseEntity<List<CategoryBasicDTO>> getCategory(){
-        categoryService.getCategory();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+       List<CategoryBasicDTO> categoryBasicDTOS = categoryService.getCategory();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryBasicDTOS);
     }
 
 }
