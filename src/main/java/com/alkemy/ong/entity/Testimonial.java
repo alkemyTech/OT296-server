@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @Where(clause = "soft_delete=false")
 public class Testimonial {
 
-    @Id @GeneratedValue(generator="system-uuid")
+    @Id
+    @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
