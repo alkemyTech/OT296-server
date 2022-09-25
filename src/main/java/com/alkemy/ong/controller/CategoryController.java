@@ -19,12 +19,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("{id}")
-    public ResponseEntity<Object> getCategoryById(@PathVariable String id) {
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
         try {
            CategoryDTO categoryDTO = categoryService.getCategoryById(id);
             return ResponseEntity.status(HttpStatus.FOUND).body(categoryDTO);
-        }catch (Exception e){
-            return new ResponseEntity<>("Category not found",HttpStatus.NOT_FOUND);
+        }catch (Exception e) {
+            return new ResponseEntity("Organization not found",HttpStatus.NOT_FOUND);
         }
     }
 
