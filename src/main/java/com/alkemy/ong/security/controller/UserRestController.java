@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -55,5 +56,11 @@ public class UserRestController {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<RegisterDTO>> findAll(){
+        List<RegisterDTO> usuarios = userService.findAllUsers();
+        return ResponseEntity.ok(usuarios);
     }
 }
