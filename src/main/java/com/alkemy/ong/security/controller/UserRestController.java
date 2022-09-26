@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -62,6 +63,16 @@ public class UserRestController {
             return new ResponseEntity(("User Not Found"),HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PatchMapping("/users/{id}")
+    public ResponseEntity<Users> patchUser(@PathVariable String id, @RequestBody Map<Object, Object> objectMap){
+        try{
+            userService.patchUser(id, objectMap);
+        }catch(NotFoundException e){
+            return new ResponseEntity("User Not Found",HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
