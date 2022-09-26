@@ -66,6 +66,13 @@
 		    <artifactId>sendgrid-java</artifactId>
 		    <version>4.9.3</version>
 		</dependency>
+
+		<!--JwT-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
