@@ -3,7 +3,9 @@ package com.alkemy.ong.security.service.impl;
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.RegisterDTO;
+import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.mapper.UserMapper;
+import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private UsersRepository usersRepository;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserWithoutPassMapper userWithoutPassMapper;
 
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
@@ -60,9 +65,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
     }
 
-    public List<RegisterDTO> findAllUsers(){
+    // Get all users without password
+    public List<UserWithoutPassDTO> findAllUsers(){
         List<Users> usersEntities = usersRepository.findAll();
-        List<RegisterDTO> usersDTO = userMapper.userEntityList2DTOList(usersEntities);
+        List<UserWithoutPassDTO> usersDTO = userWithoutPassMapper.userWPEntityList2DTOList(usersEntities);
         return usersDTO;
     }
 }

@@ -3,6 +3,7 @@ package com.alkemy.ong.security.controller;
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
+import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,8 @@ public class UserRestController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<RegisterDTO>> findAll(){
-        List<RegisterDTO> usuarios = userService.findAllUsers();
+    public ResponseEntity<List<UserWithoutPassDTO>> findAll(){
+        List<UserWithoutPassDTO> usuarios = userService.findAllUsers();
         return ResponseEntity.ok(usuarios);
     }
 }
