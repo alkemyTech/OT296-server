@@ -8,4 +8,6 @@ public interface CategoryService {
 
 	public void updateCategory(CategoryDTO dto, String id) throws NotFoundException;
 
+	public void deleteCategory(String id)throws NotFoundException;
+
 }

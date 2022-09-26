@@ -25,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@Override
     @PutMapping("/{id}")
     public void updateCategory(@RequestBody CategoryDTO dto, @PathVariable String id) throws NotFoundException{
     	Optional<Category> category = categoryRepository.findById(id);
@@ -46,6 +47,17 @@ public class CategoryServiceImpl implements CategoryService {
     	} else {
     		throw new NotFoundException("Category not found");
     	}
+	}
+
+	@Override
+	public void deleteCategory(String id) throws NotFoundException {
+    	Optional<Category> category = categoryRepository.findById(id);
+    	if (category.isPresent()) {
+    		categoryRepository.deleteById(id);
+    	} else {
+    		throw new NotFoundException("Category not found");
+    	}
+		
 	}
     
 }

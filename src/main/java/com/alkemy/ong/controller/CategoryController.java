@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,16 @@ public class CategoryController {
 			categoryService.updateCategory(category, id);
 		} catch (NotFoundException e) {
 			return new ResponseEntity<CategoryDTO>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
+		try {
+			categoryService.deleteCategory(id);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
