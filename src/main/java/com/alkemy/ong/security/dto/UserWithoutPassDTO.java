@@ -1,10 +1,8 @@
 package com.alkemy.ong.security.dto;
 
-import com.alkemy.ong.entity.Role;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.alkemy.ong.dto.RoleDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -37,5 +35,5 @@ public class UserWithoutPassDTO {
 
     @NotNull
     @NotBlank
-    private Role role;
+    private RoleDTO roleDTO;
 }
