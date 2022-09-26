@@ -1,5 +1,7 @@
 package com.alkemy.ong.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity(name = "Activity")
 @Table(name = "activities")
 @SQLDelete(sql = "UPDATE activity SET deleted = true WHERE id = ?")
