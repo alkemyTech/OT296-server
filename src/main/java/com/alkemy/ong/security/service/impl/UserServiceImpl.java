@@ -1,5 +1,6 @@
 package com.alkemy.ong.security.service.impl;
 
+import com.alkemy.ong.dto.UserDTO;
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.RegisterDTO;
@@ -71,5 +72,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }else{
             throw  new NotFoundException("User not found");
         }
+    }
+
+    @Override
+    public UserDTO meData(String userMail) {
+
+        Optional<Users> user = usersRepository.findByEmail(userMail);
+
+        return UserDTO.builder()
+                .firstName(user.get().getFirstName())
+                .lastName(user.get().getLastName())
+                .email(user.get().getEmail())
+                .photo(user.get().getPhoto())
+                .timestamps(user.get().getTimestamps())
+                .role(user.get().getRole())
+                .build();
     }
 }
