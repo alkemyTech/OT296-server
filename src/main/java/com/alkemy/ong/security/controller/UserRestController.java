@@ -4,6 +4,7 @@ import com.alkemy.ong.dto.UserDTO;
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
+import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.response.AuthenticationResponse;
 import com.alkemy.ong.security.service.UserService;
 import com.alkemy.ong.security.service.impl.UserServiceImpl;
@@ -20,6 +21,7 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -72,6 +74,12 @@ public class UserRestController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserWithoutPassDTO>> findAll(){
+        List<UserWithoutPassDTO> usuarios = userService.findAllUsers();
+        return ResponseEntity.ok(usuarios);
     }
 
     @PatchMapping("/users/{id}")
