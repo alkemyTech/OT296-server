@@ -23,5 +23,15 @@ public class CategoryController {
         List<CategoryBasicDTO> categoryBasicDTOS = categoryService.getCategory();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryBasicDTOS);
     }
+    
+	@PutMapping("/{id}")
+	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO category, @PathVariable String id) {
+		try {
+			categoryService.updateCategory(category, id);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<CategoryDTO>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 
 }
