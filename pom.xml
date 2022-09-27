@@ -71,6 +71,13 @@
 			<artifactId>aws-java-sdk-s3</artifactId>
 			<version>1.12.310</version>
 		</dependency>
+
+		<!--JwT-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
