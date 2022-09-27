@@ -38,11 +38,22 @@ public class CategoryController {
             return new ResponseEntity("Organization not found", HttpStatus.NOT_FOUND);
         }
     }
-        @GetMapping()
-        public ResponseEntity<List<CategoryBasicDTO>> getCategory () {
-            List<CategoryBasicDTO> categoryBasicDTOS = categoryService.getCategory();
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryBasicDTOS);
-        }
+    
+    @GetMapping()
+    public ResponseEntity<List<CategoryBasicDTO>> getCategory () {
+        List<CategoryBasicDTO> categoryBasicDTOS = categoryService.getCategory();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryBasicDTOS);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO category, @PathVariable String id) {
+      try {
+        categoryService.updateCategory(category, id);
+      } catch (NotFoundException e) {
+        return new ResponseEntity<CategoryDTO>(HttpStatus.NOT_FOUND);
+      }
+      return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
@@ -59,5 +70,4 @@ public class CategoryController {
         categoryService.createCategory(category);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-    }
+}

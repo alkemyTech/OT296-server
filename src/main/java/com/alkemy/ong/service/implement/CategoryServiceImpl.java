@@ -11,6 +11,9 @@ import javassist.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +34,33 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryBasicDTO> categoryBasicDTOS = categoryMapper.categoryEntityList2DTO(categories);
         return categoryBasicDTOS;
     }
-
+    
+    @Override
+    CategoryDTO updateCategory(@RequestBody CategoryDTO dto, @PathVariable String id) throws NotFoundException{
+      Optional<Category> category = categoryRepository.findById(id);
+      Category categoryUpdated = categoryMapper.categoryDTO2Entity(dto);
+      Category oldCategory = new Category();
+      if (category.isPresent()) {
+         oldCategory = category.get();
+         if (categoryUpdated.getDescription() != null) {
+           oldCategory.setDescription(dto.getDescription()); 
+         }
+         if (categoryUpdated.getImage() != null) {
+           oldCategory.setImage(dto.getImage()); 
+         }
+         if (categoryUpdated.getName() != null) {
+           oldCategory.setName(dto.getName()); 
+         }
+         if (categoryUpdated.getTimestamps() != null) {
+           oldCategory.setTimestamps(dto.getTimestamps()); 
+         }
+         categoryRepository.save(oldCategory);
+      } else {
+        throw new NotFoundException("Category not found");
+      }
+      return categoryMapper.categoryEntity2DTO(oldCategory);
+    }
+    
     @Override
     public CategoryDTO getCategoryById(String id) {
         Category category = categoryRepository.findById(id).orElse(null);
@@ -39,15 +68,15 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.categoryEntity2DTO(category);
     }
 
-	@Override
-	public void deleteCategory(String id) throws NotFoundException {
-    	Optional<Category> category = categoryRepository.findById(id);
-    	if (category.isPresent()) {
-    		categoryRepository.deleteById(id);
-    	} else {
-    		throw new NotFoundException("Category not found");
-    	}
-	}
+    @Override
+    public void deleteCategory(String id) throws NotFoundException {
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isPresent()) {
+          categoryRepository.deleteById(id);
+        } else {
+          throw new NotFoundException("Category not found");
+        }		
+    }
 
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
