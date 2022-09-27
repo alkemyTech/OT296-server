@@ -9,16 +9,12 @@ import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;

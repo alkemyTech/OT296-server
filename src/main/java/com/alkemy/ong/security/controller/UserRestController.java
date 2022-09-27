@@ -15,8 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -74,7 +73,6 @@ public class UserRestController {
         List<UserWithoutPassDTO> usuarios = userService.findAllUsers();
         return ResponseEntity.ok(usuarios);
     }
-}
 
     @PatchMapping("/users/{id}")
     public ResponseEntity<Users> patchUser(@PathVariable String id, @RequestBody Map<Object, Object> objectMap){
