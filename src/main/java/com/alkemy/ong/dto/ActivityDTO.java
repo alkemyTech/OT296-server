@@ -18,5 +18,4 @@ public class ActivityDTO {
     @NotBlank
     private String content;
     private String image;
-    private LocalDateTime updateDateTime;
 }
