@@ -1,6 +1,9 @@
 package com.alkemy.ong.security.service.impl;
 
+import com.alkemy.ong.dto.UserDTO;
+import com.alkemy.ong.entity.Role;
 import com.alkemy.ong.entity.Users;
+import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.mapper.UserMapper;
@@ -26,6 +29,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
         Users user = usersRepository.findByEmailOrPassword(emailOrPassword, emailOrPassword);
@@ -34,7 +40,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getFirstName()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
         return new org.springframework.security.core.userdetails
                 .User(user.getEmail(), user.getPassword(), authorities);
@@ -43,6 +49,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public RegisterDTO create(RegisterDTO user) {
         Users newUsers = userMapper.userDTO2Entity(user);
+        if (user.getEmail().contains("admin")) {
+            Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+            newUsers.setRole(roles);
+        }else {
+            Role roles = roleRepository.findByName("ROLE_USER").get();
+            newUsers.setRole(roles);
+        }
         Users usersSave = usersRepository.save(newUsers);
         RegisterDTO registerDTO = userMapper.userEntity2DTO(usersSave);
         return registerDTO;
@@ -71,5 +84,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }else{
             throw  new NotFoundException("User not found");
         }
+    }
+
+    @Override
+    public UserDTO meData(String userMail) {
+
+        Optional<Users> user = usersRepository.findByEmail(userMail);
+
+        return UserDTO.builder()
+                .firstName(user.get().getFirstName())
+                .lastName(user.get().getLastName())
+                .email(user.get().getEmail())
+                .photo(user.get().getPhoto())
+                .timestamps(user.get().getTimestamps())
+                .role(user.get().getRole())
+                .build();
     }
 }
