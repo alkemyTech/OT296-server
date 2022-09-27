@@ -12,7 +12,6 @@ public class ActivityMapper {
         activity.setName(activityDTO.getName());
         activity.setContent(activityDTO.getContent());
         activity.setImage(activityDTO.getImage());
-        activity.setUpdateDateTime(activityDTO.getUpdateDateTime());
         return activity;
     }
 
@@ -21,7 +20,6 @@ public class ActivityMapper {
         activityDTO.setName(activity.getName());
         activityDTO.setContent(activity.getContent());
         activityDTO.setImage(activity.getImage());
-        activityDTO.setUpdateDateTime(activity.getUpdateDateTime());
         return activityDTO;
     }
 }
