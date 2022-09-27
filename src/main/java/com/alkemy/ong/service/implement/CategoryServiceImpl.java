@@ -6,10 +6,14 @@ import com.alkemy.ong.entity.Category;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.CategoryService;
+
+import javassist.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -34,4 +38,14 @@ public class CategoryServiceImpl implements CategoryService {
         assert category != null;
         return categoryMapper.categoryEntity2DTO(category);
     }
+    
+	@Override
+	public void deleteCategory(String id) throws NotFoundException {
+    	Optional<Category> category = categoryRepository.findById(id);
+    	if (category.isPresent()) {
+    		categoryRepository.deleteById(id);
+    	} else {
+    		throw new NotFoundException("Category not found");
+    	}		
+	}
 }
