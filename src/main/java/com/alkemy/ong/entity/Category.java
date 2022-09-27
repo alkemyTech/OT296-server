@@ -16,8 +16,8 @@ import java.util.UUID;
 @Table(name = "categories")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE categories SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete = false")
+@SQLDelete(sql = "UPDATE categories SET soft_delete = true WHERE id=?")
+@Where(clause = "soft_delete = false")
 public class Category {
 
     @Id

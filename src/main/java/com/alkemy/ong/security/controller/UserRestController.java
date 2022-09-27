@@ -45,14 +45,15 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginDTO loginDTO) throws Exception {
+        Authentication auth;
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+           auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 
         } catch (BadCredentialsException e) {
             return new ResponseEntity(("ok: false"), HttpStatus.BAD_REQUEST);
         }
-        final UserDetails userDetails = userServiceImpl.loadUserByUsername(loginDTO.getEmail());
-        final String jwt = jwTUtil.generateToken(userDetails);
+
+        final String jwt = jwTUtil.generateToken(auth);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
