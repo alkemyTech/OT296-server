@@ -2,11 +2,9 @@ package com.alkemy.ong.security.mapper;
 
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.mapper.RoleMapper;
-import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 

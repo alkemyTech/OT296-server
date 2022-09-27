@@ -3,7 +3,6 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.dto.RoleDTO;
 import com.alkemy.ong.entity.Role;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
