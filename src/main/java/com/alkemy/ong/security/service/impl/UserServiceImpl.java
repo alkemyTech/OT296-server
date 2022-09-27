@@ -15,10 +15,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +64,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             usersRepository.deleteById(id);
         }else{
             throw new NotFoundException("User not found");
+        }
+    }
+
+    public void patchUser(String id, Map<Object, Object> objectMap) throws NotFoundException{
+        Optional<Users> user = usersRepository.findById(id);
+
+        if(user.isPresent()){
+            Users replace = user.get();
+            objectMap.forEach((key, value) -> {
+                Field field = ReflectionUtils.findField(Users.class, (String) key);
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, replace, value);
+            });
+            usersRepository.save(replace);
+        }else{
+            throw  new NotFoundException("User not found");
         }
     }
 
