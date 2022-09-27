@@ -38,9 +38,7 @@ public class Users {
 
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id", insertable = false,updatable = false)
+    @JoinColumn(name = "role_id", updatable = false)
     private Role role;
 
-    @Column(name = "role_id")
-    private String roleId;
 }
