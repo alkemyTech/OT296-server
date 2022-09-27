@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.implement;
 
+import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryBasicDTO;
 import com.alkemy.ong.entity.Category;
 import com.alkemy.ong.mapper.CategoryMapper;
@@ -34,29 +35,46 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryBasicDTOS;
     }
     
-    @PutMapping("/{id}")
+    @Override
     CategoryDTO updateCategory(@RequestBody CategoryDTO dto, @PathVariable String id) throws NotFoundException{
-    	Optional<Category> category = categoryRepository.findById(id);
-    	Category categoryUpdated = categoryMapper.categoryDTO2Entity(dto);
-    	Category oldCategory = new Category();
-    	if (category.isPresent()) {
-    		 oldCategory = category.get();
-    		 if (categoryUpdated.getDescription() != null) {
-    			 oldCategory.setDescription(dto.getDescription()); 
-    		 }
-    		 if (categoryUpdated.getImage() != null) {
-    			 oldCategory.setImage(dto.getImage()); 
-    		 }
-    		 if (categoryUpdated.getName() != null) {
-    			 oldCategory.setName(dto.getName()); 
-    		 }
-    		 if (categoryUpdated.getTimestamps() != null) {
-    			 oldCategory.setTimestamps(dto.getTimestamps()); 
-    		 }
-    		 categoryRepository.save(oldCategory);
-    	} else {
-    		throw new NotFoundException("Category not found");
-    	}
-    	return categoryMapper.categoryEntity2DTO(oldCategory);
-	}
+      Optional<Category> category = categoryRepository.findById(id);
+      Category categoryUpdated = categoryMapper.categoryDTO2Entity(dto);
+      Category oldCategory = new Category();
+      if (category.isPresent()) {
+         oldCategory = category.get();
+         if (categoryUpdated.getDescription() != null) {
+           oldCategory.setDescription(dto.getDescription()); 
+         }
+         if (categoryUpdated.getImage() != null) {
+           oldCategory.setImage(dto.getImage()); 
+         }
+         if (categoryUpdated.getName() != null) {
+           oldCategory.setName(dto.getName()); 
+         }
+         if (categoryUpdated.getTimestamps() != null) {
+           oldCategory.setTimestamps(dto.getTimestamps()); 
+         }
+         categoryRepository.save(oldCategory);
+      } else {
+        throw new NotFoundException("Category not found");
+      }
+      return categoryMapper.categoryEntity2DTO(oldCategory);
+    }
+    
+    @Override
+    public CategoryDTO getCategoryById(String id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        assert category != null;
+        return categoryMapper.categoryEntity2DTO(category);
+    }
+
+    @Override
+    public void deleteCategory(String id) throws NotFoundException {
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isPresent()) {
+          categoryRepository.deleteById(id);
+        } else {
+          throw new NotFoundException("Category not found");
+        }		
+    }
 }

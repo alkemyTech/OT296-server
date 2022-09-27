@@ -1,5 +1,6 @@
 package com.alkemy.ong.security.controller;
 
+import com.alkemy.ong.dto.UserDTO;
 import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
@@ -15,7 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,11 @@ public class UserRestController {
     private UserServiceImpl userServiceImpl;
     @Autowired
     private UserService userService;
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> meData(@CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+        return ResponseEntity.ok(userService.meData(authentication.getName()));
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginDTO loginDTO) throws Exception {

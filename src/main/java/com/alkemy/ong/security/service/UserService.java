@@ -1,5 +1,6 @@
 package com.alkemy.ong.security.service;
 
+import com.alkemy.ong.dto.UserDTO;
 import javassist.NotFoundException;
 
 import com.alkemy.ong.security.dto.RegisterDTO;
@@ -10,4 +11,7 @@ public interface UserService {
 
     RegisterDTO create (RegisterDTO user);
     void patchUser(String id, Map<Object, Object> objectMap) throws NotFoundException;
+
+    public UserDTO meData(String authorization);
+
 }
