@@ -10,8 +10,10 @@ import java.util.List;
 public interface CategoryService {
 
     CategoryDTO getCategoryById(String id);
-    
+
     List<CategoryBasicDTO> getCategory();
-    
+
     void deleteCategory(String id) throws NotFoundException;
+
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 }

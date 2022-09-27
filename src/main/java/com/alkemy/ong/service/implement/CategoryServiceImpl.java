@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         assert category != null;
         return categoryMapper.categoryEntity2DTO(category);
     }
-    
+
 	@Override
 	public void deleteCategory(String id) throws NotFoundException {
     	Optional<Category> category = categoryRepository.findById(id);
@@ -46,6 +46,13 @@ public class CategoryServiceImpl implements CategoryService {
     		categoryRepository.deleteById(id);
     	} else {
     		throw new NotFoundException("Category not found");
-    	}		
+    	}
 	}
+
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        Category category = categoryMapper.categoryDTO2Entity(categoryDTO);
+        Category categorySave = categoryRepository.save(category);
+        return categoryMapper.categoryEntity2DTO(categorySave);
+    }
 }
