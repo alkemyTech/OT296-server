@@ -12,7 +12,6 @@ import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
