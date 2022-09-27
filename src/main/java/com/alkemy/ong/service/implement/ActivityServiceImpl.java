@@ -23,4 +23,15 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activitySave = activityRepository.save(activity);
         return activityMapper.activityEntity2DTO(activitySave);
     }
+
+    @Override
+    public ActivityDTO updateActivity(ActivityDTO activityDTO,String id) {
+        Activity activity = activityRepository.findById(id).orElse(null);
+        assert activity != null;
+        activity.setName(activityDTO.getName());
+        activity.setContent(activityDTO.getContent());
+        activity.setImage(activityDTO.getImage());
+        Activity activitySave = activityRepository.save(activity);
+        return activityMapper.activityEntity2DTO(activitySave);
+    }
 }
