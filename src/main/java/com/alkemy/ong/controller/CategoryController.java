@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/categories")
@@ -23,6 +27,7 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
 
     @GetMapping("{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
@@ -39,13 +44,6 @@ public class CategoryController {
         List<CategoryBasicDTO> categoryBasicDTOS = categoryService.getCategory();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryBasicDTOS);
     }
-        
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
-      try {
-        categoryService.deleteCategory(id);
-      } catch (NotFoundException e) {
-        return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO category, @PathVariable String id) {
@@ -55,5 +53,21 @@ public class CategoryController {
         return new ResponseEntity<CategoryDTO>(HttpStatus.NOT_FOUND);
       }
       return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
+		try {
+			categoryService.deleteCategory(id);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
+    @PostMapping
+    public ResponseEntity<CategoryDTO> Create (@Valid @RequestBody CategoryDTO category) {
+        categoryService.createCategory(category);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -77,4 +77,11 @@ public class CategoryServiceImpl implements CategoryService {
           throw new NotFoundException("Category not found");
         }		
     }
+
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        Category category = categoryMapper.categoryDTO2Entity(categoryDTO);
+        Category categorySave = categoryRepository.save(category);
+        return categoryMapper.categoryEntity2DTO(categorySave);
+    }
 }
