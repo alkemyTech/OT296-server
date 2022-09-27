@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.implement;
 
+import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryBasicDTO;
 import com.alkemy.ong.entity.Category;
 import com.alkemy.ong.mapper.CategoryMapper;
@@ -25,5 +26,12 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryBasicDTO> categoryBasicDTOS = categoryMapper.categoryEntityList2DTO(categories);
         return categoryBasicDTOS;
+    }
+
+    @Override
+    public CategoryDTO getCategoryById(String id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        assert category != null;
+        return categoryMapper.categoryEntity2DTO(category);
     }
 }
