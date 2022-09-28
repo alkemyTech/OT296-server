@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface SlidesRepository extends JpaRepository<Slides, String> {
+    boolean existsById(String id);
 }

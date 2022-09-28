@@ -3,7 +3,9 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesDTOPublic;
 import com.alkemy.ong.service.SlidesService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +27,13 @@ public class SlidesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SlidesDTO> getSlide (@PathVariable String id) {
-        return ResponseEntity.ok(slidesService.getSlideDTO(id));
+    public ResponseEntity<Object> getSlide (@PathVariable String id) {
+        try {
+            slidesService.getSlideDTO(id);
+        } catch (NotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

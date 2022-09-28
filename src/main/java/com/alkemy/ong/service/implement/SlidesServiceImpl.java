@@ -6,6 +6,7 @@ import com.alkemy.ong.entity.Slides;
 import com.alkemy.ong.mapper.SlidesMapper;
 import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.SlidesService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,12 @@ public class SlidesServiceImpl implements SlidesService {
     }
 
     @Override
-    public SlidesDTO getSlideDTO(String id) {
+    public SlidesDTO getSlideDTO(String id) throws NotFoundException {
+        if (!slidesRepository.existsById(id)) {
+            throw new NotFoundException("Slide not found");
+        }
         Slides entity = slidesRepository.findById(id).orElse(null);
+        assert entity != null;
         return slidesMapper.SlidesEntity2DTO(entity);
     }
 }
