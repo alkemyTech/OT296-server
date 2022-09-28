@@ -1,4 +1,4 @@
-package com.alkemy.ong.aws.vm;
+package com.alkemy.ong.awsS3.vm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

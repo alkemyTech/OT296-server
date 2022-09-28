@@ -1,6 +1,6 @@
-package com.alkemy.ong.aws.service;
+package com.alkemy.ong.awsS3.service;
 
-import com.alkemy.ong.aws.vm.Asset;
+import com.alkemy.ong.awsS3.vm.Asset;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
@@ -19,7 +19,6 @@ import java.util.Date;
 
 @Service
 public class AmazonClient {
-
     private AmazonS3 s3client;
 
     @Value("${region}")
@@ -68,7 +67,6 @@ public class AmazonClient {
         }
         return fileUrl;
     }
-
     //Method to be call from Controller
     public Asset getObject(String file){
         S3Object s3Object= s3client.getObject(bucketName, file);
@@ -81,5 +79,4 @@ public class AmazonClient {
             throw new RuntimeException(ex);
         }
     }
-
 }

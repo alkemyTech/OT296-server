@@ -1,8 +1,7 @@
-package com.alkemy.ong.aws.controller;
+package com.alkemy.ong.awsS3.controller;
 
-import com.alkemy.ong.aws.repository.ImageRepository;
-import com.alkemy.ong.aws.service.AmazonClient;
-import com.alkemy.ong.aws.vm.Asset;
+import com.alkemy.ong.awsS3.service.AmazonClient;
+import com.alkemy.ong.awsS3.vm.Asset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/storage")
 public class BucketController {
     private AmazonClient amazonClient;
-
-    @Autowired
-    private ImageRepository imageRepository;
-
     @Autowired
     BucketController(AmazonClient amazonClient) {
         this.amazonClient = amazonClient;
@@ -26,7 +21,6 @@ public class BucketController {
     public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
         return this.amazonClient.uploadFile(file);
     }
-
     @GetMapping(value = "/download", params = "file")
     ResponseEntity<ByteArrayResource> getImage(@RequestParam String file){
         Asset asset= amazonClient.getObject(file);
