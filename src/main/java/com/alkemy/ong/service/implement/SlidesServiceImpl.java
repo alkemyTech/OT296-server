@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.implement;
 
+import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesDTOPublic;
 import com.alkemy.ong.entity.Slides;
 import com.alkemy.ong.mapper.SlidesMapper;
@@ -21,5 +22,11 @@ public class SlidesServiceImpl implements SlidesService {
     public List<SlidesDTOPublic> getSlidesDTO() {
         List<Slides> entities = slidesRepository.findAll();
         return slidesMapper.slidesEntityList2DTO(entities);
+    }
+
+    @Override
+    public SlidesDTO getSlideDTO(String id) {
+        Slides entity = slidesRepository.findById(id).orElse(null);
+        return slidesMapper.SlidesEntity2DTO(entity);
     }
 }

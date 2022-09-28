@@ -1,10 +1,12 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesDTOPublic;
 import com.alkemy.ong.service.SlidesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,11 @@ public class SlidesController {
     @GetMapping()
     public ResponseEntity<List<SlidesDTOPublic>> getSlides () {
         return ResponseEntity.ok(slidesService.getSlidesDTO());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SlidesDTO> getSlide (@PathVariable String id) {
+        return ResponseEntity.ok(slidesService.getSlideDTO(id));
     }
 
 }
