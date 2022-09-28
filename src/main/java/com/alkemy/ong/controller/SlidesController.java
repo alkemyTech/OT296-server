@@ -43,4 +43,14 @@ public class SlidesController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteSlide (@PathVariable String id) {
+        try {
+            slidesService.deleteSlide(id);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

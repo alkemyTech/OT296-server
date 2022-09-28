@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "slides")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE categories SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE slides SET deleted = true WHERE id=?")
 @Where(clause = "deleted = false")
 public class Slides {
     @Id

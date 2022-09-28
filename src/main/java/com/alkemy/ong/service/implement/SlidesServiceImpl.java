@@ -49,5 +49,14 @@ public class SlidesServiceImpl implements SlidesService {
         return slidesMapper.SlidesEntity2DTO(slidesSave);
     }
 
+    @Override
+    public void deleteSlide(String id) throws NotFoundException {
+        Slides slides = slidesRepository.findById(id).orElse(null);
+        if(slides == null) {
+            throw new NotFoundException("Slide not found");
+        }
+        slidesRepository.deleteById(id);
+    }
+
 
 }
