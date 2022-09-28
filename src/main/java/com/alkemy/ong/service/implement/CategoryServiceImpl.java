@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
     
     @Override
-    CategoryDTO updateCategory(@RequestBody CategoryDTO dto, @PathVariable String id) throws NotFoundException{
+    public CategoryDTO updateCategory(@RequestBody CategoryDTO dto, @PathVariable String id) throws NotFoundException{
       Optional<Category> category = categoryRepository.findById(id);
       Category categoryUpdated = categoryMapper.categoryDTO2Entity(dto);
       Category oldCategory = new Category();
