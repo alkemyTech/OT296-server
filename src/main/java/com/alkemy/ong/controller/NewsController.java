@@ -26,6 +26,16 @@ public class NewsController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
+	@PutMapping("/{id}")
+	public ResponseEntity<NewsDTO> updateNews(@RequestBody NewsDTO newsDTO, @PathVariable String id) {
+		try {
+			NewsDTO newsDTOUpdated = newsService.updateNews(newsDTO, id);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(newsDTOUpdated);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
 	@GetMapping("{id}")
 	public ResponseEntity<NewsDTO> getNewsById(@PathVariable String id) {
 		try {
