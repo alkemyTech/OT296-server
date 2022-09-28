@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class UserMapper {
     @Autowired
@@ -30,5 +33,13 @@ public class UserMapper {
         registerDTO.setEmail(users.getEmail());
         registerDTO.setPassword(password);
         return registerDTO;
+    }
+
+    public List<RegisterDTO> userEntityList2DTOList(List<Users> users){
+        List<RegisterDTO> registersDTO = new ArrayList<RegisterDTO>();
+        for(Users user : users){
+            registersDTO.add(this.userEntity2DTO(user));
+        }
+        return registersDTO;
     }
 }

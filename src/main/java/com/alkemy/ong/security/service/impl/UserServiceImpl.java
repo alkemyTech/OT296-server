@@ -6,7 +6,9 @@ import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.RegisterDTO;
+import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.mapper.UserMapper;
+import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.service.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +31,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private UsersRepository usersRepository;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserWithoutPassMapper userWithoutPassMapper;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -99,5 +105,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .timestamps(user.get().getTimestamps())
                 .role(user.get().getRole())
                 .build();
+    }
+
+    // Get all users without password
+    public List<UserWithoutPassDTO> findAllUsers(){
+        List<Users> usersEntities = usersRepository.findAll();
+        List<UserWithoutPassDTO> usersDTO = userWithoutPassMapper.userWPEntityList2DTOList(usersEntities);
+        return usersDTO;
     }
 }
