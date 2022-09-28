@@ -13,7 +13,6 @@ public class NewsMapper {
 		news.setContent(newsDTO.getContent());
 		news.setImage(newsDTO.getImage());
 		news.setName(newsDTO.getName());
-		news.setUpdateDateTime(newsDTO.getUpdateDateTime());
 		return news;
 	}
 	
@@ -22,7 +21,6 @@ public class NewsMapper {
 		newsDTO.setContent(news.getContent());
 		newsDTO.setImage(news.getImage());
 		newsDTO.setName(news.getName());
-		newsDTO.setUpdateDateTime(news.getUpdateDateTime());
 		return newsDTO; 
 	}
 
