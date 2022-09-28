@@ -23,6 +23,5 @@ public class NewsDTO {
     @NotNull
     @NotBlank
     private String image;
-    private LocalDateTime updateDateTime;
 
 }

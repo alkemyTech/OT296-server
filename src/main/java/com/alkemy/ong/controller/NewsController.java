@@ -11,6 +11,8 @@ import com.alkemy.ong.service.NewsService;
 
 import javassist.NotFoundException;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/news")
 public class NewsController {
@@ -18,13 +20,19 @@ public class NewsController {
 	@Autowired
 	private NewsService newsService;
 
+	@PostMapping()
+	public ResponseEntity<NewsDTO> createNews(@Valid @RequestBody NewsDTO newsDTO) {
+		newsService.createNews(newsDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
 	@GetMapping("{id}")
 	public ResponseEntity<NewsDTO> getNewsById(@PathVariable String id) {
 		try {
 			NewsDTO newsDTO = newsService.getNewsById(id);
 			return ResponseEntity.status(HttpStatus.FOUND).body(newsDTO);
 		} catch (Exception e) {
-			return new ResponseEntity("Organization not found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity("News not found", HttpStatus.NOT_FOUND);
 		}
 	}
 	

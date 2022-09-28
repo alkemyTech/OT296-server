@@ -20,6 +20,12 @@ public class NewsServiceImpl implements NewsService{
 	private NewsMapper newsMapper;
 
 	@Override
+	public void createNews(NewsDTO newsDTO) {
+		News newsEntity = newsMapper.newsDTO2Entity(newsDTO);
+		newsRepository.save(newsEntity);
+	}
+
+	@Override
 	public NewsDTO getNewsById(String id) {
 		News news = newsRepository.findById(id).orElse(null);
 		assert news != null;
