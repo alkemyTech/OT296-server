@@ -34,4 +34,20 @@ public class SlidesServiceImpl implements SlidesService {
         assert entity != null;
         return slidesMapper.SlidesEntity2DTO(entity);
     }
+
+    @Override
+    public SlidesDTO updateSlide(String id, SlidesDTO slideDTO) throws NotFoundException {
+        Slides slides = slidesRepository.findById(id).orElse(null);
+        if(slides == null){
+            throw new NotFoundException("Slide not found");
+        }
+        slides.setImageURL(slideDTO.getImageURL());
+        slides.setText(slideDTO.getText());
+        slides.setOrder(slideDTO.getOrder());
+        slides.setOrganizationID(slideDTO.getOrganizationID());
+        Slides slidesSave = slidesRepository.save(slides);
+        return slidesMapper.SlidesEntity2DTO(slidesSave);
+    }
+
+
 }
