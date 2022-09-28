@@ -1,16 +1,10 @@
 package com.alkemy.ong.controller;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.service.NewsService;
@@ -23,6 +17,16 @@ public class NewsController {
 	
 	@Autowired
 	private NewsService newsService;
+
+	@GetMapping("{id}")
+	public ResponseEntity<NewsDTO> getNewsById(@PathVariable String id) {
+		try {
+			NewsDTO newsDTO = newsService.getNewsById(id);
+			return ResponseEntity.status(HttpStatus.FOUND).body(newsDTO);
+		} catch (Exception e) {
+			return new ResponseEntity("Organization not found", HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteNews(@PathVariable String id) {
