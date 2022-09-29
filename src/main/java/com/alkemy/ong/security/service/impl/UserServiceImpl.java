@@ -8,10 +8,17 @@ import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.mapper.UserMapper;
+import com.alkemy.ong.security.mapper.UserWithJWTMapper;
 import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.service.UserService;
+import com.alkemy.ong.security.util.JwTUtil;
+
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -37,6 +44,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+    
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwTUtil jwTUtil;
+    
+    @Autowired
+    private UserWithJWTMapper userWithJWTMapper;
 
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
@@ -54,7 +70,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public RegisterDTO create(RegisterDTO user) {
-        Users newUsers = userMapper.userDTO2Entity(user);
+        Users newUsers = userWithJWTMapper.userDTO2Entity(user);
         if (user.getEmail().contains("admin")) {
             Role roles = roleRepository.findByName("ROLE_ADMIN").get();
             newUsers.setRole(roles);
@@ -63,7 +79,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             newUsers.setRole(roles);
         }
         Users usersSave = usersRepository.save(newUsers);
-        RegisterDTO registerDTO = userMapper.userEntity2DTO(usersSave);
+        Authentication auth;
+        try {
+        	auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+
+        } catch (BadCredentialsException e) {
+        	throw e;
+        }
+        final String jwt = jwTUtil.generateToken(auth);
+        RegisterDTO registerDTO = userWithJWTMapper.userEntity2DTO(usersSave, jwt);
         return registerDTO;
     }
 
