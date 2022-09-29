@@ -32,4 +32,15 @@ public class MembersMapper {
 
         return membersDTOList;
     }
+    public Members membersDto2Entity(MembersDTO membersDTO){
+        Members members= new Members();
+        membersDTO.setName(members.getName());
+        membersDTO.setFacebookUrl(members.getFacebookUrl());
+        membersDTO.setInstagramUrl(members.getInstagramUrl());
+        membersDTO.setLinkedinUrl(members.getLinkedinUrl());
+        membersDTO.setImage(members.getImage());
+        membersDTO.setDescription(members.getDescription());
+        membersDTO.setTimestamps(members.getTimestamps());
+        return members;
+    }
 }
