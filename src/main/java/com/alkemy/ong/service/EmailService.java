@@ -6,6 +6,6 @@ public interface EmailService {
 	
 	void sendWelcomeEmailTo(RegisterDTO user);
 	
-	void sendEmailTo(String to);
+	void sendEmailTo(String to, String message);
 
 }
