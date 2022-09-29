@@ -27,4 +27,6 @@ public class RegisterDTO {
     @NotNull
     @NotBlank
     private String password;
+    
+    private String jwt;
 }
