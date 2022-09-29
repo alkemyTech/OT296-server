@@ -33,6 +33,17 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
+	public NewsDTO updateNews(NewsDTO newsDTO, String id) {
+		News newsEntity = newsRepository.findById(id).orElse(null);
+		assert newsEntity != null;
+		newsEntity.setName(newsDTO.getName());
+		newsEntity.setImage(newsDTO.getImage());
+		newsEntity.setContent(newsDTO.getContent());
+		News newsEntitySaved = newsRepository.save(newsEntity);
+		return newsMapper.newsEntity2DTO(newsEntitySaved);
+	}
+
+	@Override
 	public void deleteNews(String id) throws NotFoundException {
     	Optional<News> news = newsRepository.findById(id);
     	if (news.isPresent()) {

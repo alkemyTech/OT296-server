@@ -11,6 +11,8 @@ public interface NewsService {
 
 	public NewsDTO getNewsById(String id);
 
+	public NewsDTO updateNews(NewsDTO newsDTO, String id);
+
 	public void deleteNews(String id) throws NotFoundException;
 
 }
