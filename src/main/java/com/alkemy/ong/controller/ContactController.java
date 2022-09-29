@@ -25,7 +25,7 @@ public class ContactController {
     public ResponseEntity<Object> createContact(@RequestBody @Valid ContactDTO dto) {
         try {
             contactService.addContact(dto);
-            emailService.sendEmailTo(dto.getEmail());
+            emailService.sendEmailTo(dto.getEmail(), "Muchas gracias por contactarte con nosotros, en breve nos volveremos a comunicar contigo.");
 
         }catch (Exception e) {
             return new ResponseEntity<>("Contact already exist", HttpStatus.FORBIDDEN);
