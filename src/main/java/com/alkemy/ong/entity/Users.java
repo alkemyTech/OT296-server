@@ -37,7 +37,7 @@ public class Users {
     private boolean softDelete = Boolean.FALSE;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", updatable = false)
     private Role role;
 
