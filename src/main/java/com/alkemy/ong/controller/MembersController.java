@@ -22,12 +22,21 @@ public class MembersController {
         List<MembersDTO> membersDTOS = membersService.getAllMembers();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteMembers(@PathVariable String id){
+        try {
+            membersService.deleteMembers(id);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateMembers(@PathVariable String id, @RequestBody MembersDTO membersDTO){
+    public ResponseEntity<Object> updateMembers(@PathVariable String id, @RequestBody MembersDTO membersDTO) {
         try {
             membersService.updateMembers(id, membersDTO);
-        }catch (
-                NotFoundException e){
+        } catch (
+                NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();

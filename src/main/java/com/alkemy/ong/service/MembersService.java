@@ -9,4 +9,5 @@ public interface MembersService {
 
     List<MembersDTO> getAllMembers();
     MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException;
+    void deleteMembers(String id) throws NotFoundException;
 }

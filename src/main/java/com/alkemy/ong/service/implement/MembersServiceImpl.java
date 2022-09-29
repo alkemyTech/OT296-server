@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MembersServiceImpl implements MembersService {
@@ -26,6 +27,15 @@ public class MembersServiceImpl implements MembersService {
         List<MembersDTO> membersDTOS = membersMapper.membersEntityList2DTO(members);
 
         return  membersDTOS;
+    }
+
+    @Override
+    public void deleteMembers(String id) throws NotFoundException {
+        Members members= membersRepository.findById(id).orElse(null);
+        if (members == null){
+            throw new NotFoundException("Members not found");
+        }
+        membersRepository.deleteById(id);
     }
     @Override
     public MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException {
