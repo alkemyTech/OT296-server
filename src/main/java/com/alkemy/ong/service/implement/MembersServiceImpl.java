@@ -5,10 +5,12 @@ import com.alkemy.ong.entity.Members;
 import com.alkemy.ong.mapper.MembersMapper;
 import com.alkemy.ong.repository.MembersRepository;
 import com.alkemy.ong.service.MembersService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MembersServiceImpl implements MembersService {
@@ -25,5 +27,14 @@ public class MembersServiceImpl implements MembersService {
         List<MembersDTO> membersDTOS = membersMapper.membersEntityList2DTO(members);
 
         return  membersDTOS;
+    }
+
+    @Override
+    public void deleteMembers(String id) throws NotFoundException {
+        Members members= membersRepository.findById(id).orElse(null);
+        if (members == null){
+            throw new NotFoundException("Members not found");
+        }
+        membersRepository.deleteById(id);
     }
 }
