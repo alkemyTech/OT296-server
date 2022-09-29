@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public RegisterDTO create(RegisterDTO user) {
-        Users newUsers = userMapper.userDTO2Entity(user);
+        Users newUsers = userWithJWTMapper.userDTO2Entity(user);
         if (user.getEmail().contains("admin")) {
             Role roles = roleRepository.findByName("ROLE_ADMIN").get();
             newUsers.setRole(roles);
