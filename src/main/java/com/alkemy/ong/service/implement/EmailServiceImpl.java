@@ -67,7 +67,7 @@ public class EmailServiceImpl implements EmailService {
 		Email from = new Email(System.getenv("EMAIL_SENDER"));
 		String subject = "Contacto ONG - Somos Mas";
 		Email to = new Email(toArg);
-		Content content = new Content("text/plain", "Estamos felices de contactarnos. En breve alguien del equipo se comunicara contigo");
+		Content content = new Content("text/plain", "Estamos agradecidos de que nos haya contactado. En breve alguien del equipo se comunicara contigo");
 		Mail mail = new Mail(from, subject, to, content);
 
 		SendGrid sg = new SendGrid(System.getenv("EMAIL_API_KEY"));
