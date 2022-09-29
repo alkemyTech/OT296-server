@@ -8,6 +8,8 @@ import com.alkemy.ong.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContactServiceImpl implements ContactService {
     @Autowired
@@ -27,6 +29,13 @@ public class ContactServiceImpl implements ContactService {
         }
         Contact entity = contactMapper.contactDTO2Entity(dto);
         contactRepository.save(entity);
+    }
+
+    @Override
+    public List<ContactDTO> getAllContacts(){
+        List<Contact> contactEntities = contactRepository.findAll();
+        List<ContactDTO> contactDTOS = contactMapper.contactEntityList2DTOList(contactEntities);
+        return contactDTOS;
     }
 
 }

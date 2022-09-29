@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/contact")
@@ -24,6 +25,12 @@ public class ContactController {
             return new ResponseEntity<>("Contact already exist", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/contacts")
+    public ResponseEntity<List<ContactDTO>> getAllContacts(){
+        List<ContactDTO> contacts = contactService.getAllContacts();
+        return ResponseEntity.ok(contacts);
     }
 
 }
