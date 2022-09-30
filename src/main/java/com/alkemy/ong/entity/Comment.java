@@ -23,6 +23,10 @@ public class Comment {
 
     private String body;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", updatable = false)
+    private Users user;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "news_id", updatable = false)
     private News news;
