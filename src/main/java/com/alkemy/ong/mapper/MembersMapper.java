@@ -14,13 +14,13 @@ public class MembersMapper {
     public MembersDTO menbersEntity2DTO(Members members) {
 
         MembersDTO membersDTO = new MembersDTO();
-        members.setName(membersDTO.getName());
-        members.setFacebookUrl(membersDTO.getFacebookUrl());
-        members.setInstagramUrl(membersDTO.getInstagramUrl());
-        members.setLinkedinUrl(membersDTO.getLinkedinUrl());
-        members.setImage(membersDTO.getImage());
-        members.setDescription(membersDTO.getDescription());
-        members.setTimestamps(membersDTO.getTimestamps());
+        membersDTO.setName(members.getName());
+        membersDTO.setFacebookUrl(members.getFacebookUrl());
+        membersDTO.setInstagramUrl(members.getInstagramUrl());
+        membersDTO.setLinkedinUrl(members.getLinkedinUrl());
+        membersDTO.setImage(members.getImage());
+        membersDTO.setDescription(members.getDescription());
+        membersDTO.setTimestamps(members.getTimestamps());
 
         return membersDTO;
     }
@@ -45,7 +45,7 @@ public class MembersMapper {
         return members;
     }
 
-    public Members menbersEntity2DTO2(MembersDTO2 membersDTO2) {
+    public Members membersEntity2DTO2(MembersDTO2 membersDTO2) {
 
         Members members = new Members();
         members.setName(membersDTO2.getName());

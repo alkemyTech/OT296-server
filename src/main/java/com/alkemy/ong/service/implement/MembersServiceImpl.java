@@ -52,10 +52,10 @@ public class MembersServiceImpl implements MembersService {
         Members saveMembers=membersRepository.save(members);
         return membersMapper.menbersEntity2DTO(saveMembers);
     }
-
+    
     @Override
     public MembersDTO2 createMembers(MembersDTO2 membersDTO2) {
-        Members members = membersMapper.menbersEntity2DTO2(membersDTO2);
+        Members members = membersMapper.membersEntity2DTO2(membersDTO2);
         Members membersSave = membersRepository.save(members);
 
         return membersMapper.membersDTO2Entity(membersSave);
