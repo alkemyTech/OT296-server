@@ -37,4 +37,19 @@ public class MembersServiceImpl implements MembersService {
         }
         membersRepository.deleteById(id);
     }
+    @Override
+    public MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException {
+        Members members= membersRepository.findById(id).orElse(null);
+        if (members == null){
+            throw new NotFoundException("Members not found");
+        }
+        members.setFacebookUrl(membersDTO.getFacebookUrl());
+        members.setInstagramUrl(membersDTO.getInstagramUrl());
+        members.setLinkedinUrl(membersDTO.getLinkedinUrl());
+        members.setImage(membersDTO.getImage());
+        members.setDescription(membersDTO.getDescription());
+        members.setTimestamps(membersDTO.getTimestamps());
+        Members saveMembers=membersRepository.save(members);
+        return membersMapper.menbersEntity2DTO(saveMembers);
+    }
 }
