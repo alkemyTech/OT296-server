@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.MembersDTO;
+import com.alkemy.ong.dto.MembersDTO2;
 import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,13 @@ public class MembersController {
         List<MembersDTO> membersDTOS = membersService.getAllMembers();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
     }
+
+    @PostMapping
+    public ResponseEntity<MembersDTO> createMembers(@Valid @RequestBody MembersDTO2 membersDTO2) throws Exception {
+        membersService.createMembers(membersDTO2);
+        return new ResponseEntity("Create members", HttpStatus.CREATED);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteMembers(@PathVariable String id){
         try {
@@ -31,6 +40,7 @@ public class MembersController {
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateMembers(@PathVariable String id, @RequestBody MembersDTO membersDTO) {
         try {

@@ -34,7 +34,7 @@ public class Members {
     @Nullable
     private String linkedinUrl;
 
-    @Column(nullable = false)
+    @Column
     private String image;
 
     @Nullable
