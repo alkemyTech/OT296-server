@@ -29,7 +29,7 @@ public class TestimonialController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@PutMapping("{/id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<TestimonialDTO> update(@PathVariable String id, @RequestBody TestimonialDTO dto) {
 		try{
 			TestimonialDTO testimonialDTO = testimonialService.updateTestimonial(dto, id);
