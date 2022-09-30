@@ -31,7 +31,7 @@ public class MembersController {
         return new ResponseEntity("Create members", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMembers(@PathVariable String id){
         try {
             membersService.deleteMembers(id);

@@ -23,7 +23,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
         try {
             CategoryDTO categoryDTO = categoryService.getCategoryById(id);
