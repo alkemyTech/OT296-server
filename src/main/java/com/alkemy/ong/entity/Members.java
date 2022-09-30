@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE users SET soft_delete = true WHERE id=?")
+@SQLDelete(sql = "UPDATE members SET soft_delete = true WHERE id=?")
 @Where(clause = "soft_delete=false")
 public class Members {
 
