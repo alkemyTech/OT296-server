@@ -34,6 +34,9 @@ public class OrganizationMapper {
         dto.setAddress(organization.getAddress());
         dto.setPhone(organization.getPhone());
         dto.setEmail(organization.getEmail());
+        dto.setUrlFacebook(organization.getUrlFacebook());
+        dto.setUrlLinkedin(organization.getUrlLinkedin());
+        dto.setUrlInstagram(organization.getUrlInstagram());
         dto.setWelcomeText(organization.getWelcomeText());
         dto.setAboutUsText(organization.getAboutUsText());
         dto.setTimestamps(organization.getTimestamps());
@@ -46,6 +49,9 @@ public class OrganizationMapper {
         organization.setAddress(organizationDTO.getAddress());
         organization.setPhone(organizationDTO.getPhone());
         organization.setEmail(organizationDTO.getEmail());
+        organization.setUrlFacebook(organizationDTO.getUrlFacebook());
+        organization.setUrlLinkedin(organizationDTO.getUrlLinkedin());
+        organization.setUrlInstagram(organizationDTO.getUrlInstagram());
         organization.setWelcomeText(organizationDTO.getWelcomeText());
         organization.setAboutUsText(organizationDTO.getAboutUsText());
         organization.setTimestamps(organizationDTO.getTimestamps());

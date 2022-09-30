@@ -30,6 +30,12 @@ public class Organization {
     private Integer phone;
     @Column(nullable = false)
     private String email;
+    @Column(name = "url_facebook")
+    private String urlFacebook;
+    @Column(name = "url_linkedin")
+    private String urlLinkedin;
+    @Column(name = "url_instagram")
+    private String urlInstagram;
     private String welcomeText;
     private String aboutUsText;
     private LocalDateTime timestamps;
