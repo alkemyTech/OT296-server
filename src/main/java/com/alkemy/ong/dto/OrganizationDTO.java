@@ -17,6 +17,9 @@ public class OrganizationDTO {
     private String address;
     private Integer phone;
     private String email;
+    private String urlFacebook;
+    private String urlLinkedin;
+    private String urlInstagram;
     private String welcomeText;
     private String aboutUsText;
     private LocalDateTime timestamps;
