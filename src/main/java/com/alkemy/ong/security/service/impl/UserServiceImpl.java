@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -53,6 +54,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     
     @Autowired
     private UserWithJWTMapper userWithJWTMapper;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
@@ -106,6 +110,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if(user.isPresent()){
             Users replace = user.get();
             objectMap.forEach((key, value) -> {
+                if(key == "password"){
+                    value = encoder.encode((String) value);
+                }
                 Field field = ReflectionUtils.findField(Users.class, (String) key);
                 field.setAccessible(true);
                 ReflectionUtils.setField(field, replace, value);
