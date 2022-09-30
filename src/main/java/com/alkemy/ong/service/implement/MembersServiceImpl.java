@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.implement;
 
 import com.alkemy.ong.dto.MembersDTO;
+import com.alkemy.ong.dto.MembersDTO2;
 import com.alkemy.ong.entity.Members;
 import com.alkemy.ong.mapper.MembersMapper;
 import com.alkemy.ong.repository.MembersRepository;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MembersServiceImpl implements MembersService {
@@ -51,5 +51,13 @@ public class MembersServiceImpl implements MembersService {
         members.setTimestamps(membersDTO.getTimestamps());
         Members saveMembers=membersRepository.save(members);
         return membersMapper.menbersEntity2DTO(saveMembers);
+    }
+
+    @Override
+    public MembersDTO2 createMembers(MembersDTO2 membersDTO2) {
+        Members members = membersMapper.menbersEntity2DTO2(membersDTO2);
+        Members membersSave = membersRepository.save(members);
+
+        return membersMapper.membersDTO2Entity(membersSave);
     }
 }

@@ -1,6 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.MembersDTO;
+import com.alkemy.ong.dto.MembersDTO2;
 import com.alkemy.ong.entity.Members;
 import org.springframework.stereotype.Component;
 
@@ -42,5 +43,21 @@ public class MembersMapper {
         members.setDescription(membersDTO.getDescription());
         members.setTimestamps(membersDTO.getTimestamps());
         return members;
+    }
+
+    public Members menbersEntity2DTO2(MembersDTO2 membersDTO2) {
+
+        Members members = new Members();
+        members.setName(membersDTO2.getName());
+
+        return members;
+    }
+
+    public MembersDTO2 membersDTO2Entity(Members members) {
+
+        MembersDTO2 membersDTO2 = new MembersDTO2();
+        membersDTO2.setName(members.getName());
+
+        return membersDTO2;
     }
 }
