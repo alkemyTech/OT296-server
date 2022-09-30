@@ -31,4 +31,14 @@ public class MembersController {
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateMembers(@PathVariable String id, @RequestBody MembersDTO membersDTO) {
+        try {
+            membersService.updateMembers(id, membersDTO);
+        } catch (
+                NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 }
