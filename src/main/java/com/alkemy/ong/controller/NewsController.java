@@ -36,7 +36,7 @@ public class NewsController {
 		}
 	}
 
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<NewsDTO> getNewsById(@PathVariable String id) {
 		try {
 			NewsDTO newsDTO = newsService.getNewsById(id);

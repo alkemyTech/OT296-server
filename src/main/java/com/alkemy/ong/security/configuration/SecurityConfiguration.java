@@ -33,30 +33,73 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
+    private static final String ROLE_ADMIN = "ADMIN";
+    private static final String ROLE_USER = "USER";
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/contact/contacts").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/auth/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/auth/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/organization/public").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/organization/public").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/organization/public").hasAnyRole("ADMIN" , "USER")
-                .antMatchers(HttpMethod.DELETE, "/news/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/members/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/members").permitAll()
-                .antMatchers("/testimonials/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/storage/uploadFile").permitAll()
-                .antMatchers("/storage/download").permitAll()
-                .antMatchers("/news/**").hasRole("ADMIN")
-                .antMatchers("/storage/**").hasRole("ADMIN")
-                .antMatchers("/categories/**").hasRole("ADMIN")
-                .antMatchers("/activities/**").hasRole("ADMIN")
-                .antMatchers("/Slides/**").hasRole("ADMIN")
-                .antMatchers("/auth/**").permitAll()
+
+                //Auth
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth/register").permitAll()
+                .antMatchers("/auth/me").permitAll()
+
+                //Storage
+                .antMatchers(HttpMethod.GET, "/storage/download").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/storage/uploadFile").hasRole(ROLE_ADMIN)
+
+                //Auth_Users
+                .antMatchers(HttpMethod.GET, "/auth/users").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.GET, "/auth/users/{id}").hasAnyRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/auth/users/{id}").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PATCH, "/auth/users/{id}").hasRole(ROLE_ADMIN)
+
+                //News
+                .antMatchers(HttpMethod.GET, "/news").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.GET, "/news/{id}").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.PUT, "/news/{id}").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/news/{id}").hasRole(ROLE_ADMIN)
+
+                //Categories
+                .antMatchers(HttpMethod.GET, "/categories/{id}").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.GET, "/categories").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/categories").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT, "/categories/{id}").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/categories/{id}").hasRole(ROLE_ADMIN)
+
+                //Testimonials
+                .antMatchers(HttpMethod.POST,"/testimonials").hasRole(ROLE_ADMIN)
+
+                //Contacts
+                .antMatchers(HttpMethod.GET, "/contacts/contacts").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/contacts").hasRole(ROLE_ADMIN)
+
+                //Activities
+                .antMatchers(HttpMethod.POST, "/activities").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT, "/activities/{id}").hasRole(ROLE_ADMIN)
+
+                //Slides
+                .antMatchers(HttpMethod.GET, "/Slides/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.GET, "/Slides/{id}").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/Slides").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT, "/Slides/{id}").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/Slides/{id}").hasRole(ROLE_ADMIN)
+
+                //Organization
+                .antMatchers(HttpMethod.GET, "/organization/public").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/organization/public").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT, "/organization/public").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/organization/public/{id}").hasRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PATCH, "/organization/{id}").hasRole(ROLE_ADMIN)
+
+                //Members
+                .antMatchers(HttpMethod.GET, "/members").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/members").hasAnyRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT, "/members/{id}").hasAnyRole(ROLE_ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/members/{id}").hasRole(ROLE_ADMIN)
+
                 .anyRequest()
                 .authenticated()
                 .and()

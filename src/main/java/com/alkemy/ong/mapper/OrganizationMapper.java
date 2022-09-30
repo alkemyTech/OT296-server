@@ -18,6 +18,9 @@ public class OrganizationMapper {
         dtoPublic.setImage(organization.getImage());
         dtoPublic.setPhone(organization.getPhone());
         dtoPublic.setAddress(organization.getAddress());
+        dtoPublic.setUrlFacebook(organization.getUrlFacebook());
+        dtoPublic.setUrlInstagram(organization.getUrlInstagram());
+        dtoPublic.setUrlLinkedin(organization.getUrlLinkedin());
         dtoPublic.setSlides(organization.getSlides().stream().map(slides -> new SlidesDTO(slides)).collect(Collectors.toList()));
         return dtoPublic;
     }
@@ -60,5 +63,4 @@ public class OrganizationMapper {
         organization.setTimestamps(organizationDTO.getTimestamps());
         return organization;
     }
-
 }
