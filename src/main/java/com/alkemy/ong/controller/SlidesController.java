@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,38 +20,47 @@ public class SlidesController {
     private SlidesService slidesService;
 
     @GetMapping()
-    public ResponseEntity<List<SlidesDTOPublic>> getSlides () {
+    public ResponseEntity<List<SlidesDTOPublic>> getSlides() {
         return ResponseEntity.ok(slidesService.getSlidesDTO());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getSlide (@PathVariable String id) {
+    public ResponseEntity<Object> getSlide(@PathVariable String id) {
         try {
             slidesService.getSlideDTO(id);
-        } catch (NotFoundException e){
+        } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateSlide (@PathVariable String id, @RequestBody SlidesDTO slideDTO){
+    public ResponseEntity<Object> updateSlide(@PathVariable String id, @RequestBody SlidesDTO slideDTO) {
         try {
             slidesService.updateSlide(id, slideDTO);
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteSlide (@PathVariable String id) {
+    public ResponseEntity<Object> deleteSlide(@PathVariable String id) {
         try {
             slidesService.deleteSlide(id);
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PostMapping
+    public ResponseEntity<Object> create(@RequestBody SlidesDTO slideDTO) {
+        try {
+            this.slidesService.createSlide(slideDTO);
+        } catch (NotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new ResponseEntity<>("Slide created", HttpStatus.OK);
+    }
 }

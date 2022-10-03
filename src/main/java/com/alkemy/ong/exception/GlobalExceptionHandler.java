@@ -1,5 +1,6 @@
 package com.alkemy.ong.exception;
 
+import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,4 +29,14 @@ public class GlobalExceptionHandler {
     public String handleMessageNotReadableException() {
         return  "JSON parse error: Unexpected character ('\":)";
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorInfo handleNotFoundException(HttpServletRequest request,
+                                                           HttpServletResponse response, Exception exception) {
+        return new ErrorInfo(request, exception);
+    }
+
+
 }
