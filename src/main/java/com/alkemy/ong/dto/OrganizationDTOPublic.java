@@ -3,6 +3,9 @@ package com.alkemy.ong.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,4 +18,7 @@ public class OrganizationDTOPublic {
     private String urlFacebook;
     private String urlLinkedin;
     private String urlInstagram;
+
+    private List<SlidesDTO> slides;
+
 }

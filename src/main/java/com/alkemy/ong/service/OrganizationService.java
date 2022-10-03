@@ -12,4 +12,5 @@ public interface OrganizationService {
     public OrganizationDTO create(OrganizationDTO dto);
     public void patchOrganization(String id, Map<Object, Object> objectMap) throws NotFoundException;
 
+    OrganizationDTOPublic getSlidesByIdOngOrder(String idOng) throws NotFoundException;
 }

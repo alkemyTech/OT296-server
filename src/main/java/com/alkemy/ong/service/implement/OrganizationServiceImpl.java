@@ -3,8 +3,11 @@ package com.alkemy.ong.service.implement;
 import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationDTOPublic;
 import com.alkemy.ong.entity.Organization;
+import com.alkemy.ong.entity.Slides;
 import com.alkemy.ong.mapper.OrganizationMapper;
+import com.alkemy.ong.mapper.SlidesMapper;
 import com.alkemy.ong.repository.OrganizationRepository;
+import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.OrganizationService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     private OrganizationRepository organizationRepository;
     @Autowired
     private OrganizationMapper organizationMapper;
+
+    @Autowired
+    private SlidesRepository slidesRepository;
+
 
     @Override
     public List<OrganizationDTOPublic> getOrganizationsDTO() {
@@ -50,5 +57,16 @@ public class OrganizationServiceImpl implements OrganizationService {
         }else {
             throw new NotFoundException("Organization not found");
         }
+    }
+
+    @Override
+    public OrganizationDTOPublic getSlidesByIdOngOrder(String idOng) throws NotFoundException {
+        Organization organization = organizationRepository.findById(idOng).orElse(null);
+        if(organization == null){
+            throw new NotFoundException("Organization not found");
+        }
+        List<Slides> slides = slidesRepository.findSlidesByIdOrg(idOng);
+        organization.setSlides(slides);
+        return organizationMapper.organizationEntity2DTO(organization);
     }
 }

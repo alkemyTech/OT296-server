@@ -1,5 +1,6 @@
 package com.alkemy.ong.mapper;
 
+import com.alkemy.ong.dto.OrganizationDTOPublic;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesDTOPublic;
 import com.alkemy.ong.entity.Slides;
@@ -34,5 +35,16 @@ public class SlidesMapper {
        dto.setOrganizationID(entity.getOrganizationID());
        return dto;
    }
+
+    /*public SlidesDTO Slides2DTO (Slides entity) {
+        SlidesDTO dto = new SlidesDTO();
+        OrganizationDTOPublic orgDTO = new OrganizationDTOPublic();
+        String idOrg = String.valueOf(entity.getOrganizationID());
+        dto.setImageURL(entity.getImageURL());
+        dto.setOrder(entity.getOrder());
+        dto.setText(entity.getText());
+        dto.setOrganizationID(entity.getOrganizationID());
+        return dto;
+    }*/
 
 }
