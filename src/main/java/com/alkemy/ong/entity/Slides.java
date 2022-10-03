@@ -28,8 +28,8 @@ public class Slides {
 
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "organization_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "organization_id",insertable = false, updatable = false)
     private Organization organization;
 
     @Column(name = "organization_id", nullable = false)

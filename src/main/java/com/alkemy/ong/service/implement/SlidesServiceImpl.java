@@ -10,7 +10,9 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SlidesServiceImpl implements SlidesService {
@@ -18,7 +20,6 @@ public class SlidesServiceImpl implements SlidesService {
     private SlidesRepository slidesRepository;
     @Autowired
     private SlidesMapper slidesMapper;
-
     @Override
     public List<SlidesDTOPublic> getSlidesDTO() {
         List<Slides> entities = slidesRepository.findAll();
@@ -57,6 +58,4 @@ public class SlidesServiceImpl implements SlidesService {
         }
         slidesRepository.deleteById(id);
     }
-
-
 }

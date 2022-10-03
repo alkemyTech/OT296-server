@@ -4,6 +4,9 @@ import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationDTOPublic;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.entity.Organization;
+import com.alkemy.ong.entity.Slides;
+import com.alkemy.ong.repository.SlidesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrganizationMapper {
+
     public OrganizationDTOPublic organizationEntity2DTO (Organization organization) {
         OrganizationDTOPublic dtoPublic = new OrganizationDTOPublic();
         dtoPublic.setName(organization.getName());
