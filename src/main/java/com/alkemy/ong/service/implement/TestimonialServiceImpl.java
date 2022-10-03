@@ -11,6 +11,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class TestimonialServiceImpl implements TestimonialService {
 
@@ -38,5 +39,13 @@ public class TestimonialServiceImpl implements TestimonialService {
 		testimonial.setName(testimonialDTO.getName());
 		Testimonial testimonialUpdated = testimonialRepository.save(testimonial);
 		return testimonialMapper.testimonialEntity2DTO(testimonialUpdated);
+	}
+
+	public void deleteTestimonial(String id) throws NotFoundException{
+		Testimonial testimonialEntity = testimonialRepository.findById(id).orElse(null);
+		if (testimonialEntity == null) {
+			throw new NotFoundException("Testimonial not found");
+		}
+		testimonialRepository.deleteById(id);
 	}
 }
