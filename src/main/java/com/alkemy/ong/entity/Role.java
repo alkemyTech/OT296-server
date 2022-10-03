@@ -1,9 +1,6 @@
 package com.alkemy.ong.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @Table(name = "roles")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
@@ -30,4 +28,11 @@ public class Role {
     @Column(name = "timestamps")
     @Temporal(TemporalType.DATE)
     private Date timestamps;
+    public Role(String name, String description) {
+        this.name=name;
+        this.description=description;
+    }
+    public Role get() {
+    return this;
+    }
 }
