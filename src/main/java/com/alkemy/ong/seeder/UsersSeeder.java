@@ -48,7 +48,7 @@ public class UsersSeeder implements CommandLineRunner {
         }
     }
     private void loadUserSeed(){
-        Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
+        Role roleAdmin = roleRepository.findByName("ROLE_ADMIN").get();
         usersRepository.save(buildUser("Caroline","Gomez","gocaroline@admin.com","OTLZQDLdddfx",roleAdmin));
         usersRepository.save(buildUser("Ezequiel","Ezealva","ezealva@admin.com","DSFDSFFguynf",roleAdmin));
         usersRepository.save(buildUser("Gabriel","Bosio","gabosio@admin.com","GHSFKGDadffa",roleAdmin));
@@ -60,7 +60,7 @@ public class UsersSeeder implements CommandLineRunner {
         usersRepository.save(buildUser("Lucia","Cora","luciacorona@admin.com","PIYFGYDhyosf",roleAdmin));
         usersRepository.save(buildUser("Brian","Nieto","brinieto@admin.com","WRTRYFAbncou",roleAdmin));
 
-        Role roleUser= roleRepository.findByName("ROLE_USER");
+        Role roleUser= roleRepository.findByName("ROLE_USER").get();
         usersRepository.save(buildUser("Misha","Fossord","mfossord9@gmail.com","3q3MgFh2Ps5", roleUser));
         usersRepository.save(buildUser("Charissa","MacGillreich","cmacgillreicha@gmail.com","7MOQwvVOHz2p", roleUser));
         usersRepository.save(buildUser("Yasmin","Lapsley","yjoicey8@gmail.com","r79Sfnpxxsx", roleUser));
