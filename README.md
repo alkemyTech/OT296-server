@@ -12,7 +12,6 @@
 |       roarma@admin.com        | Rosario    | Arma         | OYRODYDoyfgd  | default.jpg |  Admin |
 |   luciacorona@admin.com       | Lucia      | Cora         | PIYFGYDhyosf  | default.jpg |  Admin |
 |      brinieto@admin.com       | Brian      | Nieto        | WRTRYFAbncou  | default.jpg |  Admin |
-|      dextance6@wisc.edu       | Donni      | Extance      | wTahWubXxx    | default.jpg |  Admin |
 |     mfossord9@senate.gov      | Misha      | Fossord      | 3q3MgFh2Ps5   | default.jpg |   User |
 |   cmacgillreicha@sbwire.com   | Charissa   | MacGillreich | 7MOQwvVOHz2p  | default.jpg |   User |
 | yjoicey8@theglobeandmail.com  | Yasmin     | Lapsley      | r79Sfnpxxsx   | default.jpg |   User |
