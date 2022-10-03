@@ -8,4 +8,6 @@ public interface TestimonialService {
 
 	TestimonialDTO createTestimonial(TestimonialDTO testimonial);
 	TestimonialDTO updateTestimonial(TestimonialDTO dto, String id) throws NotFoundException;
+
+	public void deleteTestimonial(String id) throws NotFoundException;
 }
