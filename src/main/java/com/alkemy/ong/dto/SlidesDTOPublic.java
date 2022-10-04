@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class SlidesDTOPublic {
 
     private String imageURL;
-    private String order;
+    private Integer order;
 
 }

@@ -1,6 +1,5 @@
 package com.alkemy.ong.dto;
 
-import com.alkemy.ong.entity.Organization;
 import com.alkemy.ong.entity.Slides;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +12,7 @@ public class SlidesDTO {
 
     private String imageURL;
     private String text;
-    private String order;
+    private Integer order;
     private String organizationID;
 
     public SlidesDTO(Slides slides1) {
