@@ -4,7 +4,7 @@
 |:-----------------------------:|------------|--------------|---------------|-------------|-------:|
 |     gocaroline@admin.com      | Caroline   | Gomez        | OTLZQDLdddfx  | default.jpg |  Admin |
 |       ezealva@admin.com       | Ezequiel   | Ezealva      | DSFDSFFguynf  | default.jpg |  Admin |
-|       gabosio@admin.com       | Gabriel    | LBosio       | GHSFKGDadffa  | default.jpg |  Admin |
+|       gabosio@admin.com       | Gabriel    | Bosio        | GHSFKGDadffa  | default.jpg |  Admin |
 |    flaambroggio@admin.com     | Flavio     | Ambroggio    | DADFTJFFasdfa | default.jpg |  Admin |
 |     jotejerina@admin.com      | Joel       | Tejerina     | DSFDSFFguynf  | default.jpg |  Admin |
 |      femunevar@admin.com      | Felipe     | Munevar      | ADIDGDOadyjf  | default.jpg |  Admin |
