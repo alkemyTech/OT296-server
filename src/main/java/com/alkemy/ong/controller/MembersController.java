@@ -4,7 +4,10 @@ import com.alkemy.ong.dto.MembersDTO;
 import com.alkemy.ong.dto.MembersDTO2;
 import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +22,23 @@ public class MembersController {
     @Autowired
     private MembersService membersService;
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<MembersDTO>> getAllMembers() {
         List<MembersDTO> membersDTOS = membersService.getAllMembers();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
+    }*/
+
+    @PageableAsQueryParam
+    @GetMapping
+    public ResponseEntity<List<MembersDTO>> getAllMembers(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+        List<MembersDTO> membersDTOS = null;
+        try {
+            membersDTOS = membersService.getAllMembers(pageable);
+
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(membersDTOS);
+        }
+
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
     }
 
