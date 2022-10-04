@@ -1,16 +1,12 @@
 package com.alkemy.ong.controller;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
 import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.service.TestimonialService;
@@ -37,5 +33,16 @@ public class TestimonialController {
 		}catch (Exception e){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deleteTestimonial (@PathVariable String id){
+		try{
+			testimonialService.deleteTestimonial(id);
+		}
+		catch (NotFoundException e){
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

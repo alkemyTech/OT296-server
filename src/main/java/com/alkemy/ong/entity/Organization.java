@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,5 +41,8 @@ public class Organization {
     private String aboutUsText;
     private LocalDateTime timestamps;
     private boolean softDelete = Boolean.FALSE;
+
+    @OneToMany(mappedBy = "organization")
+    private List<Slides> slides;
 
 }

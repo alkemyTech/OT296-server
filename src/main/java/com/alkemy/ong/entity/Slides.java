@@ -7,7 +7,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "slides")
@@ -24,9 +23,13 @@ public class Slides {
     private String imageURL;
     private String text;
     @Column(name = "orders")
-    private String order;
+    private Integer order;
 
     private boolean deleted = Boolean.FALSE;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "organization_id",insertable = false, updatable = false)
+    private Organization organization;
 
     @Column(name = "organization_id", nullable = false)
     private String organizationID;
