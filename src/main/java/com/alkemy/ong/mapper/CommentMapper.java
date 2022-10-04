@@ -1,11 +1,14 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.CommentDTO;
+import com.alkemy.ong.dto.CommentDTOBody;
 import com.alkemy.ong.entity.Comment;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CommentMapper {
 
     public CommentDTO commentEntity2CommentDTO(Comment commentEntity){
@@ -24,11 +27,17 @@ public class CommentMapper {
         return commentEntity;
     }
 
-    public List<CommentDTO> commentsEntityList2DTOCommentsList(List<Comment> commentsEntityList) {
-        List<CommentDTO> commentDTOList = new ArrayList<CommentDTO>();
+    public List<CommentDTOBody> commentsEntityList2DTOCommentsList(List<Comment> commentsEntityList) {
+        List<CommentDTOBody> commentDTOList = new ArrayList<CommentDTOBody>();
         for(Comment comment : commentsEntityList){
-            commentDTOList.add(this.commentEntity2CommentDTO(comment));
+            commentDTOList.add(this.commentEntity2CommentDTOBody(comment));
         }
         return commentDTOList;
+    }
+
+    private CommentDTOBody commentEntity2CommentDTOBody(Comment comment) {
+        CommentDTOBody commentDTO = new CommentDTOBody();
+        commentDTO.setBody(comment.getBody());
+        return commentDTO;
     }
 }
