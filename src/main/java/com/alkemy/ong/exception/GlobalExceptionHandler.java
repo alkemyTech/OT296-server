@@ -38,5 +38,11 @@ public class GlobalExceptionHandler {
         return new ErrorInfo(request, exception);
     }
 
-
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorInfo handleIllegalArgumentException(HttpServletRequest request,
+                                             HttpServletResponse response, Exception exception) {
+        return new ErrorInfo(request, exception);
+    }
 }

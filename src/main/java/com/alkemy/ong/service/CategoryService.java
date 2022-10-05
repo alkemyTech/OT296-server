@@ -2,6 +2,7 @@ package com.alkemy.ong.service;
 
 import com.alkemy.ong.dto.CategoryDTO;
 
+import com.alkemy.ong.dto.PagesDTO;
 import javassist.NotFoundException;
 
 import com.alkemy.ong.dto.CategoryBasicDTO;
@@ -9,6 +10,8 @@ import com.alkemy.ong.dto.CategoryBasicDTO;
 import java.util.List;
 
 public interface CategoryService {
+
+    public PagesDTO<CategoryDTO> getAllForPages(int page);
 
     CategoryDTO getCategoryById(String id);
 
