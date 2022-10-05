@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "comments")
-@SQLDelete(sql = "UPDATE comments SET soft_delete = true WHERE id=?")
-@Where(clause = "soft_delete = false")
+@SQLDelete(sql = "UPDATE comments SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Comment {
 
     @Id
