@@ -31,7 +31,9 @@ public class MembersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Found members",
                     content = {@Content(mediaType = "application/json",
-                    schema = @Schema(implementation = MembersDTO.class))})
+                    schema = @Schema(implementation = MembersDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+            content = @Content)
     })
     @GetMapping
     public ResponseEntity<List<MembersDTO>> getAllMembers() {
@@ -43,7 +45,9 @@ public class MembersController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Return created status code",
                     content = {@Content(mediaType = "application/json",
-                    schema = @Schema(implementation = MembersDTO.class))}),
+                        schema = @Schema(implementation = MembersDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
             @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
                     content = @Content)
     })
@@ -57,11 +61,13 @@ public class MembersController {
     @Operation(summary = "DELETE members")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return ok status code",
-            content = @Content),
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
             @ApiResponse(responseCode = "404", description = "Members not found",
-            content = @Content),
+                    content = @Content),
             @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
-            content = @Content)
+                    content = @Content)
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMembers(@PathVariable @Parameter(description = "Id of Member to delete", required = true) String id){
@@ -76,12 +82,14 @@ public class MembersController {
     @Operation(summary = "UPDATE members")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Update members",
-            content = {@Content(mediaType = "application/json",
-            schema = @Schema(implementation = MembersDTO.class))}),
+                    content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = MembersDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
             @ApiResponse(responseCode = "404", description = "Members not found",
-            content = @Content),
+                    content = @Content),
             @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
-            content = @Content)
+                    content = @Content)
     })
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateMembers(@Parameter(description = "Id of Member to update", required = true) @PathVariable String id,
