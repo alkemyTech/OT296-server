@@ -3,6 +3,7 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.dto.MembersDTO;
 import com.alkemy.ong.dto.MembersDTO2;
 import com.alkemy.ong.entity.Members;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -59,5 +60,14 @@ public class MembersMapper {
         membersDTO2.setName(members.getName());
 
         return membersDTO2;
+    }
+
+    // ---------- Entity Page to DTO LIST ------------
+    public List<MembersDTO> membersEntityPageDTOList(Page<Members> members){
+        List<MembersDTO> membersDTO = new ArrayList<>();
+        for(Members member : members){
+            membersDTO.add(this.menbersEntity2DTO(member));
+        }
+        return membersDTO;
     }
 }
