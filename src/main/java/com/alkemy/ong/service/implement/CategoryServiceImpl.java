@@ -2,6 +2,7 @@ package com.alkemy.ong.service.implement;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryBasicDTO;
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.entity.Category;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.repository.CategoryRepository;
@@ -10,6 +11,10 @@ import com.alkemy.ong.service.CategoryService;
 import javassist.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -83,5 +88,23 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.categoryDTO2Entity(categoryDTO);
         Category categorySave = categoryRepository.save(category);
         return categoryMapper.categoryEntity2DTO(categorySave);
+    }
+
+    @Override
+    public PagesDTO<CategoryDTO> getAllForPages(int page) {
+        if (page < 0) {
+            throw new IllegalArgumentException("Page index must not be less than zero!");
+        }
+        Pageable pageRequest = PageRequest.of(page, 10);
+        Page<Category> category = categoryRepository.findAll(pageRequest);
+        return responsePage(category);
+    }
+    private PagesDTO<CategoryDTO> responsePage(Page<Category> page) {
+        Page<CategoryDTO> response = new PageImpl<>(
+                categoryMapper.categoryEntityPageDTOList(page.getContent()),
+                PageRequest.of(page.getNumber(), page.getSize()),
+                page.getTotalElements());
+
+        return new PagesDTO<>(response, "localhost:8080/categories?page=");
     }
 }

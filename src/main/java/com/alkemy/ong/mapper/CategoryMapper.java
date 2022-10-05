@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class CategoryMapper {
 
-
     public CategoryBasicDTO categoryEntity2DTOBasic(Category category) {
         CategoryBasicDTO categoryBasicDTO = new CategoryBasicDTO();
         categoryBasicDTO.setName(category.getName());
@@ -42,6 +41,14 @@ public class CategoryMapper {
         categoryDTO.setDescription(category.getDescription());
         categoryDTO.setImage(category.getImage());
         categoryDTO.setTimestamps(category.getTimestamps());
+        return categoryDTO;
+    }
+
+    public List<CategoryDTO> categoryEntityPageDTOList(List<Category> categories){
+        List<CategoryDTO> categoryDTO = new ArrayList<>();
+        for(Category category : categories){
+            categoryDTO.add(this.categoryEntity2DTO(category));
+        }
         return categoryDTO;
     }
 }

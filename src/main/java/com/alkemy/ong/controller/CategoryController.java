@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryBasicDTO;
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.service.CategoryService;
 
 import javassist.NotFoundException;
@@ -22,6 +23,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping(params = "page")
+    public ResponseEntity<?> getPageCategory(@RequestParam(defaultValue = "0") int page) {
+        PagesDTO<CategoryDTO> response = categoryService.getAllForPages(page);
+        return ResponseEntity.ok().body(response);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
