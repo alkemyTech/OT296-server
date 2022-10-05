@@ -9,6 +9,7 @@ import java.util.List;
 public interface MembersService {
 
     List<MembersDTO> getAllMembers();
+    List<MembersDTO> getAllMembers(int page);
     MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException;
     void deleteMembers(String id) throws NotFoundException;
 

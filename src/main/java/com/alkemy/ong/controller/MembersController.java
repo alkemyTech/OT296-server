@@ -51,6 +51,13 @@ public class MembersController {
             @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
                     content = @Content)
     })
+    // -------------- GET Page of Members -------------
+    @GetMapping(params = "page")
+    public ResponseEntity<List<MembersDTO>> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
+        List<MembersDTO> membersDTOS = membersService.getAllMembers(page);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
+    }
+
     @PostMapping
     public ResponseEntity<MembersDTO> createMembers(@Valid @RequestBody @Parameter(description = "Member DTO created", required = true)
                                                     MembersDTO2 membersDTO2) throws Exception {
