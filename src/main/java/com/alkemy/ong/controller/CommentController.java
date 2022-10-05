@@ -3,13 +3,13 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.CommentDTO;
 import com.alkemy.ong.dto.CommentDTOBody;
 import com.alkemy.ong.service.CommentService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,4 +25,13 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(commentDTOList);
     }
 
+    @PostMapping
+    public ResponseEntity<CommentDTO> Create (@Valid @RequestBody CommentDTO comment) throws NotFoundException {
+        try{
+            ResponseEntity<CommentDTO> commentDTO = commentService.create(comment);
+            return commentDTO;
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

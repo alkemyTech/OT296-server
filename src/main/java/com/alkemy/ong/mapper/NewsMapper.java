@@ -1,10 +1,11 @@
-package com.alkemy.ong.mapper;
+package com.alkemy.ong.repository.mapper;
 
 import org.springframework.stereotype.Component;
 
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.entity.News;
 
+import java.util.List;
 @Component
 public class NewsMapper {
 	
@@ -23,5 +24,6 @@ public class NewsMapper {
 		newsDTO.setName(news.getName());
 		return newsDTO; 
 	}
+
 
 }
