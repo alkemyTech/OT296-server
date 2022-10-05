@@ -9,7 +9,7 @@ import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +23,8 @@ public class MembersServiceImpl implements MembersService {
     @Autowired
     private MembersMapper membersMapper;
 
+    private final int PAGE_SIZE = 10;
+
     @Override
     public List<MembersDTO> getAllMembers() {
         List<Members> members = membersRepository.findAll();
@@ -31,16 +33,12 @@ public class MembersServiceImpl implements MembersService {
         return  membersDTOS;
     }
 
+    // ------------- GET Page of Members -------------
     @Override
-    public List<MembersDTO> getAllMembers(Pageable pageable) throws NotFoundException{
-        Page<Members> members = membersRepository.findAll(pageable);
-        if(members.isEmpty()){
-            throw new NotFoundException("Members not found in this page");
-        }else{
-            List<MembersDTO> membersDTOS = membersMapper.membersEntityPageDTOList(members);
-            return  membersDTOS;
-        }
-
+    public List<MembersDTO> getAllMembers(int page) {
+        Page<Members> members = membersRepository.findAll(PageRequest.of(page, PAGE_SIZE));
+        List<MembersDTO> membersDTOS = membersMapper.membersEntityPageDTOList(members);
+        return membersDTOS;
     }
 
     @Override

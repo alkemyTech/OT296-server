@@ -3,14 +3,13 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.dto.MembersDTO;
 import javassist.NotFoundException;
 import com.alkemy.ong.dto.MembersDTO2;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface MembersService {
 
     List<MembersDTO> getAllMembers();
-    List<MembersDTO> getAllMembers(Pageable pageable) throws NotFoundException;
+    List<MembersDTO> getAllMembers(int page);
     MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException;
     void deleteMembers(String id) throws NotFoundException;
 
