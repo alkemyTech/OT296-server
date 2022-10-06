@@ -1,6 +1,7 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.dto.MembersDTO;
+import com.alkemy.ong.dto.PagesDTO;
 import javassist.NotFoundException;
 import com.alkemy.ong.dto.MembersDTO2;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface MembersService {
 
     List<MembersDTO> getAllMembers();
-    List<MembersDTO> getAllMembers(int page);
+    PagesDTO<MembersDTO> getAllMembers(int page);
     MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException;
     void deleteMembers(String id) throws NotFoundException;
 

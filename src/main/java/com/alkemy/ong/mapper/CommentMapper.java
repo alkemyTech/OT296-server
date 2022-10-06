@@ -13,17 +13,17 @@ public class CommentMapper {
 
     public CommentDTO commentEntity2CommentDTO(Comment commentEntity){
         CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setUserId(commentEntity.getUserId());
         commentDTO.setBody(commentEntity.getBody());
-        commentDTO.setNews(commentEntity.getNews());
-        commentDTO.setUser(commentEntity.getUser());
+        commentDTO.setNewsId(commentEntity.getNewsId());
         return commentDTO;
     }
 
     public Comment commentDTO2commentEntity (CommentDTO commentDTO){
         Comment commentEntity = new Comment();
+        commentEntity.setUserId(commentDTO.getUserId());
         commentEntity.setBody(commentDTO.getBody());
-        commentEntity.setNews(commentDTO.getNews());
-        commentEntity.setUser(commentDTO.getUser());
+        commentEntity.setNewsId(commentDTO.getNewsId());
         return commentEntity;
     }
 

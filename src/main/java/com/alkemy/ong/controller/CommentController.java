@@ -6,9 +6,11 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,15 @@ public class CommentController {
     public ResponseEntity<List<CommentDTOBody>> getAllComments(){
         List<CommentDTOBody> commentDTOList = commentService.getAllComments();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(commentDTOList);
+    }
+    @PostMapping
+    public ResponseEntity<CommentDTO> Create (@Valid @RequestBody CommentDTO comment)  {
+        try{
+            ResponseEntity<CommentDTO> commentDTO = commentService.create(comment);
+            return commentDTO;
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/{id}")
