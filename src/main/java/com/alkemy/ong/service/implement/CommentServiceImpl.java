@@ -8,12 +8,9 @@ import com.alkemy.ong.mapper.CommentMapper;
 import com.alkemy.ong.repository.CommentRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.repository.UsersRepository;
-import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.service.CommentService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -30,8 +27,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
-    @Autowired
-    private UsersRepository usersRepository;
+
     @Autowired
     private NewsRepository newsRepository;
 
