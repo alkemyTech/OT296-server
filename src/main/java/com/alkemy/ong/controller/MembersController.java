@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javassist.NotFoundException;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,21 @@ public class MembersController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
     }
 
+    // -------------- GET Page of Members -------------
+    @Operation(summary = "GET Page of Members")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Found members",
+                    content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = MembersDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content)
+    })
+    @GetMapping(params = "page")
+    public ResponseEntity<List<MembersDTO>> getPageableMembers(@ParameterObject @RequestParam(required = false, defaultValue = "-1") int page) {
+        List<MembersDTO> membersDTOS = membersService.getAllMembers(page);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
+    }
+
     @Operation(summary = "POST members")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Return created status code",
@@ -51,13 +67,6 @@ public class MembersController {
             @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
                     content = @Content)
     })
-    // -------------- GET Page of Members -------------
-    @GetMapping(params = "page")
-    public ResponseEntity<List<MembersDTO>> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
-        List<MembersDTO> membersDTOS = membersService.getAllMembers(page);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
-    }
-
     @PostMapping
     public ResponseEntity<MembersDTO> createMembers(@Valid @RequestBody @Parameter(description = "Member DTO created", required = true)
                                                     MembersDTO2 membersDTO2) throws Exception {
