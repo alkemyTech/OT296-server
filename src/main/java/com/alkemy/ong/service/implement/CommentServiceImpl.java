@@ -34,7 +34,6 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private UsersRepository usersRepository;
 
-
     @Override
     public List<CommentDTOBody> getAllComments() {
         List<Comment> commentsEntityList = commentRepository.findAll();
