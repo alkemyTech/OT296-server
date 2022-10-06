@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.MembersDTO;
 import com.alkemy.ong.dto.MembersDTO2;
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.service.MembersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,9 +56,9 @@ public class MembersController {
                     content = @Content)
     })
     @GetMapping(params = "page")
-    public ResponseEntity<List<MembersDTO>> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
-        List<MembersDTO> membersDTOS = membersService.getAllMembers(page);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
+    public ResponseEntity<?> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
+        PagesDTO<MembersDTO> membersDTOS = membersService.getAllMembers(page);
+        return ResponseEntity.ok().body(membersDTOS);
     }
 
     @Operation(summary = "POST members")
