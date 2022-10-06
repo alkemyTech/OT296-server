@@ -24,12 +24,18 @@ public class Comment {
     private String body;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", updatable = false)
+    @JoinColumn(name = "user_id", updatable = false,insertable = false)
     private Users user;
 
+    @Column(name = "user_id", nullable = false)
+    private String userId;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "news_id", updatable = false)
+    @JoinColumn(name = "news_id", updatable = false,insertable = false)
     private News news;
+
+    @Column(name = "news_id", nullable = false)
+    private String newsId;
 
     private boolean deleted = Boolean.FALSE;
 
