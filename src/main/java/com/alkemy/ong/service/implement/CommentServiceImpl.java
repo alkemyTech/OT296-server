@@ -48,5 +48,11 @@ public class CommentServiceImpl implements CommentService {
         return new ResponseEntity("Comment created",HttpStatus.CREATED);
     }
 
+    // ---------------- Get Para Comentarios de un Post ----------------
+    @Override
+    public List<CommentDTOBody> getAllPostComments(String id) {
+        List<Comment> commentsEntityList = commentRepository.findAllByNewsId(id);
+        return commentMapper.commentsEntityList2DTOCommentsList(commentsEntityList);
+    }
 
 }

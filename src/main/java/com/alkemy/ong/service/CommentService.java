@@ -12,4 +12,5 @@ public interface CommentService{
     public List<CommentDTOBody> getAllComments();
     ResponseEntity<CommentDTO> create(CommentDTO commentDTO) throws NotFoundException;
 
+    public List<CommentDTOBody> getAllPostComments(String id);
 }
