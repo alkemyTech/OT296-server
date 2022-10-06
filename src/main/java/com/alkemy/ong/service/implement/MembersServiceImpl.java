@@ -2,6 +2,7 @@ package com.alkemy.ong.service.implement;
 
 import com.alkemy.ong.dto.MembersDTO;
 import com.alkemy.ong.dto.MembersDTO2;
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.entity.Members;
 import com.alkemy.ong.mapper.MembersMapper;
 import com.alkemy.ong.repository.MembersRepository;
@@ -9,6 +10,7 @@ import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +37,15 @@ public class MembersServiceImpl implements MembersService {
 
     // ------------- GET Page of Members -------------
     @Override
-    public List<MembersDTO> getAllMembers(int page) {
+    public PagesDTO<MembersDTO> getAllMembers(int page) {
         Page<Members> members = membersRepository.findAll(PageRequest.of(page, PAGE_SIZE));
         List<MembersDTO> membersDTOS = membersMapper.membersEntityPageDTOList(members);
-        return membersDTOS;
+        Page<MembersDTO> response = new PageImpl<>(
+                membersDTOS,
+                PageRequest.of(members.getNumber(), members.getSize()),
+                members.getTotalElements()
+        );
+        return new PagesDTO<>(response, "localhost:8080/members/?page=");
     }
 
     @Override

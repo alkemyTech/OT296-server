@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.MembersDTO;
 import com.alkemy.ong.dto.MembersDTO2;
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,9 @@ public class MembersController {
 
     // -------------- GET Page of Members -------------
     @GetMapping(params = "page")
-    public ResponseEntity<List<MembersDTO>> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
-        List<MembersDTO> membersDTOS = membersService.getAllMembers(page);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
+    public ResponseEntity<?> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
+        PagesDTO<MembersDTO> membersDTOS = membersService.getAllMembers(page);
+        return ResponseEntity.ok().body(membersDTOS);
     }
 
     @PostMapping
