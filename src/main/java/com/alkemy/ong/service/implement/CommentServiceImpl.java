@@ -3,6 +3,7 @@ package com.alkemy.ong.service.implement;
 import com.alkemy.ong.dto.CommentDTO;
 import com.alkemy.ong.dto.CommentDTOBody;
 import com.alkemy.ong.entity.Comment;
+import com.alkemy.ong.entity.Users;
 import com.alkemy.ong.mapper.CommentMapper;
 import com.alkemy.ong.repository.CommentRepository;
 import com.alkemy.ong.repository.NewsRepository;
@@ -12,9 +13,12 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -23,10 +27,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
-    @Autowired
-    private UsersRepository usersRepository;
+
     @Autowired
     private NewsRepository newsRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
 
     @Override
     public List<CommentDTOBody> getAllComments() {
@@ -49,4 +55,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
+
+    @Override
+    public ResponseEntity<?> deleteComment(String id, Authentication authentication) throws NotFoundException {
+        Optional<Comment> comment = commentRepository.findById(id);
+        Optional<Users> users = usersRepository.findByEmail(authentication.getName());
+        if(comment.get().getUser().getId().equals(users.get().getId()) || users.get().getEmail().contains("admin")) {
+            commentRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        else {
+            throw new NotFoundException("you cant delete this comment");
+        }
+    }
+
+    @Override
+    public boolean exitsById(String id) {
+        return commentRepository.findById(id).isEmpty();
+    }
 }
