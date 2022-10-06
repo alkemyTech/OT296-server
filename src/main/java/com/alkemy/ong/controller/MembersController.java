@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javassist.NotFoundException;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,9 @@ public class MembersController {
                     content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = MembersDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad request",
-            content = @Content)
+            content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
+                    content = @Content)
     })
     @GetMapping
     public ResponseEntity<List<MembersDTO>> getAllMembers() {
@@ -49,10 +50,12 @@ public class MembersController {
                     content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = MembersDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
                     content = @Content)
     })
     @GetMapping(params = "page")
-    public ResponseEntity<List<MembersDTO>> getPageableMembers(@ParameterObject @RequestParam(required = false, defaultValue = "-1") int page) {
+    public ResponseEntity<List<MembersDTO>> getPageableMembers(@RequestParam(required = false, defaultValue = "-1") int page) {
         List<MembersDTO> membersDTOS = membersService.getAllMembers(page);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTOS);
     }
@@ -68,8 +71,7 @@ public class MembersController {
                     content = @Content)
     })
     @PostMapping
-    public ResponseEntity<MembersDTO> createMembers(@Valid @RequestBody @Parameter(description = "Member DTO created", required = true)
-                                                    MembersDTO2 membersDTO2) throws Exception {
+    public ResponseEntity<MembersDTO> createMembers(@Valid @RequestBody MembersDTO2 membersDTO2) throws Exception {
         membersService.createMembers(membersDTO2);
         return new ResponseEntity("Create members", HttpStatus.CREATED);
     }
@@ -109,7 +111,7 @@ public class MembersController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateMembers(@Parameter(description = "Id of Member to update", required = true) @PathVariable String id,
-                                                @Parameter(description = "Member DTO update", required = true) @RequestBody MembersDTO membersDTO) {
+                                                @RequestBody MembersDTO membersDTO) {
         try {
             membersService.updateMembers(id, membersDTO);
         } catch (
