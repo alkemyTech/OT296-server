@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +23,8 @@ import com.alkemy.ong.service.TestimonialService;
 @RequestMapping("/testimonials")
 @Tag(name = "Testimonial Controller", description = "Create, delete and update Testimonial")
 public class TestimonialController {
-
-
 	@Autowired
 	private TestimonialService testimonialService;
-
 	@Operation(summary = "POST Testimonial")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Return created status code",
@@ -36,12 +34,11 @@ public class TestimonialController {
 			@ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
 					content = @Content)
 	})
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestimonialDTO> createTestimonial(@Valid @RequestBody TestimonialDTO testimonial) {
 		testimonialService.createTestimonial(testimonial);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
-
 	@Operation(summary = "UPDATE testimonial")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "202", description = "Update testimonial",
@@ -54,7 +51,7 @@ public class TestimonialController {
 			@ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
 					content = @Content)
 	})
-	@PutMapping("/{id}")
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestimonialDTO> update(@Parameter(description = "Id of Testimonial to update", required = true) @PathVariable String id,
 												 @RequestBody TestimonialDTO dto) {
 		try{
@@ -64,7 +61,6 @@ public class TestimonialController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
-
 	@Operation(summary = "DELETE testimonial")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Testimonial deleted",
@@ -76,7 +72,7 @@ public class TestimonialController {
 			@ApiResponse(responseCode = "403", description = "Forbidden for no authenticated user",
 					content = @Content)
 	})
-	@DeleteMapping("/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Object> deleteTestimonial (@Parameter(description = "Id of Testimonial to delete", required = true) @PathVariable String id){
 		try{
 			testimonialService.deleteTestimonial(id);
