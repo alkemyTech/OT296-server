@@ -104,6 +104,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/comment").hasRole(ROLE_ADMIN)
                 .antMatchers(HttpMethod.POST, "/comment").hasRole(ROLE_USER)
                 .antMatchers(HttpMethod.DELETE, "/comment/**").hasAnyRole(ROLE_ADMIN,ROLE_USER)
+                .antMatchers(HttpMethod.PUT, "/comment/**").hasRole(ROLE_ADMIN)
+
 
                 //Docs
                 .antMatchers("/api/docs/**").permitAll()
