@@ -17,4 +17,5 @@ public interface CommentService{
 
     boolean exitsById(String id);
 
+    public List<CommentDTOBody> getAllPostComments(String id);
 }

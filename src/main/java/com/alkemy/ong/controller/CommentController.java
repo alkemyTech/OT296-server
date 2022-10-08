@@ -48,4 +48,10 @@ public class CommentController {
         }
     }
 
+    @GetMapping("/posts/{id}/comments")
+    public ResponseEntity<List<CommentDTOBody>> getAllPostComments(@PathVariable String id){
+        List<CommentDTOBody> commentDTOList = commentService.getAllPostComments(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(commentDTOList);
+    }
+
 }
