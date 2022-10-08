@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.implement;
 
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.service.TestimonialService;
 import com.alkemy.ong.entity.Testimonial;
@@ -9,6 +10,10 @@ import com.alkemy.ong.repository.TestimonialRepository;
 import javassist.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -47,5 +52,23 @@ public class TestimonialServiceImpl implements TestimonialService {
 			throw new NotFoundException("Testimonial not found");
 		}
 		testimonialRepository.deleteById(id);
+	}
+	
+	@Override
+	public PagesDTO<TestimonialDTO> getAllForPages(int page) {
+		if (page < 0) {
+			throw new IllegalArgumentException("Page index must not be less than zero!");
+		}
+		Pageable pageRequest = PageRequest.of(page, 10);
+		Page<Testimonial> testimonial = testimonialRepository.findAll(pageRequest);
+		return responsePage(testimonial);
+	}
+
+	private PagesDTO<TestimonialDTO> responsePage(Page<Testimonial> page) {
+		Page<TestimonialDTO> response = new PageImpl<>(
+				testimonialMapper.testimonialEntityPageDTOList(page.getContent()),
+				PageRequest.of(page.getNumber(), page.getSize()),
+				page.getTotalElements());
+		return new PagesDTO<>(response, "localhost:8080/testimonials?page=");
 	}
 }

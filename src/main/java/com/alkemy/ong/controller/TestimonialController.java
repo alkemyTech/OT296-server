@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.service.TestimonialService;
 
@@ -15,9 +16,14 @@ import com.alkemy.ong.service.TestimonialService;
 @RequestMapping("/testimonials")
 public class TestimonialController {
 
-
 	@Autowired
 	private TestimonialService testimonialService;
+
+	@GetMapping(params = "page")
+	public ResponseEntity<?> getPageTestimonial(@RequestParam(defaultValue = "0") int page) {
+		PagesDTO<TestimonialDTO> response = testimonialService.getAllForPages(page);
+		return ResponseEntity.ok().body(response);
+	}
 
 	@PostMapping
 	public ResponseEntity<TestimonialDTO> createTestimonial(@Valid @RequestBody TestimonialDTO testimonial) {
