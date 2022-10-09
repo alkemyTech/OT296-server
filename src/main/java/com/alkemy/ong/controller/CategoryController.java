@@ -45,7 +45,7 @@ public class CategoryController {
     @Tag(name = "Category")
     @Operation(summary = "Get a category by its id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "302", description = "Found the category",
+            @ApiResponse(responseCode = "200", description = "Found the category",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CategoryDTO.class))}),
             @ApiResponse(responseCode = "403", description = "User unauthorized",
@@ -58,7 +58,7 @@ public class CategoryController {
                                                            @PathVariable String id) {
         try {
             CategoryDTO categoryDTO = categoryService.getCategoryById(id);
-            return ResponseEntity.status(HttpStatus.FOUND).body(categoryDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(categoryDTO);
         } catch (Exception e) {
             return new ResponseEntity("Category not found", HttpStatus.NOT_FOUND);
         }
