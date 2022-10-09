@@ -62,6 +62,7 @@ public class MembersServiceImpl implements MembersService {
         if (members == null){
             throw new NotFoundException("Members not found");
         }
+        members.setName(membersDTO.getName());
         members.setFacebookUrl(membersDTO.getFacebookUrl());
         members.setInstagramUrl(membersDTO.getInstagramUrl());
         members.setLinkedinUrl(membersDTO.getLinkedinUrl());
