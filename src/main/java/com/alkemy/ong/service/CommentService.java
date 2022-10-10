@@ -15,7 +15,6 @@ public interface CommentService{
 
     ResponseEntity<?> updateComment(String id, CommentDTO commentDTO);
 
-
     ResponseEntity<?> deleteComment(String id, Authentication authentication) throws NotFoundException;
 
     boolean exitsById(String id);
