@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestimonialDTO {
 
-	private String id;
-
 	@NotBlank(message = "Name cannot be empty or null")
 	private String name;
 	private String image;
