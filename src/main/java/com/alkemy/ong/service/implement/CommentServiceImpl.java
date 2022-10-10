@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
         commentDTO=commentMapper.commentEntity2CommentDTO(commentSave);
         return new ResponseEntity("Comment created",HttpStatus.CREATED);
     }
-
+    
     @Override
     public ResponseEntity<?> updateComment(String id, CommentDTO commentDTO) {
         Comment commentEntity = commentRepository.findById(id).orElse(null);
@@ -64,6 +64,13 @@ public class CommentServiceImpl implements CommentService {
             commentRepository.save(commentEntity);
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+      }
+      
+    // ---------------- Get Para Comentarios de un Post ----------------
+    @Override
+    public List<CommentDTOBody> getAllPostComments(String id) {
+        List<Comment> commentsEntityList = commentRepository.findAllByNewsId(id);
+        return commentMapper.commentsEntityList2DTOCommentsList(commentsEntityList);
     }
 
 
