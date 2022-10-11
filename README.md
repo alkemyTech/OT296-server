@@ -12,15 +12,15 @@
 |       roarma@admin.com        | Rosario    | Arma         | OYRODYDoyfgd  | default.jpg |  Admin |
 |   luciacorona@admin.com       | Lucia      | Cora         | PIYFGYDhyosf  | default.jpg |  Admin |
 |      brinieto@admin.com       | Brian      | Nieto        | WRTRYFAbncou  | default.jpg |  Admin |
-|     mfossord9@senate.gov      | Misha      | Fossord      | 3q3MgFh2Ps5   | default.jpg |   User |
-|   cmacgillreicha@sbwire.com   | Charissa   | MacGillreich | 7MOQwvVOHz2p  | default.jpg |   User |
-| yjoicey8@theglobeandmail.com  | Yasmin     | Lapsley      | r79Sfnpxxsx   | default.jpg |   User |
-|    spenreth7@linkedin.com     | Sharity    | Penreth      | 7QWax89xxs    | default.jpg |   User |
-| hsaffill6@huffingtonpost.com  | Heidi      | Saffill      | DZfgtHxxxs    | default.jpg |   User |
-|       slarter5@ovh.net        | Skylar     | Larter       | olpArkfRD2    | default.jpg |   User |
-|    wmacronald3@jalbum.net     | Will       | MacRonald    | KW1LpoXehdo   | default.jpg |   User |
-|   oclynmans2@bravesites.com   | Odele      | Clynmans     | DTUMZGlDjxdd  | default.jpg |   User |
+|     mfossord9@gmail.com       | Misha      | Fossord      | 3q3MgFh2Ps5   | default.jpg |   User |
+|   cmacgillreicha@gmail.com    | Charissa   | MacGillreich | 7MOQwvVOHz2p  | default.jpg |   User |
+|   yjoicey8@gmail.com          | Yasmin     | Lapsley      | r79Sfnpxxsx   | default.jpg |   User |
+|    spenreth7@gmail.com        | Sharity    | Penreth      | 7QWax89xxs    | default.jpg |   User |
+|     hsaffill6@gmail.com       | Heidi      | Saffill      | DZfgtHxxxs    | default.jpg |   User |
+|     slarter5@gmail.com        | Skylar     | Larter       | olpArkfRD2    | default.jpg |   User |
+|     wmacronald3@gmail.com     | Will       | MacRonald    | KW1LpoXehdo   | default.jpg |   User |
+|      oclynmans2@gmail.com     | Odele      | Clynmans     | DTUMZGlDjxdd  | default.jpg |   User |
 |      cinkpen0@joomla.org      | Cristian   | Inkpen       | 4VHcXxp86sB   | default.jpg |   User |
-|     cfoston1@japanpost.jp     | Cristiano  | Foston       | 9wf9KkPkxsx   | default.jpg |   User |
+|     cfoston1@japan.org        | Cristiano  | Foston       | 9wf9KkPkxsx   | default.jpg |   User |
 
 
