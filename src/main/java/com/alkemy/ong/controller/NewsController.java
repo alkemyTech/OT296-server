@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 
+import com.alkemy.ong.dto.PagesDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -89,5 +90,11 @@ public class NewsController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-	
+
+	@GetMapping(params = "page")
+	public ResponseEntity<?> getNewsForPage(@RequestParam(defaultValue = "0") int page){
+		PagesDTO<NewsDTO> pages = newsService.getAllNewsForPages(page);
+		return ResponseEntity.status(HttpStatus.OK).body(pages);
+	}
+
 }
