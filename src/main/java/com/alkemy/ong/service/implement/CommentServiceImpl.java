@@ -53,7 +53,19 @@ public class CommentServiceImpl implements CommentService {
         commentDTO=commentMapper.commentEntity2CommentDTO(commentSave);
         return new ResponseEntity("Comment created",HttpStatus.CREATED);
     }
-
+    
+    @Override
+    public ResponseEntity<?> updateComment(String id, CommentDTO commentDTO) {
+        Comment commentEntity = commentRepository.findById(id).orElse(null);
+        assert commentEntity != null;
+        Optional<Users> userEntity = usersRepository.findById(commentDTO.getUserId());
+        if(commentEntity.getUser().getId().equals(commentDTO.getUserId()) || userEntity.get().getEmail().contains("admin")){
+            commentEntity.setBody(commentDTO.getBody());
+            commentRepository.save(commentEntity);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+      }
+      
     // ---------------- Get Para Comentarios de un Post ----------------
     @Override
     public List<CommentDTOBody> getAllPostComments(String id) {

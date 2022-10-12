@@ -35,6 +35,19 @@ public class CommentController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody CommentDTO commentDTO){
+        if(commentService.exitsById(id)){
+            return new ResponseEntity<>("Comment not found",HttpStatus.NOT_FOUND);
+        }
+        try {
+            commentService.updateComment(id, commentDTO);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("can not modified this comment",HttpStatus.FORBIDDEN);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable String id,Authentication authentication) {
         if(commentService.exitsById(id)){
