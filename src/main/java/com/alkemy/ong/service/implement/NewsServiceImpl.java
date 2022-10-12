@@ -2,7 +2,12 @@ package com.alkemy.ong.service.implement;
 
 import java.util.Optional;
 import com.alkemy.ong.dto.NewsDTO;
+import com.alkemy.ong.dto.PagesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.alkemy.ong.entity.News;
 import com.alkemy.ong.mapper.NewsMapper;
@@ -51,6 +56,25 @@ public class NewsServiceImpl implements NewsService{
     	} else {
     		throw new NotFoundException("News not found");
     	}		
+	}
+
+	@Override
+	public PagesDTO<NewsDTO> getAllNewsForPages(int page) {
+		if (page < 0) {
+			throw new IllegalArgumentException("Page index must not be less than zero!");
+		}
+		Pageable pageRequest = PageRequest.of(page, 10);
+		Page<News> news = newsRepository.findAll(pageRequest);
+		return responsePage(news);
+	}
+
+	private PagesDTO<NewsDTO> responsePage(Page<News> page) {
+		Page<NewsDTO> response = new PageImpl<>(
+				newsMapper.newsEntityPageDTOList(page.getContent()),
+				PageRequest.of(page.getNumber(), page.getSize()),
+				page.getTotalElements());
+
+		return new PagesDTO<>(response, "localhost:8080/news?page=");
 	}
 
 }

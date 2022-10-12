@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.entity.News;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class NewsMapper {
 	
@@ -22,6 +25,14 @@ public class NewsMapper {
 		newsDTO.setImage(news.getImage());
 		newsDTO.setName(news.getName());
 		return newsDTO; 
+	}
+
+	public List<NewsDTO> newsEntityPageDTOList(List<News> news) {
+		List<NewsDTO> newsDTOList = new ArrayList<>();
+		for(News newsEntity : news){
+			newsDTOList.add(this.newsEntity2DTO(newsEntity));
+		}
+		return newsDTOList;
 	}
 
 }
