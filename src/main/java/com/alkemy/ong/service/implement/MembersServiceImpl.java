@@ -8,6 +8,7 @@ import com.alkemy.ong.mapper.MembersMapper;
 import com.alkemy.ong.repository.MembersRepository;
 import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MembersServiceImpl implements MembersService {
 
     @Autowired
@@ -49,12 +51,13 @@ public class MembersServiceImpl implements MembersService {
     }
 
     @Override
-    public void deleteMembers(String id) throws NotFoundException {
+    public String deleteMembers(String id) throws NotFoundException {
         Members members= membersRepository.findById(id).orElse(null);
         if (members == null){
             throw new NotFoundException("Members not found");
         }
         membersRepository.deleteById(id);
+        return "Member deleted";
     }
     @Override
     public MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException {

@@ -1,8 +1,7 @@
 package com.alkemy.ong.entity;
 
 import com.sun.istack.Nullable;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -15,6 +14,9 @@ import java.time.LocalDateTime;
 @Setter
 @SQLDelete(sql = "UPDATE members SET soft_delete = true WHERE id=?")
 @Where(clause = "soft_delete=false")
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Members {
 
     @Id 
