@@ -1,4 +1,4 @@
-package com.alkemy.ong.security.service.impl;
+package com.alkemy.ong.UserServiceTest;
 
 import com.alkemy.ong.dto.UserDTO;
 import com.alkemy.ong.entity.Role;

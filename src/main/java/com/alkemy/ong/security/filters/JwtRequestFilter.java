@@ -1,6 +1,6 @@
 package com.alkemy.ong.security.filters;
 
-import com.alkemy.ong.security.service.impl.UserServiceImpl;
+import com.alkemy.ong.UserServiceTest.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

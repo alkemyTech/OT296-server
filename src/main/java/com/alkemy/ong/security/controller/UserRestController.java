@@ -7,7 +7,7 @@ import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.response.AuthenticationResponse;
 import com.alkemy.ong.security.service.UserService;
-import com.alkemy.ong.security.service.impl.UserServiceImpl;
+import com.alkemy.ong.UserServiceTest.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
