@@ -3,12 +3,12 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationDTOPublic;
 import com.alkemy.ong.dto.SlidesDTO;
+import com.alkemy.ong.entity.Slides;
 import com.alkemy.ong.security.service.impl.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import com.alkemy.ong.service.OrganizationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,7 +24,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.*;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -37,16 +36,10 @@ class OrganizationControllerTest {
 
     @MockBean
     UserServiceImpl userService;
-
     @MockBean
     JwTUtil jwTUtil;
     @Autowired
     ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void setting(){
-        this.objectMapper = new ObjectMapper();
-    }
 
     static OrganizationDTO generateOrganizationDTO(){
         OrganizationDTO orgDTO = new OrganizationDTO();
@@ -61,6 +54,15 @@ class OrganizationControllerTest {
         orgDTO.setWelcomeText("welcome1");
         orgDTO.setAboutUsText("about1");
         return orgDTO;
+    }
+    static List<Slides> generateSlides() {
+        Slides slide = new Slides();
+        slide.setId("1");
+        slide.setImageURL("image1");
+        slide.setText("text1");
+        slide.setOrder(1);
+        slide.setOrganizationID("1");
+        return Collections.singletonList(slide);
     }
     static List<SlidesDTO> generateSlidesDTO(){
         SlidesDTO slidesDTO = new SlidesDTO();
@@ -101,13 +103,12 @@ class OrganizationControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(dto)))
                 .andDo(MockMvcResultHandlers.print());
 
         Mockito.verify(organizationService).create(Mockito.any());
     }
-
     @Test
     @DisplayName("Test Post Ong status .FORBIDDEN invalid user")
     void createIsForbidden() throws Exception {
@@ -124,7 +125,6 @@ class OrganizationControllerTest {
                 .andDo(MockMvcResultHandlers.print());
         Mockito.verify(organizationService, Mockito.never()).create(Mockito.any());
     }
-
     @Test
     @DisplayName("Test Post Ong status .FORBIDDEN invalid token")
     void createIsForbiddenToken() throws Exception {
@@ -141,7 +141,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isForbidden());
         Mockito.verify(organizationService, Mockito.never()).create(Mockito.any());
     }
-
     @Test
     @DisplayName("Test Post Ong status .INTERNAL_SERVER_ERROR")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_ADMIN")
@@ -158,7 +157,6 @@ class OrganizationControllerTest {
     /*============================================================*/
     /*                           PATCH-TEST                       */
     /*============================================================*/
-
     @Test
     @DisplayName("Test Patch Ong status .OK")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_ADMIN")
@@ -175,7 +173,6 @@ class OrganizationControllerTest {
 
         Mockito.verify(organizationService,Mockito.times(1)).patchOrganization(id, objectMap);
     }
-
     @Test
     @DisplayName("Test Patch Ong status .FORBIDDEN invalid user")
     void patchOrganizationIsForbidden() throws Exception {
@@ -192,7 +189,6 @@ class OrganizationControllerTest {
 
         Mockito.verify(organizationService,Mockito.never()).patchOrganization(id, objectMap);
     }
-
     @Test
     @DisplayName("Test Patch Ong status .FORBIDDEN invalid token")
     void patchOrganizationIsForbiddenToken() throws Exception {
@@ -210,24 +206,23 @@ class OrganizationControllerTest {
 
         Mockito.verify(organizationService,Mockito.never()).patchOrganization(id, objectMap);
     }
-
     @Test
     @DisplayName("Test Patch Ong status .NOT_FOUND")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_ADMIN")
     void patchOrganizationIsNotFound() throws Exception {
-        String id = "123";
+        String id = "2";
         Map<Object, Object> objectMap = new HashMap<>();
         objectMap.put("name", "nameUpdated");
+
+        when(organizationService.patchOrganization(Mockito.any(),Mockito.any())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/organization/public" + "/{id}", id)
                         .content(objectMapper.writeValueAsString(objectMap))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
-
-        Mockito.verify(organizationService,Mockito.never()).patchOrganization(Mockito.any(),Mockito.any());
+        Mockito.verify(organizationService).patchOrganization(id, objectMap);
     }
-
     @Test
     @DisplayName("Test Patch Ong status .INTERNAL_SERVER_ERROR")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_ADMIN")
@@ -235,6 +230,8 @@ class OrganizationControllerTest {
         String id = "123";
         Map<Object, Object> objectMap = new HashMap<>();
         objectMap.put("name", "nameUpdated");
+
+        when(organizationService.patchOrganization(Mockito.any(),Mockito.any())).thenThrow(InternalError.class);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/organization/public" + "/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -247,7 +244,6 @@ class OrganizationControllerTest {
     /*============================================================*/
     /*                           GET-TEST                         */
     /*============================================================*/
-
     @Test
     @DisplayName("Test Get Ong status .OK")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_USER")
@@ -259,7 +255,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isOk());
         Mockito.verify(organizationService).getOrganizationsDTO();
     }
-
     @Test
     @DisplayName("Test Get Ong status .FORBIDDEN invalid user")
     void getOrganizationsIsForbidden() throws Exception {
@@ -272,7 +267,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isForbidden());
         Mockito.verify(organizationService, Mockito.never()).getOrganizationsDTO();
     }
-
     @Test
     @DisplayName("Test Get Ong status .FORBIDDEN invalid token")
     void getOrganizationsIsForbiddenToken() throws Exception {
@@ -284,7 +278,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isForbidden());
         Mockito.verify(organizationService, Mockito.never()).getOrganizationsDTO();
     }
-
     @Test
     @DisplayName("Test Get Ong by Id status .OK")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_USER")
@@ -297,7 +290,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isAccepted());
         Mockito.verify(organizationService).getSlidesByIdOngOrder(Mockito.any());
     }
-
     @Test
     @DisplayName("Test Get Ong by Id status .NOT_FOUND")
     @WithMockUser(username = "flaambroggio@admin.com", authorities = "ROLE_USER")
@@ -309,7 +301,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isNotFound());
         Mockito.verify(organizationService).getSlidesByIdOngOrder(Mockito.any());
     }
-
     @Test
     @DisplayName("Test Get Ong by Id status .FORBIDDEN invalid user")
     void getByIdIsForbidden() throws Exception {
@@ -322,7 +313,6 @@ class OrganizationControllerTest {
                 .andExpect(status().isForbidden());
         Mockito.verify(organizationService, Mockito.never()).getSlidesByIdOngOrder(Mockito.any());
     }
-
     @Test
     @DisplayName("Test Get Ong by Id status .FORBIDDEN invalid token")
     void getByIdIsForbiddenToken() throws Exception {

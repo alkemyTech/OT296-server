@@ -5,11 +5,11 @@ import com.alkemy.ong.dto.OrganizationDTOPublic;
 import com.alkemy.ong.entity.Organization;
 import com.alkemy.ong.entity.Slides;
 import com.alkemy.ong.mapper.OrganizationMapper;
-import com.alkemy.ong.mapper.SlidesMapper;
 import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.OrganizationService;
 import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -20,12 +20,12 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private OrganizationRepository organizationRepository;
     @Autowired
     private OrganizationMapper organizationMapper;
-
     @Autowired
     private SlidesRepository slidesRepository;
 
@@ -44,7 +44,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return result;
     }
     @Override
-    public void patchOrganization(String id, Map<Object, Object> objectMap) throws NotFoundException {
+    public OrganizationDTOPublic patchOrganization(String id, Map<Object, Object> objectMap) throws NotFoundException {
         Optional<Organization> organization = organizationRepository.findById(id);
         if(organization.isPresent()){
             Organization replace = organization.get();
@@ -54,6 +54,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 ReflectionUtils.setField(field, replace, value);
             });
             organizationRepository.save(replace);
+            return organizationMapper.organizationEntity2DTO(replace);
         }else {
             throw new NotFoundException("Organization not found");
         }
