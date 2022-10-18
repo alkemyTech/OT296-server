@@ -3,6 +3,7 @@ package com.alkemy.ong.service.implement;
 import java.util.Optional;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.dto.PagesDTO;
+import com.alkemy.ong.entity.Testimonial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,17 +18,18 @@ import javassist.NotFoundException;
 
 @Service
 public class NewsServiceImpl implements NewsService{
-	
+
 	@Autowired
 	private NewsRepository newsRepository;
-	
+
 	@Autowired
 	private NewsMapper newsMapper;
 
 	@Override
-	public void createNews(NewsDTO newsDTO) {
+	public NewsDTO createNews(NewsDTO newsDTO) {
 		News newsEntity = newsMapper.newsDTO2Entity(newsDTO);
-		newsRepository.save(newsEntity);
+		News newsSave= newsRepository.save(newsEntity);
+		return newsMapper.newsEntity2DTO(newsSave);
 	}
 
 	@Override
@@ -49,13 +51,14 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
-	public void deleteNews(String id) throws NotFoundException {
-    	Optional<News> news = newsRepository.findById(id);
-    	if (news.isPresent()) {
-    		newsRepository.deleteById(id);
-    	} else {
-    		throw new NotFoundException("News not found");
-    	}		
+	public String deleteNews(String id) throws NotFoundException {
+		Optional<News> news = newsRepository.findById(id);
+		if (news.isPresent()) {
+			newsRepository.deleteById(id);
+		} else {
+			throw new NotFoundException("News not found");
+		}
+		return "delete news";
 	}
 
 	@Override
