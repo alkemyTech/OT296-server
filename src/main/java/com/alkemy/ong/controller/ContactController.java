@@ -3,8 +3,10 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.ContactDTO;
 import com.alkemy.ong.service.ContactService;
 import com.alkemy.ong.service.EmailService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,7 @@ public class ContactController {
             contactService.addContact(dto);
             emailService.sendEmailTo(dto.getEmail(), "Muchas gracias por contactarte con nosotros, en breve nos volveremos a comunicar contigo.");
 
-        }catch (Exception e) {
+        }catch (NotFoundException e) {
             return new ResponseEntity<>("Contact already exist", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
@@ -36,7 +38,7 @@ public class ContactController {
     @GetMapping("/contacts")
     public ResponseEntity<List<ContactDTO>> getAllContacts(){
         List<ContactDTO> contacts = contactService.getAllContacts();
-        return ResponseEntity.ok(contacts);
+        return ResponseEntity.status(HttpStatus.OK).body(contacts);
     }
 
 }
