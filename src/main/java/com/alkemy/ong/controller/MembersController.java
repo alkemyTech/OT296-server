@@ -75,7 +75,6 @@ public class MembersController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MembersDTO2> createMembers(@Valid @RequestBody MembersDTO2 membersDTO2) throws Exception {
        MembersDTO2 membersDTO = membersService.createMembers(membersDTO2);
-        //return new ResponseEntity("Create members", HttpStatus.CREATED);
         return ResponseEntity.status(HttpStatus.CREATED).body(membersDTO);
     }
 
@@ -98,7 +97,6 @@ public class MembersController {
         }catch (NotFoundException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
-        //return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "UPDATE members")
@@ -122,6 +120,5 @@ public class MembersController {
                 NotFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-       // return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
