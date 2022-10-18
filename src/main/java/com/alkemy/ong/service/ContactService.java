@@ -5,7 +5,9 @@ import com.alkemy.ong.dto.ContactDTO;
 import java.util.List;
 
 public interface ContactService {
-    public void saveContact(ContactDTO dto);
+
     public void addContact(ContactDTO dto) throws Exception;
+
     public List<ContactDTO> getAllContacts();
+
 }

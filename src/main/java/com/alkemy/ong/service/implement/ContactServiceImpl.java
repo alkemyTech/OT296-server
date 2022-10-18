@@ -18,11 +18,6 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository contactRepository;
 
     @Override
-    public void saveContact(ContactDTO dto) {
-        Contact entity = contactMapper.contactDTO2Entity(dto);
-        contactRepository.save(entity);
-    }
-    @Override
     public void addContact(ContactDTO dto) throws Exception {
         if (contactRepository.existsByEmail(dto.getEmail())) {
             throw new Exception("Contact already exist");
