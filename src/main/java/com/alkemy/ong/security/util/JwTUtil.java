@@ -62,7 +62,13 @@ public class JwTUtil {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
     public Boolean isBearer(String token) {
         return token != null && token.startsWith("Bearer ") && token.split("\\.").length == 3;
+    }
+
+    public boolean verify(String token) throws Exception{
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
     }
 }

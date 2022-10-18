@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.ActivityDTO;
+import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,13 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ActivityDTO> create(@Valid @RequestBody ActivityDTO activityDTO) {
         activityService.createActivity(activityDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(activityDTO);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ActivityDTO> update(@PathVariable String id,@RequestBody ActivityDTO activityDTO) {
         try{
             ActivityDTO activityDTO1 = activityService.updateActivity(activityDTO,id);
@@ -30,6 +31,5 @@ public class ActivityController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
     }
 }
