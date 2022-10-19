@@ -1,4 +1,4 @@
-package com.alkemy.ong.Service;
+package com.alkemy.ong.service;
 
 import com.alkemy.ong.dto.MembersDTO;
 import com.alkemy.ong.dto.MembersDTO2;
@@ -8,7 +8,9 @@ import com.alkemy.ong.mapper.MembersMapper;
 import com.alkemy.ong.repository.MembersRepository;
 import com.alkemy.ong.service.implement.MembersServiceImpl;
 import javassist.NotFoundException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

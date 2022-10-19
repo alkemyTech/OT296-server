@@ -1,4 +1,4 @@
-package com.alkemy.ong.Service;
+package com.alkemy.ong.service;
 
 import com.alkemy.ong.dto.UserDTO;
 import com.alkemy.ong.entity.Role;
