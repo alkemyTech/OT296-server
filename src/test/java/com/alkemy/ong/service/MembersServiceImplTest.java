@@ -47,12 +47,8 @@ class MembersServiceImplTest {
 
     private MembersDTO2 membersDto2;
 
-
-
     @BeforeEach
     void SetUp(){
-
-
         member = Members.builder()
                 .id("1")
                 .name("name")
@@ -61,9 +57,7 @@ class MembersServiceImplTest {
                 .instagramUrl("instagramUrl")
                 .linkedinUrl("linkedinUrl")
                 .build();
-
     }
-
 
     @Test
     @DisplayName("get members")
@@ -151,7 +145,6 @@ class MembersServiceImplTest {
         verify(membersRepository,never()).save(any());
     }
 
-
     @Test
     void createMembers() {
         membersDto2 = new MembersDTO2();
@@ -163,7 +156,6 @@ class MembersServiceImplTest {
         assertEquals(membersDTO2.getName(), member.getName());
         verify(membersMapper,times(1)).membersEntity2DTO2(membersDto2);
         verify(membersMapper,times(1)).membersDTO2Entity(member);
-
     }
 
 }
