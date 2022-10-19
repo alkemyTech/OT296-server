@@ -20,27 +20,28 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import com.alkemy.ong.security.configuration.SecurityConfiguration;
+import java.util.*;
+
+import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.alkemy.ong.security.dto.LoginDTO;
 import com.alkemy.ong.security.dto.RegisterDTO;
-import com.alkemy.ong.security.service.impl.UserServiceImpl;
-import com.alkemy.ong.security.util.JwTUtil;
-import com.alkemy.ong.utils.OpenAPISecurityConfiguration;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(UserRestController.class)
-@Import({SecurityConfiguration.class, BCryptPasswordEncoder.class, OpenAPISecurityConfiguration.class})
 class UserRestControllerTest {
 
 	@Autowired
@@ -52,14 +53,13 @@ class UserRestControllerTest {
 	@MockBean
 	private JwTUtil jwTUtil;
 
-	@MockBean
-	private UserServiceImpl userServiceImpl;
+    @MockBean
+    private UserServiceImpl userService;
 
-	//	@MockBean
-	//	private UserService userService;
+    @Autowired
+    private ObjectMapper jsonMapper;
 
-	@Autowired
-	private ObjectMapper jsonMapper;
+    private List<UserWithoutPassDTO> userDTOList;
 
 	@BeforeEach
 	public void setting(){
@@ -144,42 +144,6 @@ class UserRestControllerTest {
 			assertEquals(201, result.andReturn().getResponse().getStatus());
 		}
 	}
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.*;
-
-import static org.hamcrest.Matchers.is;
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-@WebMvcTest(UserRestController.class)
-public class UserRestControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private UserServiceImpl userService;
-
-    @MockBean
-    private JwTUtil jwTUtil;
-
-    @Autowired
-    private ObjectMapper jsonMapper;
-
-    private List<UserWithoutPassDTO> userDTOList;
-
-    @BeforeEach
-    public void setting(){
-        this.jsonMapper = new ObjectMapper();
-    }
 
     @Nested
     class FindAllUsersTest { //status: 200
