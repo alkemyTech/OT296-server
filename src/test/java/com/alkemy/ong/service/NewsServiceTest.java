@@ -88,7 +88,7 @@ public class NewsServiceTest {
     @Nested
     class getNewsTest{
         @Test
-        @DisplayName("News get status ok")
+        @DisplayName("News Get Id status ok")
         void getNewsById_Ok() throws NotFoundException {
             News news=NewsServiceTest.generateNews();
             NewsDTO newsDTO= newsMapper.newsEntity2DTO(news);
@@ -123,7 +123,7 @@ public class NewsServiceTest {
     @Nested
     class deleteNewsTest{
         @Test
-        @DisplayName("News get status ok")
+        @DisplayName("News delete status ok")
         void deleteNews_Ok() throws NotFoundException {
             News news=NewsServiceTest.generateNews();
             given(newsRepository.findById(news.getId())).willReturn(Optional.of(news));
@@ -132,7 +132,7 @@ public class NewsServiceTest {
             verify(newsRepository, Mockito.times(1)).deleteById(news.getId());
         }
         @Test
-        @DisplayName("News get status ok")
+        @DisplayName("News delete Not Found")
         void deleteNews_404() throws NotFoundException {
             News news=NewsServiceTest.generateNews();
             given(newsRepository.findById(news.getId())).willReturn(Optional.empty());
@@ -144,13 +144,12 @@ public class NewsServiceTest {
     @Nested
     class getPageNewsTest{
         @Test
-        @DisplayName("get members page")
+        @DisplayName("Get News page")
         void getAllNewsForPages() {
             ArrayList<News> news = new ArrayList<>();
             news.add(new News());
             news.add(new News());
             news.add(new News());
-            //List<NewsDTO> newsDTO = new ArrayList<>();
             Pageable pageable = PageRequest.of(0,10, Sort.unsorted());
             Page<News> page = new PageImpl<>(news,pageable,news.size());
             when(newsRepository.findAll(any(Pageable.class))).thenReturn(page);
@@ -160,8 +159,8 @@ public class NewsServiceTest {
             verify(newsMapper,times(1)).newsEntityPageDTOList(any());
         }
         @Test
-        @DisplayName("get members page")
-        void getAllNewsForPages_405() {
+        @DisplayName("Get News page-IllegalArgumentException")
+        void getAllNewsForPages_IllegalArgumentException() {
             ArrayList<News> news = new ArrayList<>();
             news.add(new News());
             news.add(new News());
