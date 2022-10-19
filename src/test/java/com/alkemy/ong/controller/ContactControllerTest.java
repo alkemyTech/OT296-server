@@ -1,7 +1,6 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.ContactDTO;
-import com.alkemy.ong.entity.Contact;
 import com.alkemy.ong.security.service.impl.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import com.alkemy.ong.service.ContactService;
@@ -25,7 +24,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,24 +51,15 @@ class ContactControllerTest {
     @Autowired
     ObjectMapper jsonMapper;
 
-    private ContactDTO contact;
-
     @BeforeEach
     void setUp() {
         this.jsonMapper = new ObjectMapper();
-
-        contact = ContactDTO.builder()
-                .email("test@admin.com")
-                .name("Contact dto tests")
-                .phone("2263355")
-                .message("message")
-                .build();
     }
 
     @Nested
     class createContactTest {
 
-        @DisplayName("Contact as admin added succesfull")
+        @DisplayName("Contact as admin added successful")
         @WithMockUser(username = "mock@admin.com", roles = "ADMIN")
         @Test
         void test1() throws Exception {
@@ -86,7 +76,7 @@ class ContactControllerTest {
             Mockito.verify(contactService).addContact(Mockito.any());
         }
 
-        @DisplayName("Contact as user added succesfull")
+        @DisplayName("Contact as user added successful")
         @WithMockUser(username = "mock@user.com", roles = "USER")
         @Test
         void test2() throws Exception {
@@ -103,7 +93,7 @@ class ContactControllerTest {
             Mockito.verify(contactService).addContact(Mockito.any());
         }
 
-        @DisplayName("") //????
+        @DisplayName("validate token")
         @Test
         void test3() throws Exception {
             Mockito.when(jwTUtil.isBearer(Mockito.any())).thenReturn(false);
@@ -143,19 +133,20 @@ class ContactControllerTest {
         @Test
         void test5() throws Exception{
             ContactDTO contactDTO = generateContactDTO();
-            doNothing().when(contactService).addContact(contact);
-            doNothing().doThrow(NotFoundException.class).when(contactService).addContact(contactDTO);
+            doNothing().when(contactService).addContact(contactDTO);
+            doThrow(NotFoundException.class).when(contactService).addContact(contactDTO);
 
             mockMvc.perform(post("/contact")
                             .contentType(APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)
                             .content(jsonMapper.writeValueAsString(contactDTO)))
-                    .andExpect(status().isNotFound())
+                    .andExpect(status().isForbidden())
                     .andDo(MockMvcResultHandlers.print());
 
-            Mockito.verify(contactService, Mockito.never()).addContact(Mockito.any());
+            Mockito.verify(contactService).addContact(Mockito.any());
         }
     }
+
     @Nested
     class getAllContactsTest {
 
