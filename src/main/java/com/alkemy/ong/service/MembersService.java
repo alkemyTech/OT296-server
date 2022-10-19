@@ -12,7 +12,7 @@ public interface MembersService {
     List<MembersDTO> getAllMembers();
     PagesDTO<MembersDTO> getAllMembers(int page);
     MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException;
-    void deleteMembers(String id) throws NotFoundException;
+    String deleteMembers(String id) throws NotFoundException;
 
     MembersDTO2 createMembers(MembersDTO2 membersDTO2);
 

@@ -49,12 +49,13 @@ public class MembersServiceImpl implements MembersService {
     }
 
     @Override
-    public void deleteMembers(String id) throws NotFoundException {
+    public String deleteMembers(String id) throws NotFoundException {
         Members members= membersRepository.findById(id).orElse(null);
         if (members == null){
             throw new NotFoundException("Members not found");
         }
         membersRepository.deleteById(id);
+        return "Member deleted";
     }
     @Override
     public MembersDTO updateMembers(String id, MembersDTO membersDTO) throws NotFoundException {
