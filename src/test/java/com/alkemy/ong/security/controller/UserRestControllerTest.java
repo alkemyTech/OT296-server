@@ -1,18 +1,21 @@
 package com.alkemy.ong.security.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -81,8 +84,7 @@ class UserRestControllerTest {
 					.content(jsonMapper.writeValueAsString(requestBody)))
 					.andExpect(status().isOk())
 					.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-//					.andDo(MockMvcResultHandlers.print());
-					;
+					.andDo(MockMvcResultHandlers.print());
 
 			assertEquals(200, result.andReturn().getResponse().getStatus());
 		}
@@ -91,6 +93,8 @@ class UserRestControllerTest {
 		@DisplayName("Invalid Json")
 		void test2() throws Exception {
 			LoginDTO requestBody = generateFakeLoginDTO();
+			
+			when(authenticationManager.authenticate(Mockito.any())).thenThrow(new BadCredentialsException("ok false"));
 
 			ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
 					.contentType(MediaType.APPLICATION_JSON)
@@ -101,7 +105,7 @@ class UserRestControllerTest {
 					//        			.andExpect(MockMvcResultMatchers.content().string("ok: false"))
 					.andDo(MockMvcResultHandlers.print());
 
-			assertEquals(403, result.andReturn().getResponse().getStatus());
+			assertEquals(400, result.andReturn().getResponse().getStatus());
 		}
 
 		@Test
