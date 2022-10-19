@@ -1,6 +1,9 @@
 package com.alkemy.ong.security.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.alkemy.ong.util.LoginMocksUtil.generateExistentLoginDTO;
+import static com.alkemy.ong.util.LoginMocksUtil.generateFakeLoginDTO;
+import static com.alkemy.ong.util.RegisterMocksUtil.generateRegisterDTO;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,14 +28,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.alkemy.ong.security.configuration.SecurityConfiguration;
 import com.alkemy.ong.security.dto.LoginDTO;
-import com.alkemy.ong.security.service.UserService;
+import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.service.impl.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import com.alkemy.ong.utils.OpenAPISecurityConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static com.alkemy.ong.util.LoginMocksUtil.*;
-import static com.alkemy.ong.util.RegisterMocksUtil.*;
 
 @WebMvcTest(UserRestController.class)
 @Import({SecurityConfiguration.class, BCryptPasswordEncoder.class, OpenAPISecurityConfiguration.class})
@@ -50,8 +50,8 @@ class UserRestControllerTest {
 	@MockBean
 	private UserServiceImpl userServiceImpl;
 
-//	@MockBean
-//	private UserService userService;
+	//	@MockBean
+	//	private UserService userService;
 
 	@Autowired
 	private ObjectMapper jsonMapper;
@@ -59,15 +59,18 @@ class UserRestControllerTest {
 	@BeforeEach
 	public void setting(){
 		this.jsonMapper = new ObjectMapper();
-		userServiceImpl.create(generateRegisterDTO());
 	}
 
 	@Nested
 	class meTest{
 		@Test
 		@DisplayName("Valid case")
-		void testMeData() throws Exception {
-			fail("Not yet implemented");
+		void test1() throws Exception {
+			ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/auth/me"))
+					.andExpect(status().isOk())
+					.andDo(MockMvcResultHandlers.print());
+
+			assertEquals(200, result.andReturn().getResponse().getStatus());
 		}
 	}
 
@@ -90,19 +93,16 @@ class UserRestControllerTest {
 		}
 
 		@Test
-		@DisplayName("Invalid Json")
+		@DisplayName("Bad request")
 		void test2() throws Exception {
 			LoginDTO requestBody = generateFakeLoginDTO();
-			
+
 			when(authenticationManager.authenticate(Mockito.any())).thenThrow(new BadCredentialsException("ok false"));
 
 			ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
 					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON)
 					.content(jsonMapper.writeValueAsString(requestBody)))
-					//        			.andExpect(status().isForbidden())
-					//        			.andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_PLAIN))
-					//        			.andExpect(MockMvcResultMatchers.content().string("ok: false"))
 					.andDo(MockMvcResultHandlers.print());
 
 			assertEquals(400, result.andReturn().getResponse().getStatus());
@@ -115,11 +115,8 @@ class UserRestControllerTest {
 			ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
 					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON)
-					.content(" "));
-			//.andExpect(status().isForbidden())
-			//        			.andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_PLAIN))
-			//        			.andExpect(MockMvcResultMatchers.content().string("ok: false"))
-			//        			.andDo(MockMvcResultHandlers.print());
+					.content(" "))
+					.andDo(MockMvcResultHandlers.print());
 
 			assertEquals(500, result.andReturn().getResponse().getStatus());
 		}
@@ -129,9 +126,17 @@ class UserRestControllerTest {
 	class registerTest{
 		@Test
 		@DisplayName("Valid case")
-		//        @WithMockUser(username = "adminmock@gmail.com", roles = "ADMIN")
-		void testRegister() throws Exception {
-			fail("Not yet implemented");
+		void test1() throws Exception {
+			RegisterDTO requestBody = generateRegisterDTO();
+
+			ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/auth/register")
+					.contentType(MediaType.APPLICATION_JSON)
+					.accept(MediaType.APPLICATION_JSON)
+					.content(jsonMapper.writeValueAsString(requestBody)))
+					.andExpect(status().isCreated())
+					.andDo(MockMvcResultHandlers.print());
+
+			assertEquals(201, result.andReturn().getResponse().getStatus());
 		}
 	}
 }
