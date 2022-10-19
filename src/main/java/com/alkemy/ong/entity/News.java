@@ -1,7 +1,6 @@
 package com.alkemy.ong.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,6 +14,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "News")
 @Table(name = "news")
 @SQLDelete(sql = "UPDATE news SET deleted = true WHERE id=?" )

@@ -272,7 +272,6 @@ class NewsControllerTest {
             String id = "1234id";
             NewsDTO newsDTO = NewsControllerTest.generateNewsDto();
             when(newsService.getNewsById(id)).thenReturn(newsDTO);
-
             mockMvc.perform(MockMvcRequestBuilders.get("/news/{id}", id)
                             .content(objectMapper.writeValueAsString(newsDTO))
                             .contentType(MediaType.APPLICATION_JSON)
@@ -330,13 +329,12 @@ class NewsControllerTest {
         void getNewsById_404() throws Exception {
             String id = "1234id";
             NewsDTO newsDTO = NewsControllerTest.generateNewsDto();
-            when(newsService.getNewsById(id)).thenReturn(newsDTO);
-            mockMvc.perform(MockMvcRequestBuilders.put("/news/{id}/casa", id)
-                            .content(objectMapper.writeValueAsString(newsDTO))
+            when(newsService.getNewsById(Mockito.any())).thenThrow(NotFoundException.class);
+            mockMvc.perform(MockMvcRequestBuilders.get("/news/{id}", id)
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isNotFound());
-            Mockito.verify(newsService, Mockito.never()).createNews(Mockito.any());
+            Mockito.verify(newsService).getNewsById(Mockito.any());
         }
     }
 

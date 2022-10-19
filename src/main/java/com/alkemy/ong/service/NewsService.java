@@ -10,7 +10,7 @@ public interface NewsService {
 
 	public NewsDTO createNews(NewsDTO newsDTO);
 
-	public NewsDTO getNewsById(String id);
+	public NewsDTO getNewsById(String id)throws NotFoundException;
 
 	public NewsDTO updateNews(NewsDTO newsDTO, String id);
 

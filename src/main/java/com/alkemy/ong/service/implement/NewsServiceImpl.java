@@ -4,6 +4,7 @@ import java.util.Optional;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.dto.PagesDTO;
 import com.alkemy.ong.entity.Testimonial;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,6 +18,7 @@ import com.alkemy.ong.service.NewsService;
 import javassist.NotFoundException;
 
 @Service
+@AllArgsConstructor
 public class NewsServiceImpl implements NewsService{
 
 	@Autowired
@@ -33,7 +35,7 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
-	public NewsDTO getNewsById(String id) {
+	public NewsDTO getNewsById(String id) throws NotFoundException{
 		News news = newsRepository.findById(id).orElse(null);
 		assert news != null;
 		return newsMapper.newsEntity2DTO(news);
