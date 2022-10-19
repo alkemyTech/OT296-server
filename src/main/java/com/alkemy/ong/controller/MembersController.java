@@ -73,9 +73,9 @@ public class MembersController {
                     content = @Content)
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MembersDTO> createMembers(@Valid @RequestBody MembersDTO2 membersDTO2) throws Exception {
-        membersService.createMembers(membersDTO2);
-        return new ResponseEntity("Create members", HttpStatus.CREATED);
+    public ResponseEntity<MembersDTO2> createMembers(@Valid @RequestBody MembersDTO2 membersDTO2) throws Exception {
+       MembersDTO2 membersDTO = membersService.createMembers(membersDTO2);
+        return ResponseEntity.status(HttpStatus.CREATED).body(membersDTO);
     }
 
     @Operation(summary = "DELETE members")
@@ -90,13 +90,13 @@ public class MembersController {
                     content = @Content)
     })
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteMembers(@PathVariable @Parameter(description = "Id of Member to delete", required = true) String id){
+    public ResponseEntity<String> deleteMembers(@PathVariable @Parameter(description = "Id of Member to delete", required = true) String id){
         try {
             membersService.deleteMembers(id);
+            return new ResponseEntity<>("Member deleted",HttpStatus.OK);
         }catch (NotFoundException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation(summary = "UPDATE members")
@@ -111,14 +111,14 @@ public class MembersController {
                     content = @Content)
     })
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> updateMembers(@Parameter(description = "Id of Member to update", required = true) @PathVariable String id,
+    public ResponseEntity<MembersDTO> updateMembers(@Parameter(description = "Id of Member to update", required = true) @PathVariable String id,
                                                 @RequestBody MembersDTO membersDTO) {
         try {
-            membersService.updateMembers(id, membersDTO);
+            MembersDTO membersDTO1 = membersService.updateMembers(id, membersDTO);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(membersDTO1);
         } catch (
                 NotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
