@@ -10,7 +10,7 @@ import java.util.Map;
 public interface OrganizationService {
     public List<OrganizationDTOPublic> getOrganizationsDTO();
     public OrganizationDTO create(OrganizationDTO dto);
-    public void patchOrganization(String id, Map<Object, Object> objectMap) throws NotFoundException;
+    public OrganizationDTOPublic patchOrganization(String id, Map<Object, Object> objectMap) throws NotFoundException;
 
     OrganizationDTOPublic getSlidesByIdOngOrder(String idOng) throws NotFoundException;
 }
