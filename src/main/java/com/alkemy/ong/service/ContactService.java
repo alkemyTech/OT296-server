@@ -10,5 +10,4 @@ public interface ContactService {
     public void addContact(ContactDTO dto) throws NotFoundException;
 
     public List<ContactDTO> getAllContacts();
-
 }
