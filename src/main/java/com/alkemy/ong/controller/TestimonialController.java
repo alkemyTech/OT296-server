@@ -51,8 +51,8 @@ public class TestimonialController {
 	})
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TestimonialDTO> createTestimonial(@Valid @RequestBody TestimonialDTO testimonial) {
-		testimonialService.createTestimonial(testimonial);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+		TestimonialDTO testimonialDTO = testimonialService.createTestimonial(testimonial);
+		return ResponseEntity.status(HttpStatus.CREATED).body(testimonialDTO);
 	}
 	@Operation(summary = "UPDATE testimonial")
 	@ApiResponses(value = {
@@ -67,8 +67,8 @@ public class TestimonialController {
 					content = @Content)
 	})
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TestimonialDTO> update(@Parameter(description = "Id of Testimonial to update", required = true) @PathVariable String id,
-												 @RequestBody TestimonialDTO dto) {
+	public ResponseEntity<TestimonialDTO> update(@Parameter(description = "Id of Testimonial to update", required = true) @Valid @PathVariable String id,
+												 @Valid @RequestBody TestimonialDTO dto) {
 		try{
 			TestimonialDTO testimonialDTO = testimonialService.updateTestimonial(dto, id);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(testimonialDTO);
