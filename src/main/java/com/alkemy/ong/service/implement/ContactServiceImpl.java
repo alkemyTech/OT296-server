@@ -5,11 +5,14 @@ import com.alkemy.ong.entity.Contact;
 import com.alkemy.ong.mapper.ContactMapper;
 import com.alkemy.ong.repository.ContactRepository;
 import com.alkemy.ong.service.ContactService;
+import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class ContactServiceImpl implements ContactService {
     @Autowired
@@ -18,14 +21,9 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository contactRepository;
 
     @Override
-    public void saveContact(ContactDTO dto) {
-        Contact entity = contactMapper.contactDTO2Entity(dto);
-        contactRepository.save(entity);
-    }
-    @Override
-    public void addContact(ContactDTO dto) throws Exception {
+    public void addContact(ContactDTO dto) throws NotFoundException {
         if (contactRepository.existsByEmail(dto.getEmail())) {
-            throw new Exception("Contact already exist");
+            throw new NotFoundException("Contact already exist");
         }
         Contact entity = contactMapper.contactDTO2Entity(dto);
         contactRepository.save(entity);
