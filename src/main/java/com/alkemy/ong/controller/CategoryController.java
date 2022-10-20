@@ -128,6 +128,6 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryDTO> Create (@Valid @RequestBody CategoryDTO category) {
         categoryService.createCategory(category);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 }

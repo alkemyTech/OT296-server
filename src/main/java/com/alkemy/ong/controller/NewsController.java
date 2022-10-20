@@ -65,12 +65,12 @@ public class NewsController {
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "404", description = "New not found")
 	})
-	public ResponseEntity<NewsDTO> getNewsById(@PathVariable String id) {
+	public ResponseEntity<NewsDTO> getNewsById(@PathVariable String id){
 		try {
 			NewsDTO newsDTO = newsService.getNewsById(id);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(newsDTO);
-		} catch (Exception e) {
-			return new ResponseEntity("News not found", HttpStatus.NOT_FOUND);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<NewsDTO>(HttpStatus.NOT_FOUND);
 		}
 	}
 	@Tag(name = "News")
@@ -82,11 +82,11 @@ public class NewsController {
 			@ApiResponse(responseCode = "403", description = "Forbidden"),
 			@ApiResponse(responseCode = "404", description = "New not found")
 	})
-	public ResponseEntity<Void> deleteNews(@PathVariable String id) {
+	public ResponseEntity<String> deleteNews(@PathVariable String id) {
 		try {
 			newsService.deleteNews(id);
 		} catch (NotFoundException e) {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}

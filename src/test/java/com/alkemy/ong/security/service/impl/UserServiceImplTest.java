@@ -1,4 +1,4 @@
-package com.alkemy.ong.service;
+package com.alkemy.ong.security.service.impl;
 
 import com.alkemy.ong.dto.UserDTO;
 import com.alkemy.ong.entity.Role;
@@ -9,7 +9,6 @@ import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.mapper.UserWithJWTMapper;
 import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
-import com.alkemy.ong.security.service.impl.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.*;
@@ -20,7 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.assertj.core.api.Assertions.*;
 
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -57,9 +55,6 @@ class UserServiceImplTest {
     @Mock
     private JwTUtil jwTUtil;
 
-    @Mock
-    private ArrayList<String> mockedArrayList;
-
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
@@ -83,9 +78,6 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        autoCloseable = MockitoAnnotations.openMocks(this);
-        MockitoAnnotations.initMocks(this);
-
         roleUser = Role.builder()
                 .id("1")
                 .name("ROLE_USER")
@@ -117,11 +109,6 @@ class UserServiceImplTest {
                 .photo("adminPhoto")
                 .role(roleAdmin)
                 .build();
-    }
-
-    @AfterEach
-    void tearDown() throws Exception{
-        autoCloseable.close();
     }
 
     @DisplayName("LOAD user - Correct User Login")
