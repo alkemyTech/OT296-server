@@ -23,5 +23,4 @@ public class ContactDTO {
     private String email;
 
     private String message;
-
 }
