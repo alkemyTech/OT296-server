@@ -3,6 +3,7 @@ package com.alkemy.ong.service.implement;
 import java.util.Optional;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.dto.PagesDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,24 +15,25 @@ import com.alkemy.ong.mapper.NewsMapper;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.NewsService;
 import javassist.NotFoundException;
-
+@AllArgsConstructor
 @Service
 public class NewsServiceImpl implements NewsService{
-	
+
 	@Autowired
 	private NewsRepository newsRepository;
-	
+
 	@Autowired
 	private NewsMapper newsMapper;
 
 	@Override
-	public void createNews(NewsDTO newsDTO) {
+	public NewsDTO createNews(NewsDTO newsDTO) {
 		News newsEntity = newsMapper.newsDTO2Entity(newsDTO);
-		newsRepository.save(newsEntity);
+		News newsSave= newsRepository.save(newsEntity);
+		return newsMapper.newsEntity2DTO(newsSave);
 	}
 
 	@Override
-	public NewsDTO getNewsById(String id) {
+	public NewsDTO getNewsById(String id) throws NotFoundException{
 		News news = newsRepository.findById(id).orElse(null);
 		assert news != null;
 		return newsMapper.newsEntity2DTO(news);
@@ -49,13 +51,14 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
-	public void deleteNews(String id) throws NotFoundException {
-    	Optional<News> news = newsRepository.findById(id);
-    	if (news.isPresent()) {
-    		newsRepository.deleteById(id);
-    	} else {
-    		throw new NotFoundException("News not found");
-    	}		
+	public String deleteNews(String id) throws NotFoundException {
+		Optional<News> news = newsRepository.findById(id);
+		if (news.isPresent()) {
+			newsRepository.deleteById(id);
+		} else {
+			throw new NotFoundException("News not found");
+		}
+		return "delete news";
 	}
 
 	@Override
