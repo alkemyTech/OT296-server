@@ -10,6 +10,7 @@ import com.alkemy.ong.service.implement.CategoryServiceImpl;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -78,7 +79,6 @@ public class CategoryServiceImplTest {
         category.setTimestamps(LocalDate.now());
         return category;
     }
-
     @Test
     @DisplayName("Test Get All Category status .OK")
     void getCategory_Ok() {
@@ -178,6 +178,4 @@ public class CategoryServiceImplTest {
         assertThrows(NotFoundException.class, () -> categoryServiceImpl.updateCategory(categoryDTO,"2"));
         verify(categoryRepository, never()).save(Mockito.any());
     }
-
-
 }
