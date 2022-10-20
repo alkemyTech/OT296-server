@@ -5,10 +5,12 @@ import com.alkemy.ong.entity.Activity;
 import com.alkemy.ong.mapper.ActivityMapper;
 import com.alkemy.ong.repository.ActivityRepository;
 import com.alkemy.ong.service.ActivityService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ActivityServiceImpl implements ActivityService {
 
     @Autowired

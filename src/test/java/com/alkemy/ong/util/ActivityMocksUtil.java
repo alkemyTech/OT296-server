@@ -1,12 +1,15 @@
 package com.alkemy.ong.util;
 
 import com.alkemy.ong.dto.ActivityDTO;
+import com.alkemy.ong.entity.Activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityMocksUtil {
+
+    //****** Controller ******//
 
     public static ActivityDTO generateActivityDTO(){
         ActivityDTO activityDTO = new ActivityDTO();
@@ -60,5 +63,26 @@ public class ActivityMocksUtil {
         requests.add(singleRequest);
 
         return requests;
+    }
+
+    //****** Service ******//
+
+    public static Activity generateMockActivity(){
+        Activity activityEntity = new Activity();
+        activityEntity.setId("1");
+        activityEntity.setName("Activity ");
+        activityEntity.setContent("Activity content ");
+        activityEntity.setImage("image.jpg ");
+
+        return activityEntity;
+    }
+
+    public static ActivityDTO generateANewActivityDTO(){
+        ActivityDTO activityDTO = new ActivityDTO();
+        activityDTO.setName("Test save name");
+        activityDTO.setContent("Test save content");
+        activityDTO.setImage("testSave.jpg");
+
+        return activityDTO;
     }
 }
