@@ -27,21 +27,21 @@ public class SlidesController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getSlide(@PathVariable String id) {
         try {
-            slidesService.getSlideDTO(id);
+           SlidesDTO slidesDTO = slidesService.getSlideDTO(id);
+            return ResponseEntity.status(HttpStatus.OK).body(slidesDTO);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateSlide(@PathVariable String id, @RequestBody SlidesDTO slideDTO) {
         try {
-            slidesService.updateSlide(id, slideDTO);
+           SlidesDTO slidesDTO = slidesService.updateSlide(id, slideDTO);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(slidesDTO);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @DeleteMapping("/{id}")
