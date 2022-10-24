@@ -11,7 +11,7 @@ import java.util.List;
 public interface CommentService{
 
     public List<CommentDTOBody> getAllComments();
-    ResponseEntity<CommentDTO> createComment(CommentDTO commentDTO) throws NotFoundException;
+    ResponseEntity<CommentDTO> create(CommentDTO commentDTO) throws NotFoundException;
 
     ResponseEntity<?> updateComment(String id, CommentDTO commentDTO);
 
