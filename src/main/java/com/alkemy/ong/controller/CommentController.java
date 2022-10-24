@@ -29,7 +29,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<?> createComment(@Valid @RequestBody CommentDTO comment)  {
         try{
-            ResponseEntity<CommentDTO> commentDTO = commentService.createComment(comment);
+            ResponseEntity<CommentDTO> commentDTO = commentService.create(comment);
             return commentDTO;
         } catch (Exception e) {
             return new ResponseEntity<>("can not create this comment",HttpStatus.NOT_FOUND);
