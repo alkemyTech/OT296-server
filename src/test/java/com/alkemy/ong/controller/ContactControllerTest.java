@@ -5,6 +5,7 @@ import com.alkemy.ong.security.service.impl.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import com.alkemy.ong.service.ContactService;
 import com.alkemy.ong.service.EmailService;
+import com.alkemy.ong.service.implement.ContactServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.*;
@@ -37,7 +38,7 @@ class ContactControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ContactService contactService;
+    private ContactServiceImpl contactService;
 
     @MockBean
     private EmailService emailService;

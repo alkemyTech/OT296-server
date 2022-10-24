@@ -1,7 +1,5 @@
 package com.alkemy.ong.dto;
 
-import com.alkemy.ong.entity.News;
-import com.alkemy.ong.entity.Users;
 import lombok.Getter;
 import lombok.Setter;
 
