@@ -9,13 +9,14 @@ import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.SlidesService;
 import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
-
+@AllArgsConstructor
 @Service
 public class SlidesServiceImpl implements SlidesService {
     @Autowired
@@ -76,12 +77,12 @@ public class SlidesServiceImpl implements SlidesService {
         }
         entity.setOrganization(organization.get());
 
-        if (dto.getOrder() == null){
+        if (Objects.equals(dto.getOrder(), slideMaxOrder)) {
+            entity.setOrder(slideMaxOrder + 1);
+        } else if (dto.getOrder() == null){
             entity.setOrder(slideMaxOrder + 1);
         } else if (dto.getOrder() != null) {
             entity.setOrder(dto.getOrder());
-        } else if (Objects.equals(dto.getOrder(), slideMaxOrder)) {
-            entity.setOrder(slideMaxOrder + 1);
         }
         slidesRepository.save(entity);
         return slidesMapper.SlidesEntity2DTO(entity);
