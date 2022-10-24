@@ -181,11 +181,16 @@ public class SlidesServiceImplTest {
         @Test
         @DisplayName("Slides create status ok")
         void createSlide_Ok() throws IOException, NotFoundException {
+            SlidesDTO slidesDTO= new SlidesDTO();
+            slidesDTO.setImageURL("image1");
+            slidesDTO.setText("text1");
+            slidesDTO.setOrder(1);
+            slidesDTO.setOrganizationID(generateOrganizations().getId());
             given(slidesRepository.getMaxOrder()).willReturn(1);
             given(organizationRepository.findById(any())).willReturn(Optional.of(generateOrganizations()));
             given(slidesRepository.save(any())).willReturn(generateSlidesLis().get(0));
             Slides slides= SlidesServiceImplTest.generateSlidesLis().get(0);
-            SlidesDTO slidesDTO = slidesServiceImpl.createSlide(generateSlidesDto());
+            SlidesDTO slidesDTO1 = slidesServiceImpl.createSlide(slidesDTO);
             assertThat(slides.getId()).isNotEmpty();
             assertThat(slides.getImageURL()).isEqualTo("image2");
             assertThat(slides.getOrder()).isEqualTo(1);
@@ -199,11 +204,35 @@ public class SlidesServiceImplTest {
             verify(slidesRepository, never()).findById(Mockito.any());
         }
         @Test
-        @DisplayName("Slides create status Not Found")
-        void createSlide_Null(){
-            given(slidesRepository.getMaxOrder()).willReturn(null);
-            assertThrows(NotFoundException.class, () -> slidesServiceImpl.createSlide(generateSlidesDto()));
-            verify(slidesRepository, never()).save(any());
+        @DisplayName("Slides create status ok")
+        void createSlide_Null() throws IOException, NotFoundException {
+            SlidesDTO slidesDTO= new SlidesDTO();
+            slidesDTO.setImageURL("image1");
+            slidesDTO.setText("text1");
+            slidesDTO.setOrder(null);
+            slidesDTO.setOrganizationID(generateOrganizations().getId());
+            given(slidesRepository.getMaxOrder()).willReturn(1);
+            given(organizationRepository.findById(any())).willReturn(Optional.of(generateOrganizations()));
+            given(slidesRepository.save(any())).willReturn(generateSlidesLis().get(0));
+            Slides slides= SlidesServiceImplTest.generateSlidesLis().get(0);
+            SlidesDTO slidesDTO1 = slidesServiceImpl.createSlide(slidesDTO);
+            assertThat(slides.getId()).isNotEmpty();
+            assertThat(slides.getImageURL()).isEqualTo("image2");
+            assertThat(slides.getOrder()).isEqualTo(1);
+            verify(slidesRepository, times(1)).save(any());
+        }
+        @Test
+        @DisplayName("Slides create status ok")
+        void createSlide_NotNull() throws IOException, NotFoundException {
+            given(slidesRepository.getMaxOrder()).willReturn(1);
+            given(organizationRepository.findById(any())).willReturn(Optional.of(generateOrganizations()));
+            given(slidesRepository.save(any())).willReturn(generateSlidesLis().get(0));
+            Slides slides= SlidesServiceImplTest.generateSlidesLis().get(0);
+            SlidesDTO slidesDTO1 = slidesServiceImpl.createSlide(generateSlidesDto());
+            assertThat(slides.getId()).isNotEmpty();
+            assertThat(slides.getImageURL()).isEqualTo("image2");
+            assertThat(slides.getOrder()).isEqualTo(1);
+            verify(slidesRepository, times(1)).save(any());
         }
     }
 

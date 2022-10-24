@@ -77,12 +77,12 @@ public class SlidesServiceImpl implements SlidesService {
         }
         entity.setOrganization(organization.get());
 
-        if (dto.getOrder() == null){
+        if (Objects.equals(dto.getOrder(), slideMaxOrder)) {
+            entity.setOrder(slideMaxOrder + 1);
+        } else if (dto.getOrder() == null){
             entity.setOrder(slideMaxOrder + 1);
         } else if (dto.getOrder() != null) {
             entity.setOrder(dto.getOrder());
-        } else if (Objects.equals(dto.getOrder(), slideMaxOrder)) {
-            entity.setOrder(slideMaxOrder + 1);
         }
         slidesRepository.save(entity);
         return slidesMapper.SlidesEntity2DTO(entity);
