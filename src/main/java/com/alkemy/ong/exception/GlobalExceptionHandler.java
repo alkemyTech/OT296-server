@@ -46,8 +46,4 @@ public class GlobalExceptionHandler {
         return new ErrorInfo(request, exception);
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public class ForbiddenException extends RuntimeException {
-    }
-
 }

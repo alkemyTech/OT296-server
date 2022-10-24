@@ -3,7 +3,6 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.CommentDTO;
 import com.alkemy.ong.dto.CommentDTOBody;
 import com.alkemy.ong.exception.GlobalExceptionHandler;
-import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.service.impl.UserServiceImpl;
 import com.alkemy.ong.security.util.JwTUtil;
 import com.alkemy.ong.service.implement.CommentServiceImpl;
@@ -17,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,7 +26,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,9 +45,6 @@ class CommentControllerTest {
 
     @MockBean
     JwTUtil jwTUtil;
-
-    @MockBean
-    UsersRepository usersRepository;
 
     @Autowired
     ObjectMapper jsonMapper;
@@ -99,42 +93,22 @@ class CommentControllerTest {
             Mockito.verify(commentService).createComment(Mockito.any());
         }
 
-        @DisplayName("User not found")
-        @WithMockUser(username = "mock@admin.com", roles = "ADMIN") //?????
+        @DisplayName("User or news not found")
+        @WithMockUser(username = "mock@admin.com", roles = "ADMIN")
         @Test
         void test3() throws Exception{
             CommentDTO commentDTO = generateDTO();
             ResponseEntity<CommentDTO> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            when(usersRepository.existsById(any())).thenReturn(true);
             when(commentService.createComment(any())).thenThrow(NotFoundException.class);
 
-            mockMvc.perform(post("/contact")
+            mockMvc.perform(post("/comment")
                             .contentType(APPLICATION_JSON)
                             .content(jsonMapper.writeValueAsString(commentDTO)))
                     .andExpect(status().isNotFound())
                     .andDo(MockMvcResultHandlers.print());
 
-            Mockito.verify(commentService,never()).createComment(any());
-        }
-
-        @DisplayName("News not found")
-        @WithMockUser(username = "mock@admin.com", roles = "ADMIN") //?????
-        @Test
-        void test4() throws Exception{
-            CommentDTO commentDTO = generateDTO();
-            ResponseEntity<CommentDTO> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-            //when(usersRepository.existsById(any())).thenReturn(true);
-            when(commentService.createComment(any())).thenThrow(NotFoundException.class);
-
-            mockMvc.perform(post("/contact")
-                            .contentType(APPLICATION_JSON)
-                            .content(jsonMapper.writeValueAsString(commentDTO)))
-                    .andExpect(status().isNotFound())
-                    .andDo(MockMvcResultHandlers.print());
-
-            Mockito.verify(commentService,never()).createComment(any());
+            Mockito.verify(commentService).createComment(any());
         }
 
     }
@@ -186,7 +160,7 @@ class CommentControllerTest {
             String id = "123";
             CommentDTO commentDTO = generateDTO();
 
-            when(commentService.updateComment(any(),any())).thenThrow(GlobalExceptionHandler.ForbiddenException.class);
+            when(commentService.updateComment(any(),any())).thenThrow(NotFoundException.class);
 
             mockMvc.perform(put("/comment" + "/{id}", id)
                             .contentType(APPLICATION_JSON)
@@ -239,7 +213,7 @@ class CommentControllerTest {
         }
 
         @DisplayName("Comment not found")
-        @WithMockUser(username = "mock@admin.com", roles = "ADMIN") //?????????
+        @WithMockUser(username = "mock@admin.com", roles = "ADMIN")
         @Test
         void test3() throws Exception{
             String id = "123";
@@ -258,7 +232,7 @@ class CommentControllerTest {
         }
 
         @DisplayName("forbidden")
-        @WithMockUser(username = "mock@admin.com", roles = "ADMIN") //?????????
+        @WithMockUser(username = "mock@admin.com", roles = "ADMIN")
         @Test
         void test4() throws Exception{
             String id = "123";
@@ -272,7 +246,7 @@ class CommentControllerTest {
                     .andExpect(status().isForbidden())
                     .andDo(MockMvcResultHandlers.print());
 
-            Mockito.verify(commentService).deleteComment(any(),any()); // nunca invocado, bien preguntado?
+            Mockito.verify(commentService).deleteComment(any(),any());
         }
 
     }

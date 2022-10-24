@@ -31,8 +31,8 @@ public class CommentController {
         try{
             ResponseEntity<CommentDTO> commentDTO = commentService.createComment(comment);
             return commentDTO;
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>("something not found",HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("can not create this comment",HttpStatus.NOT_FOUND);
         }
     }
 
@@ -44,7 +44,7 @@ public class CommentController {
         try {
             commentService.updateComment(id, commentDTO);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } catch (GlobalExceptionHandler.ForbiddenException e) {
+        } catch (NotFoundException e) {
             return new ResponseEntity<>("can not modified this comment",HttpStatus.FORBIDDEN);
         }
     }
