@@ -103,10 +103,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 //Comments
                 .antMatchers(HttpMethod.GET, "/comment").hasRole(ROLE_ADMIN)
-                .antMatchers(HttpMethod.POST, "/comment").hasRole(ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/comment").hasAnyRole(ROLE_ADMIN, ROLE_USER)
                 .antMatchers(HttpMethod.DELETE, "/comment/**").hasAnyRole(ROLE_ADMIN,ROLE_USER)
-                .antMatchers(HttpMethod.PUT, "/comment/**").hasRole(ROLE_ADMIN)
-                .antMatchers(HttpMethod.GET, "/comment/posts/comments").hasAnyRole(ROLE_USER, ROLE_ADMIN)
+                .antMatchers(HttpMethod.PUT, "/comment/**").hasAnyRole(ROLE_ADMIN, ROLE_USER)
+                .antMatchers(HttpMethod.GET, "/comment/posts/{id}/comments").hasAnyRole(ROLE_USER, ROLE_ADMIN)
 
                 //Docs
                 .antMatchers("/api/docs/**").permitAll()

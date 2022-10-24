@@ -146,7 +146,7 @@ public class CommentServiceImplTest {
 
     @Test
     @DisplayName("Update Comment - success")
-    void updateCommentSuccess(){
+    void updateCommentSuccess() throws Exception{
         given(commentRepository.findById(any())).willReturn(Optional.of(comment));
         given(usersRepository.findById(any())).willReturn(Optional.of(user));
 

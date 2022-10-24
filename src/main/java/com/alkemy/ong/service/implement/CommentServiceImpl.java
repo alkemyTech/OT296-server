@@ -57,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
     }
     
     @Override
-    public ResponseEntity<?> updateComment(String id, CommentDTO commentDTO) {
+    public ResponseEntity<?> updateComment(String id, CommentDTO commentDTO) throws NotFoundException{
         Comment commentEntity = commentRepository.findById(id).orElse(null);
         assert commentEntity != null;
         Optional<Users> userEntity = usersRepository.findById(commentDTO.getUserId());
