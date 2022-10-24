@@ -63,7 +63,7 @@ class CommentControllerTest {
         void test1() throws Exception{
             CommentDTO commentDTO = generateDTO();
             ResponseEntity<CommentDTO> responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
-            when(commentService.createComment(any())).thenReturn(responseEntity);
+            when(commentService.create(any())).thenReturn(responseEntity);
 
             mockMvc.perform(post("/comment")
                             .contentType(APPLICATION_JSON)
@@ -81,7 +81,7 @@ class CommentControllerTest {
         void test2() throws Exception{
             CommentDTO commentDTO = generateDTO();
             ResponseEntity<CommentDTO> responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
-            when(commentService.createComment(any())).thenReturn(responseEntity);
+            when(commentService.create(any())).thenReturn(responseEntity);
 
             mockMvc.perform(post("/comment")
                             .contentType(APPLICATION_JSON)
@@ -100,7 +100,7 @@ class CommentControllerTest {
             CommentDTO commentDTO = generateDTO();
             ResponseEntity<CommentDTO> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            when(commentService.createComment(any())).thenThrow(NotFoundException.class);
+            when(commentService.create(any())).thenThrow(NotFoundException.class);
 
             mockMvc.perform(post("/comment")
                             .contentType(APPLICATION_JSON)
