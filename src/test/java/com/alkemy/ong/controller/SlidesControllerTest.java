@@ -321,8 +321,7 @@ class SlidesControllerTest {
                     .andDo(print());
             verify(slidesService,never()).deleteSlide(any());
         }
-
-
+        
     }
 
     @Nested
@@ -357,8 +356,6 @@ class SlidesControllerTest {
                     .andDo(print());
             verify(slidesService).createSlide(any());
         }
-
-
 
         @Test
         @DisplayName("Invalid Role Case")
