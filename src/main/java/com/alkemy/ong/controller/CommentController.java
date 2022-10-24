@@ -37,14 +37,14 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody CommentDTO commentDTO){
+    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody CommentDTO commentDTO) throws NotFoundException{
         if(commentService.exitsById(id)){
             return new ResponseEntity<>("Comment not found",HttpStatus.NOT_FOUND);
         }
         try {
             commentService.updateComment(id, commentDTO);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
             return new ResponseEntity<>("can not modified this comment",HttpStatus.FORBIDDEN);
         }
     }
