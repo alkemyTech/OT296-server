@@ -26,24 +26,24 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(commentDTOList);
     }
     @PostMapping
-    public ResponseEntity<CommentDTO> Create (@Valid @RequestBody CommentDTO comment)  {
+    public ResponseEntity<?> createComment(@Valid @RequestBody CommentDTO comment)  {
         try{
             ResponseEntity<CommentDTO> commentDTO = commentService.create(comment);
             return commentDTO;
         }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new ResponseEntity<>("can not create this comment",HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody CommentDTO commentDTO){
+    public ResponseEntity<?> updateComment(@PathVariable String id, @RequestBody CommentDTO commentDTO) throws NotFoundException{
         if(commentService.exitsById(id)){
             return new ResponseEntity<>("Comment not found",HttpStatus.NOT_FOUND);
         }
         try {
             commentService.updateComment(id, commentDTO);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
             return new ResponseEntity<>("can not modified this comment",HttpStatus.FORBIDDEN);
         }
     }

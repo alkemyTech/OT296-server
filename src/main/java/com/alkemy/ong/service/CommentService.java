@@ -13,7 +13,7 @@ public interface CommentService{
     public List<CommentDTOBody> getAllComments();
     ResponseEntity<CommentDTO> create(CommentDTO commentDTO) throws NotFoundException;
 
-    ResponseEntity<?> updateComment(String id, CommentDTO commentDTO);
+    ResponseEntity<?> updateComment(String id, CommentDTO commentDTO) throws NotFoundException;
 
     ResponseEntity<?> deleteComment(String id, Authentication authentication) throws NotFoundException;
 
