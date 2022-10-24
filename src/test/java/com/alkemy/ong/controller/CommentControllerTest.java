@@ -72,7 +72,7 @@ class CommentControllerTest {
                     .andExpect(status().isCreated())
                     .andDo(MockMvcResultHandlers.print());
 
-            Mockito.verify(commentService).createComment(Mockito.any());
+            Mockito.verify(commentService).create(Mockito.any());
         }
 
         @DisplayName("create comment as ADMIN added successful")
@@ -90,7 +90,7 @@ class CommentControllerTest {
                     .andExpect(status().isCreated())
                     .andDo(MockMvcResultHandlers.print());
 
-            Mockito.verify(commentService).createComment(Mockito.any());
+            Mockito.verify(commentService).create(Mockito.any());
         }
 
         @DisplayName("User or news not found")
@@ -108,7 +108,7 @@ class CommentControllerTest {
                     .andExpect(status().isNotFound())
                     .andDo(MockMvcResultHandlers.print());
 
-            Mockito.verify(commentService).createComment(any());
+            Mockito.verify(commentService).create(any());
         }
 
     }
