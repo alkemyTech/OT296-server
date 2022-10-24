@@ -14,8 +14,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.*;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +32,16 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {TestimonialServiceImpl.class})
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 class TestimonialServiceImplTest {
 
-    @Mock
+    @MockBean
     TestimonialRepository testimonialRepository;
 
-    @InjectMocks
-    private TestimonialServiceImpl testimonialServiceImpl;
-
-    @Mock
+    @SpyBean
     private TestimonialMapper testimonialMapper;
+
+    private TestimonialServiceImpl testimonialServiceImpl;
 
     private Testimonial testimonial;
 
@@ -50,6 +52,8 @@ class TestimonialServiceImplTest {
                 .name("name")
                 .content("content")
                 .build();
+
+        testimonialServiceImpl = new TestimonialServiceImpl(testimonialMapper,testimonialRepository);
     }
 
     @Test
@@ -72,6 +76,8 @@ class TestimonialServiceImplTest {
         TestimonialDTO testimonialDTO = new TestimonialDTO();
         testimonialDTO.setName("name1");
         testimonialDTO.setContent("content1");
+
+        given(testimonialRepository.save(any())).willReturn(testimonial);
         given(testimonialRepository.findById("1")).willReturn(Optional.of(testimonial));
         testimonialServiceImpl.updateTestimonial(testimonialDTO,"1");
         assertThat(testimonial.getName()).isEqualTo("name1");
@@ -121,7 +127,6 @@ class TestimonialServiceImplTest {
         Page<Testimonial> page = new PageImpl<>(testimonials,pageable,testimonials.size());
 
         when(testimonialRepository.findAll(any(Pageable.class))).thenReturn(page);
-        when(testimonialMapper.testimonialEntityPageDTOList(testimonials)).thenReturn(testimonialDTOS);
         PagesDTO<TestimonialDTO> testimonialPagesDTO = testimonialServiceImpl.getAllForPages(0);
 
         assertThat(testimonialPagesDTO).isNotNull();

@@ -11,10 +11,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "roles")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(generator="system-uuid")

@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class OrganizationDTO {
 
     private String name;

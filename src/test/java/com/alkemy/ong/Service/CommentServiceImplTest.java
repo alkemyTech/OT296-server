@@ -46,7 +46,7 @@ public class CommentServiceImplTest {
     UsersRepository usersRepository;
     @SpyBean
     CommentMapper commentMapper;
-    @InjectMocks
+
     private CommentServiceImpl commentServiceImpl;
 
     private Comment comment;

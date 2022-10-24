@@ -47,7 +47,7 @@ public class SlidesServiceImplTest {
     private AmazonClient amazonClient;
     @SpyBean
     SlidesMapper slidesMapper;
-    @InjectMocks
+
     private SlidesServiceImpl slidesServiceImpl;
 
     @BeforeEach

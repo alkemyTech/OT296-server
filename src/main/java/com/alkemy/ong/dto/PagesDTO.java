@@ -1,12 +1,9 @@
 package com.alkemy.ong.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.Page;
 
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
 public class PagesDTO<T> {
 

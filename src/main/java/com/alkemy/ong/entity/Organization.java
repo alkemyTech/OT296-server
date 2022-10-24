@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Builder
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @SQLDelete(sql = "UPDATE organizations SET soft_delete = true WHERE id=?")
 @Where(clause = "soft_delete=false")
 @Table(name="organizations")
