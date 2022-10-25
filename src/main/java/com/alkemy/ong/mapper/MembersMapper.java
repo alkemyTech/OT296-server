@@ -34,17 +34,6 @@ public class MembersMapper {
 
         return membersDTOList;
     }
-    public Members membersDto2Entity(MembersDTO membersDTO){
-        Members members= new Members();
-        members.setName(membersDTO.getName());
-        members.setFacebookUrl(membersDTO.getFacebookUrl());
-        members.setInstagramUrl(membersDTO.getInstagramUrl());
-        members.setLinkedinUrl(membersDTO.getLinkedinUrl());
-        members.setImage(membersDTO.getImage());
-        members.setDescription(membersDTO.getDescription());
-        members.setTimestamps(membersDTO.getTimestamps());
-        return members;
-    }
 
     public Members membersEntity2DTO2(MembersDTO2 membersDTO2) {
 

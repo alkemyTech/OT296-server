@@ -8,6 +8,7 @@ import com.alkemy.ong.mapper.MembersMapper;
 import com.alkemy.ong.repository.MembersRepository;
 import com.alkemy.ong.service.MembersService;
 import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class MembersServiceImpl implements MembersService {
 

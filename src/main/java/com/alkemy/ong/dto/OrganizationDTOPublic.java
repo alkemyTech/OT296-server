@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class OrganizationDTOPublic {
 
     private String name;

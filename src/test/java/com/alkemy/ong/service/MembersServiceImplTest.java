@@ -15,8 +15,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.*;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +34,15 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {MembersServiceImpl.class})
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 class MembersServiceImplTest {
 
-    @Mock
+    @MockBean
     MembersRepository membersRepository;
 
-    @InjectMocks
     private MembersServiceImpl membersServiceImpl;
 
-    @Mock
+    @SpyBean
     private MembersMapper membersMapper;
 
     private Members member;
@@ -57,6 +59,8 @@ class MembersServiceImplTest {
                 .instagramUrl("instagramUrl")
                 .linkedinUrl("linkedinUrl")
                 .build();
+
+        membersServiceImpl = new MembersServiceImpl(membersRepository,membersMapper);
     }
 
     @Test
@@ -89,7 +93,6 @@ class MembersServiceImplTest {
         Page<Members> page = new PageImpl<>(members,pageable,members.size());
 
         when(membersRepository.findAll(any(Pageable.class))).thenReturn(page);
-        when(membersMapper.membersEntityPageDTOList(page)).thenReturn(membersDto);
         PagesDTO<MembersDTO> membersPagesDTO2 = membersServiceImpl.getAllMembers(0);
 
         assertThat(membersPagesDTO2).isNotNull();
@@ -125,6 +128,7 @@ class MembersServiceImplTest {
         membersDTO.setLinkedinUrl("linkedinUrl1");
         membersDTO.setInstagramUrl("instagramUrl1");
         given(membersRepository.findById("1")).willReturn(Optional.of(member));
+        given(membersRepository.save(any())).willReturn(member);
         membersServiceImpl.updateMembers("1",membersDTO);
         assertThat(member.getName()).isEqualTo("name1");
         verify(membersRepository,times(1)).findById("1");

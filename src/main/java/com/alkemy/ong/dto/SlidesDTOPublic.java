@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class SlidesDTOPublic {
 
     private String imageURL;

@@ -6,12 +6,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Builder
+
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ContactDTO {
 
     @NotNull @NotEmpty @NotBlank
