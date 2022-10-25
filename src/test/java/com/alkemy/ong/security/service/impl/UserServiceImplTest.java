@@ -10,52 +10,57 @@ import com.alkemy.ong.security.dto.UserWithoutPassDTO;
 import com.alkemy.ong.security.mapper.UserWithJWTMapper;
 import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.util.JwTUtil;
+import com.alkemy.ong.service.implement.EmailServiceImpl;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import static org.assertj.core.api.Assertions.*;
 
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = UserServiceImpl.class)
 class UserServiceImplTest {
 
-    @Mock
+    @MockBean
     private UsersRepository usersRepository;
 
-    @Mock
+    @SpyBean
     private UserWithoutPassMapper userWithoutPassMapper;
 
-    @Mock
+    @MockBean
     private PasswordEncoder encoder;
 
-    @Mock
+    @SpyBean
     private UserWithJWTMapper userWithJWTMapper;
 
-    @Mock
+    @MockBean
     private AuthenticationManager authenticationManager;
 
-    @Mock
+    @MockBean
     private RoleRepository roleRepository;
 
-    @Mock
+    @MockBean
     private JwTUtil jwTUtil;
 
-    @InjectMocks
+    @MockBean
+    private EmailServiceImpl emailService;
+
     private UserServiceImpl userServiceImpl;
 
     private Users user;
@@ -74,10 +79,10 @@ class UserServiceImplTest {
 
     private RegisterDTO registerDTO;
 
-    private AutoCloseable autoCloseable;
-
     @BeforeEach
     void setUp() {
+        userServiceImpl = new UserServiceImpl(usersRepository, userWithoutPassMapper, roleRepository, authenticationManager, jwTUtil, userWithJWTMapper, encoder, emailService);
+
         roleUser = Role.builder()
                 .id("1")
                 .name("ROLE_USER")
@@ -148,9 +153,7 @@ class UserServiceImplTest {
         Authentication auth = authenticationManager.authenticate(userDetails);
 
         given(roleRepository.findByName(roleAdmin.getName())).willReturn(Optional.of(roleAdmin));
-        given(userWithJWTMapper.userDTO2Entity(registerDTO)).willReturn(admin);
-        given(userWithJWTMapper.userEntity2DTO(admin, "1234")).willReturn(registerDTO);
-        given(usersRepository.save(admin)).willReturn(admin);
+        given(usersRepository.save(any())).willReturn(admin);
         given(authenticationManager.authenticate(userDetails)).willReturn(auth);
 
         when(jwTUtil.generateToken(auth)).thenReturn("1234");
@@ -181,9 +184,7 @@ class UserServiceImplTest {
         Authentication auth = authenticationManager.authenticate(userDetails);
 
         given(roleRepository.findByName(roleUser.getName())).willReturn(Optional.of(roleUser));
-        given(userWithJWTMapper.userDTO2Entity(registerDTO)).willReturn(user);
-        given(userWithJWTMapper.userEntity2DTO(user, "1234")).willReturn(registerDTO);
-        given(usersRepository.save(user)).willReturn(user);
+        given(usersRepository.save(any())).willReturn(user);
 
         when(jwTUtil.generateToken(auth)).thenReturn("1234");
 
@@ -214,8 +215,7 @@ class UserServiceImplTest {
         Authentication auth = authenticationManager.authenticate(userDetails);
 
         given(roleRepository.findByName(roleUser.getName())).willReturn(Optional.of(roleUser));
-        given(userWithJWTMapper.userDTO2Entity(registerDTO)).willReturn(user);
-        given(usersRepository.save(user)).willReturn(user);
+        given(usersRepository.save(any())).willReturn(user);
 
         when(authenticationManager.authenticate(userDetails)).thenThrow(BadCredentialsException.class);
 
@@ -299,18 +299,11 @@ class UserServiceImplTest {
     @DisplayName("GET list of users - get list with an element")
     @Test
     void findAllUsersListWithUsers() {
-        userDTO = new UserWithoutPassDTO();
-        userDTO.setFirstName("Ezequiel");
-        userDTO.setLastName("Alvarez");
-        userDTO.setEmail("ezequiel@gmail.com");
-        userDTO.setPhoto("ezequielPhoto");
-
         given(usersRepository.findAll()).willReturn(List.of(user));
-        given(userWithoutPassMapper.userWPEntityList2DTOList(List.of(user))).willReturn(List.of(userDTO));
 
         List<UserWithoutPassDTO> usersDTO = userServiceImpl.findAllUsers();
 
-        assertThat(usersDTO).isNotNull();
+        assertThat(usersDTO).isNotEmpty();
         assertThat(usersDTO.size()).isEqualTo(1);
     }
 

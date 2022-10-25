@@ -1,24 +1,26 @@
 package com.alkemy.ong.security.mapper;
 
+import com.alkemy.ong.dto.RoleDTO;
 import com.alkemy.ong.entity.Users;
-import com.alkemy.ong.mapper.RoleMapper;
 import com.alkemy.ong.security.dto.UserWithoutPassDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class UserWithoutPassMapper {
-    @Autowired
-    private RoleMapper roleMapper;
 
     public UserWithoutPassDTO userWPEntity2DTO(Users users){
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTO.setName(users.getRole().getName());
+        roleDTO.setDescription(users.getRole().getDescription());
+        roleDTO.setTimestamps(users.getRole().getTimestamps());
+
         UserWithoutPassDTO userDTO = new UserWithoutPassDTO();
         userDTO.setFirstName(users.getFirstName());
         userDTO.setLastName(users.getLastName());
         userDTO.setEmail(users.getEmail());
-        userDTO.setRoleDTO(roleMapper.roleEntity2DTO(users.getRole()));
+        userDTO.setRoleDTO(roleDTO);
         return userDTO;
     }
 

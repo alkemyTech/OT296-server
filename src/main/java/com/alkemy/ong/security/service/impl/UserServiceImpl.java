@@ -7,13 +7,15 @@ import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UsersRepository;
 import com.alkemy.ong.security.dto.RegisterDTO;
 import com.alkemy.ong.security.dto.UserWithoutPassDTO;
-import com.alkemy.ong.security.mapper.UserMapper;
 import com.alkemy.ong.security.mapper.UserWithJWTMapper;
 import com.alkemy.ong.security.mapper.UserWithoutPassMapper;
 import com.alkemy.ong.security.service.UserService;
 import com.alkemy.ong.security.util.JwTUtil;
 
+import com.alkemy.ong.service.implement.EmailServiceImpl;
 import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,13 +34,13 @@ import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UsersRepository usersRepository;
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private UserWithoutPassMapper userWithoutPassMapper;
@@ -57,6 +59,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
@@ -90,6 +95,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         } catch (BadCredentialsException e) {
         	throw e;
         }
+        emailService.sendWelcomeEmailTo(user);
         final String jwt = jwTUtil.generateToken(auth);
         RegisterDTO registerDTO = userWithJWTMapper.userEntity2DTO(usersSave, jwt);
         return registerDTO;
