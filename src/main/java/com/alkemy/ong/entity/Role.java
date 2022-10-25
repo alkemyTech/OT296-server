@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(generator="system-uuid")

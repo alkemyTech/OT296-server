@@ -2,12 +2,10 @@ package com.alkemy.ong.dto;
 
 import com.alkemy.ong.entity.Role;
 import lombok.Builder;
-import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Builder
-@Data
 public class UserDTO {
 
     private String firstName;
