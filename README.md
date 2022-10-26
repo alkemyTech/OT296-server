@@ -1,3 +1,5 @@
+###  OT296 100% COVERAGE
+
 ###  SEEDERS USERS EXAMPLE
 
 |      Email And Username       | First Name | Last Name    | Password      | Photo       |   Role |
