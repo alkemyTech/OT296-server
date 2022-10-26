@@ -8,7 +8,6 @@ public class Base64MultipartFile implements MultipartFile {
     private final byte[] fileContent;
     private final String fileName;
 
-    private String contentType;
     private final File file;
 
     public Base64MultipartFile(byte[] fileData, String name) {

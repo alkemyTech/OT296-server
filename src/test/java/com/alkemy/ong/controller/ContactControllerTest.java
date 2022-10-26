@@ -65,6 +65,7 @@ class ContactControllerTest {
         void test1() throws Exception {
             ContactDTO contactDTO = generateContactDTO();
             doNothing().when(contactService).addContact(any());
+            doNothing().when(emailService).sendEmailTo("user", "message");
 
             mockMvc.perform(post("/contact")
                             .contentType(APPLICATION_JSON)

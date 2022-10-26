@@ -16,7 +16,7 @@ public class ImageHelper {
         try {
             base64MultipartFile.transferTo(base64MultipartFile.getFile());
         }catch (IOException e) {
-            throw new IOException("IOExeption :"+e);
+            throw new IOException("IOException :"+e);
         }
         return base64MultipartFile;
     }
