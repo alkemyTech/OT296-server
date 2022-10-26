@@ -26,7 +26,7 @@ class ImageHelperTest {
     @DisplayName("base64ToImage - ok")
     void base64ToImage() throws IOException {
         String encodedImage = "miImagen,parteADesencodear";
-        String fileName = "nombre de mi archivo";
+        String fileName = "myFileName";
 
         assertDoesNotThrow(() -> {
             Base64MultipartFile myBase64file = imageHelper.base64ToImage(encodedImage, fileName);
