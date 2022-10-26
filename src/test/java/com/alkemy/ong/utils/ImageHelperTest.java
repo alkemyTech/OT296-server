@@ -23,7 +23,7 @@ class ImageHelperTest {
     }
 
     @Test
-    @DisplayName("nombre")
+    @DisplayName("base64ToImage - ok")
     void base64ToImage() throws IOException {
         String encodedImage = "miImagen,parteADesencodear";
         String fileName = "nombre de mi archivo";

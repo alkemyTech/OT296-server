@@ -43,44 +43,44 @@ class Base64MultipartFileTest {
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("getContentType")
     void getContentType() {
         String contentType = base64MultipartFile.getContentType();
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("isEmpty")
     void isEmpty() {
         boolean isEmpty = base64MultipartFile.isEmpty();
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("getSize")
     void getSize() {
         long size = base64MultipartFile.getSize();
 
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("getBytes")
     void getBytes() throws IOException {
         byte[] bytes = base64MultipartFile.getBytes();
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("getInputStream")
     void getInputStream() throws IOException {
         ByteArrayInputStream inputStream = (ByteArrayInputStream) base64MultipartFile.getInputStream();
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("transferTo")
     void transferTo() throws IOException, IllegalStateException {
         base64MultipartFile.transferTo(file);
     }
 
     @Test
-    @DisplayName("get file name")
+    @DisplayName("getFile")
     void getFile() {
         File file1 = base64MultipartFile.getFile();
     }
