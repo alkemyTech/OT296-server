@@ -9,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = ImageHelper.class)
 class ImageHelperTest {
@@ -26,6 +28,9 @@ class ImageHelperTest {
         String encodedImage = "miImagen,parteADesencodear";
         String fileName = "nombre de mi archivo";
 
-        Base64MultipartFile myBase64file = imageHelper.base64ToImage(encodedImage, fileName);
+        assertDoesNotThrow(() -> {
+            Base64MultipartFile myBase64file = imageHelper.base64ToImage(encodedImage, fileName);
+        });
+
     }
 }
