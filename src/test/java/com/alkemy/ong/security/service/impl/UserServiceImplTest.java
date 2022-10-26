@@ -156,6 +156,7 @@ class UserServiceImplTest {
         given(usersRepository.save(any())).willReturn(admin);
         given(authenticationManager.authenticate(userDetails)).willReturn(auth);
 
+        doNothing().when(emailService).sendWelcomeEmailTo(registerDTO);
         when(jwTUtil.generateToken(auth)).thenReturn("1234");
 
         RegisterDTO usersRegisterDTO = userServiceImpl.create(registerDTO);
