@@ -12,6 +12,7 @@
 |       roarma@admin.com        | Rosario    | Arma         | OYRODYDoyfgd  | default.jpg |  Admin |
 |   luciacorona@admin.com       | Lucia      | Cora         | PIYFGYDhyosf  | default.jpg |  Admin |
 |      brinieto@admin.com       | Brian      | Nieto        | WRTRYFAbncou  | default.jpg |  Admin |
+|------------------------------ | ---------- | --------     | -----------   | ----------- |   ---- |
 |     mfossord9@gmail.com       | Misha      | Fossord      | 3q3MgFh2Ps5   | default.jpg |   User |
 |   cmacgillreicha@gmail.com    | Charissa   | MacGillreich | 7MOQwvVOHz2p  | default.jpg |   User |
 |   yjoicey8@gmail.com          | Yasmin     | Lapsley      | r79Sfnpxxsx   | default.jpg |   User |
